@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/start/start",
+    "pages/home/home",
+    "pages/place/place",
+    "pages/map/map",
+    "pages/routes/routes",
+    "pages/favorites/favorites",
+    "pages/profile/profile",
+    "pages/assistant/assistant",
+    "pages/story/story",
+    "pages/history/history"
+  ],
+  "window": {
+    "navigationBarTitleText": "本地历史导览",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f4ef"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于发现你附近的历史文化地点并生成本地导览内容"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "sitemapLocation": "sitemap.json"
+}

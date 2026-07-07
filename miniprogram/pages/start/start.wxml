@@ -1,0 +1,14 @@
+<view class="start-page {{leaving ? 'leaving' : ''}}" bindtap="onEnter">
+  <view class="start-underlay">
+    <view class="underlay-title">北京历史热点</view>
+    <view class="underlay-map"></view>
+    <view class="underlay-card"></view>
+    <view class="underlay-card short"></view>
+  </view>
+  <image class="cover-image" src="/assets/images/forbidden-city-cover.jpeg" mode="aspectFill" />
+  <view class="start-overlay"></view>
+  <view class="start-content">
+    <view class="start-title">北京</view>
+    <view class="start-subtitle">点击屏幕开启旅程</view>
+  </view>
+</view>

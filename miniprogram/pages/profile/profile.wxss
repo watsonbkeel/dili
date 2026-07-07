@@ -1,0 +1,50 @@
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 44rpx;
+  background: #15937f;
+  color: #ffffff;
+  font-size: 36rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18rpx;
+  margin-bottom: 20rpx;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1rpx solid #e4e0d8;
+  border-radius: 8rpx;
+  padding: 26rpx;
+}
+
+.stat-num {
+  color: #15937f;
+  font-size: 42rpx;
+  font-weight: 800;
+}
+
+.list-line {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #ece8df;
+  color: #344054;
+  font-size: 27rpx;
+  line-height: 1.5;
+}
+
+.list-line:last-child {
+  border-bottom: 0;
+}

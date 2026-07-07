@@ -1,0 +1,83 @@
+[
+  {
+    "id": "beijing-palace-museum",
+    "name": "北京故宫",
+    "targetFile": "beijing-palace-museum.jpg",
+    "sourceName": "故宫博物院官网",
+    "sourceUrl": "https://www.dpm.org.cn/",
+    "preferredKeywords": ["故宫", "全景", "首页"]
+  },
+  {
+    "id": "temple-of-heaven",
+    "name": "天坛",
+    "targetFile": "temple-of-heaven.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101409",
+    "preferredKeywords": ["天坛", "祈年殿"]
+  },
+  {
+    "id": "jingshan-park",
+    "name": "景山公园",
+    "targetFile": "jingshan-park.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117811",
+    "preferredKeywords": ["景山", "万春亭"]
+  },
+  {
+    "id": "shichahai",
+    "name": "什刹海",
+    "targetFile": "shichahai.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117800",
+    "preferredKeywords": ["什刹海", "后海"]
+  },
+  {
+    "id": "summer-palace",
+    "name": "颐和园",
+    "targetFile": "summer-palace.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101407",
+    "preferredKeywords": ["颐和园", "昆明湖", "十七孔桥"]
+  },
+  {
+    "id": "old-summer-palace-ruins",
+    "name": "圆明园遗址",
+    "targetFile": "old-summer-palace-ruins.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101422",
+    "preferredKeywords": ["圆明园", "大水法", "西洋楼"]
+  },
+  {
+    "id": "beihai-park",
+    "name": "北海公园",
+    "targetFile": "beihai-park.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117807",
+    "preferredKeywords": ["北海", "白塔"]
+  },
+  {
+    "id": "national-museum-of-china",
+    "name": "中国国家博物馆",
+    "targetFile": "national-museum-of-china.jpg",
+    "sourceName": "北京市人民政府网站",
+    "sourceUrl": "https://arabic.beijing.gov.cn/consuminginbeijing/onlyinbeijing/conventions/updatesofconventions/202105/t20210519_2392873.html",
+    "directImageUrl": "https://arabic.beijing.gov.cn/consuminginbeijing/onlyinbeijing/conventions/updatesofconventions/202105/W020210519484419673337.jpeg",
+    "preferredKeywords": ["国家博物馆", "国博"]
+  },
+  {
+    "id": "nanluoguxiang",
+    "name": "南锣鼓巷",
+    "targetFile": "nanluoguxiang.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101328",
+    "preferredKeywords": ["南锣鼓巷", "胡同"]
+  },
+  {
+    "id": "prince-kung-mansion",
+    "name": "恭王府",
+    "targetFile": "prince-kung-mansion.jpg",
+    "sourceName": "北京旅游网",
+    "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117810",
+    "preferredKeywords": ["恭王府", "王府"]
+  }
+]

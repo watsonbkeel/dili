@@ -1,0 +1,24 @@
+.story-body {
+  margin: 28rpx 0;
+  padding: 32rpx;
+  background: #ffffff;
+  border: 1rpx solid #e4e0d8;
+  border-radius: 8rpx;
+  color: #273142;
+  font-size: 31rpx;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.disclaimer {
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #ece8df;
+  color: #8a5a21;
+  font-size: 24rpx;
+  line-height: 1.5;
+}
+
+.facts-title {
+  margin-top: 24rpx;
+}

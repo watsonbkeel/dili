@@ -1,0 +1,58 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="title">推荐路线</view>
+      <view class="subtitle">按北京核心历史文化区域规划，适合现场探索。</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="status">正在加载推荐路线...</view>
+  <view wx:elif="{{error}}" class="status">
+    <view>{{error}}</view>
+    <button class="btn primary" bindtap="loadRoutes">重试</button>
+  </view>
+  <view wx:elif="{{!routes.length}}" class="status">暂无推荐路线。</view>
+
+  <block wx:else>
+    <block wx:for="{{routes}}" wx:key="id">
+      <view class="route-card">
+        <view class="route-hero">
+          <view>
+            <view class="route-title">{{item.title}}</view>
+            <view class="route-desc">{{item.description}}</view>
+            <view class="route-meta">{{item.totalDuration}}</view>
+          </view>
+        </view>
+        <view class="tag-wrap">
+          <block wx:for="{{item.tags}}" wx:key="*this">
+            <text class="tag">{{item}}</text>
+          </block>
+        </view>
+
+        <block wx:for="{{item.stops}}" wx:for-item="stop" wx:key="id">
+          <view class="stop-row" bindtap="openStop" data-id="{{stop.id}}">
+            <view class="stop-order">{{stop.order}}</view>
+            <view class="stop-main">
+              <view class="stop-name">{{stop.name}}</view>
+              <view class="meta">建议游览：{{stop.recommendedDuration}}</view>
+            </view>
+          </view>
+        </block>
+
+        <view class="toolbar">
+          <button class="btn primary" bindtap="startRoute" data-index="{{index}}">开始导航</button>
+          <button class="btn" bindtap="openAi" data-index="{{index}}">问 AI</button>
+        </view>
+      </view>
+    </block>
+  </block>
+
+  <view class="ai-float" bindtap="openGlobalAi">AI</view>
+  <view class="bottom-nav">
+    <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
+    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item active" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
+    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
+    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
+  </view>
+</view>

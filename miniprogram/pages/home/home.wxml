@@ -1,0 +1,95 @@
+<view class="page">
+  <view class="topbar">
+    <view>
+      <view class="title">旅行 · 历史 · 发现</view>
+      <view class="subtitle">探索北京足迹，了解历史故事，让每一次旅行更有深度。</view>
+    </view>
+  </view>
+
+  <view class="search-panel">
+    <view class="city-row">
+      <view class="city-pill" bindtap="switchCity">{{city}} · 核心历史区</view>
+      <button class="btn" bindtap="refreshPlaces" loading="{{loading}}">全部热点</button>
+      <button class="btn" bindtap="refreshLocation" loading="{{loading}}">刷新定位</button>
+    </view>
+    <view class="search-row">
+      <input
+        class="search-input"
+        value="{{query}}"
+        placeholder="搜索景点、历史人物、事件"
+        confirm-type="search"
+        bindinput="onQueryInput"
+        bindconfirm="searchPlaces"
+      />
+      <button class="btn primary search-button" bindtap="searchPlaces" loading="{{loading}}">搜索</button>
+    </view>
+  </view>
+
+  <map
+    class="home-map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    markers="{{markers}}"
+    scale="12"
+    bindmarkertap="onMarkerTap"
+  />
+
+  <view class="toolbar map-toolbar">
+    <button class="btn" bindtap="openMap" disabled="{{!places.length}}">查看大地图</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="status">正在加载历史热点...</view>
+
+  <view wx:elif="{{error}}" class="status">
+    <view>{{error}}</view>
+    <button class="btn primary" bindtap="refreshPlaces">重试</button>
+  </view>
+
+  <view wx:elif="{{!places.length}}" class="status">没有找到匹配的历史地点，请输入地点名、别名、标签或地址再试。</view>
+
+  <view wx:else class="place-list">
+    <block wx:for="{{places}}" wx:key="id">
+      <view class="place-card" bindtap="openPlace" data-id="{{item.id}}">
+        <view class="cover {{item.coverUrl ? '' : 'cover-empty'}}">
+          <image wx:if="{{item.coverUrl}}" class="cover-img" mode="aspectFill" src="{{item.coverUrl}}" />
+          <text wx:else>资料图待补充</text>
+        </view>
+        <view class="place-content">
+          <view class="card-title">{{item.name}}</view>
+          <view class="tag-row">
+            <text class="tag">{{item.categoryText}}</text>
+            <text wx:if="{{item.distanceText}}" class="distance">{{item.distanceText}}</text>
+          </view>
+          <view class="meta">{{item.address}}</view>
+          <view class="summary">{{item.summary}}</view>
+          <view class="source-line">来源：{{item.sourceText}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="ai-float" bindtap="openAi">AI</view>
+
+  <view class="bottom-nav">
+    <view class="nav-item active" data-tab="home" bindtap="goTab">
+      <view class="nav-icon">⌂</view>
+      <view>首页</view>
+    </view>
+    <view class="nav-item" data-tab="map" bindtap="goTab">
+      <view class="nav-icon">◎</view>
+      <view>地图</view>
+    </view>
+    <view class="nav-item" data-tab="routes" bindtap="goTab">
+      <view class="nav-icon">⌘</view>
+      <view>路线</view>
+    </view>
+    <view class="nav-item" data-tab="favorites" bindtap="goTab">
+      <view class="nav-icon">♡</view>
+      <view>收藏</view>
+    </view>
+    <view class="nav-item" data-tab="profile" bindtap="goTab">
+      <view class="nav-icon">○</view>
+      <view>我的</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,1850 @@
+{
+  "version": "beijing-hotspots-v1",
+  "city": "北京",
+  "coordinateSystem": "GCJ-02",
+  "generatedAt": "2026-07-06",
+  "items": [
+    {
+      "id": "beijing-palace-museum",
+      "name": "北京故宫",
+      "aliases": [
+        "故宫",
+        "紫禁城",
+        "故宫博物院"
+      ],
+      "category": [
+        "古建筑",
+        "博物馆",
+        "世界文化遗产"
+      ],
+      "tags": [
+        "明清",
+        "宫殿",
+        "中轴线"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区景山前街4号",
+      "lat": 39.916345,
+      "lng": 116.397155,
+      "period": "明清",
+      "summary": "北京故宫是在明清两代皇宫紫禁城基础上建立的博物院，保存有大规模古代宫殿建筑群。",
+      "timeline": [
+        {
+          "year": "1406",
+          "event": "明成祖朱棣开始营建北京宫城。"
+        },
+        {
+          "year": "1420",
+          "event": "紫禁城基本建成。"
+        },
+        {
+          "year": "1925",
+          "event": "故宫博物院成立。"
+        },
+        {
+          "year": "1987",
+          "event": "明清故宫被列入世界文化遗产名录。"
+        }
+      ],
+      "highlights": [
+        "太和殿、中和殿、保和殿构成外朝核心空间。",
+        "乾清宫、交泰殿、坤宁宫体现内廷格局。",
+        "午门、神武门位于中轴线南北两端。"
+      ],
+      "visitTips": [
+        "中轴线建筑适合串联观察明清宫城礼制格局。",
+        "可结合景山公园俯瞰故宫整体轴线。",
+        "图片字段仅保留检索词，实际上线建议使用自有或授权图片。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/beijing-palace-museum.jpg",
+          "caption": "北京故宫",
+          "source": "故宫博物院官网",
+          "sourceUrl": "https://www.dpm.org.cn/",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北京故宫",
+          "url": ""
+        },
+        {
+          "title": "故宫博物院",
+          "url": "https://www.dpm.org.cn/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "temple-of-heaven",
+      "name": "天坛",
+      "aliases": [
+        "天坛公园",
+        "天地坛"
+      ],
+      "category": [
+        "古建筑",
+        "坛庙",
+        "世界文化遗产"
+      ],
+      "tags": [
+        "明清",
+        "祭天",
+        "中轴线"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区天坛东里甲1号",
+      "lat": 39.882187,
+      "lng": 116.406605,
+      "period": "明清",
+      "summary": "天坛是明清两代皇帝祭天、祈谷的坛庙建筑群，以祈年殿、圜丘坛、皇穹宇等建筑著称。",
+      "timeline": [
+        {
+          "year": "1420",
+          "event": "天地坛建成。"
+        },
+        {
+          "year": "1530",
+          "event": "明代实行天地分祀后，天地坛改称天坛。"
+        },
+        {
+          "year": "1998",
+          "event": "天坛被列入世界文化遗产名录。"
+        }
+      ],
+      "highlights": [
+        "祈年殿是天坛标志性建筑。",
+        "圜丘坛用于冬至祭天礼仪。",
+        "皇穹宇与回音壁展示坛庙空间声学特色。"
+      ],
+      "visitTips": [
+        "可按祈年殿、皇穹宇、圜丘坛南北线参观。",
+        "建议在详情页提示游客尊重祭祀遗址空间。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/temple-of-heaven.jpg",
+          "caption": "天坛",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101409",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：天坛",
+          "url": ""
+        },
+        {
+          "title": "天坛公园",
+          "url": "https://www.tiantanpark.cn/aboutus.html"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "summer-palace",
+      "name": "颐和园",
+      "aliases": [
+        "清漪园"
+      ],
+      "category": [
+        "皇家园林",
+        "世界文化遗产"
+      ],
+      "tags": [
+        "清代",
+        "昆明湖",
+        "万寿山"
+      ],
+      "city": "北京",
+      "district": "海淀区",
+      "address": "北京市海淀区新建宫门路19号",
+      "lat": 39.999972,
+      "lng": 116.27547,
+      "period": "清代",
+      "summary": "颐和园以昆明湖、万寿山为主体，是清代皇家园林，也是中国古典园林的重要代表。",
+      "timeline": [
+        {
+          "year": "1750",
+          "event": "清漪园开始营建。"
+        },
+        {
+          "year": "1888",
+          "event": "清漪园重建后改称颐和园。"
+        },
+        {
+          "year": "1998",
+          "event": "颐和园被列入世界文化遗产名录。"
+        }
+      ],
+      "highlights": [
+        "万寿山与昆明湖共同构成山水园林格局。",
+        "长廊、佛香阁、十七孔桥是代表性景观。",
+        "园内建筑反映清代皇家园林营造思想。"
+      ],
+      "visitTips": [
+        "可从东宫门进入后串联仁寿殿、长廊、佛香阁区域。",
+        "昆明湖沿线适合展示地图步行动线。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/summer-palace.jpg",
+          "caption": "颐和园",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101407",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：颐和园",
+          "url": ""
+        },
+        {
+          "title": "颐和园官网：关于",
+          "url": "https://summerpalace.net.cn/about.html"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "old-summer-palace-ruins",
+      "name": "圆明园遗址",
+      "aliases": [
+        "圆明园",
+        "圆明园遗址公园"
+      ],
+      "category": [
+        "遗址",
+        "皇家园林"
+      ],
+      "tags": [
+        "清代",
+        "遗址公园",
+        "西洋楼"
+      ],
+      "city": "北京",
+      "district": "海淀区",
+      "address": "北京市海淀区清华西路28号",
+      "lat": 40.008102,
+      "lng": 116.302004,
+      "period": "清代",
+      "summary": "圆明园是清代大型皇家园林遗址，曾由圆明园、长春园、绮春园三园组成。",
+      "timeline": [
+        {
+          "year": "1707",
+          "event": "圆明园开始兴建。"
+        },
+        {
+          "year": "1860",
+          "event": "圆明园在第二次鸦片战争中遭劫掠焚毁。"
+        },
+        {
+          "year": "1988",
+          "event": "圆明园遗址公园正式对外开放。"
+        }
+      ],
+      "highlights": [
+        "西洋楼遗址是圆明园遗址展示的重要区域。",
+        "大水法遗址常用于说明园林与历史变迁。",
+        "三园格局有助于理解清代皇家园林规模。"
+      ],
+      "visitTips": [
+        "详情页可将西洋楼遗址作为重点导览点。",
+        "建议用遗址属性提示游客不要攀爬或触碰遗存。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/old-summer-palace-ruins.jpg",
+          "caption": "圆明园遗址",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101422",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：圆明园",
+          "url": ""
+        },
+        {
+          "title": "圆明园遗址公园",
+          "url": "https://www.yuanmingyuanpark.cn/sy/english/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "jingshan-park",
+      "name": "景山公园",
+      "aliases": [
+        "景山"
+      ],
+      "category": [
+        "历史园林",
+        "城市中轴线"
+      ],
+      "tags": [
+        "明清",
+        "皇家苑囿",
+        "中轴线"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区景山西街44号",
+      "lat": 39.92542,
+      "lng": 116.396583,
+      "period": "元明清",
+      "summary": "景山公园位于北京城中轴线上、故宫北侧，是观察北京老城轴线格局的重要历史园林。",
+      "timeline": [
+        {
+          "year": "明代",
+          "event": "景山成为北京宫城北侧的重要皇家苑囿。"
+        },
+        {
+          "year": "1928",
+          "event": "景山辟为公园。"
+        }
+      ],
+      "highlights": [
+        "万春亭所在山顶可俯瞰故宫和北京中轴线。",
+        "园内保留皇家园林和祭祀相关历史空间。",
+        "与故宫神武门形成南北相邻关系。"
+      ],
+      "visitTips": [
+        "适合与故宫北门出入口形成联动导览。",
+        "登高点适合作为地图热点的视角提示。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/jingshan-park.jpg",
+          "caption": "景山公园",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117811",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：景山公园",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "beihai-park",
+      "name": "北海公园",
+      "aliases": [
+        "北海"
+      ],
+      "category": [
+        "皇家园林",
+        "历史园林"
+      ],
+      "tags": [
+        "辽金元明清",
+        "琼华岛",
+        "白塔"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区文津街1号",
+      "lat": 39.925507,
+      "lng": 116.389016,
+      "period": "辽金至明清",
+      "summary": "北海公园是北京历史悠久的皇家园林之一，以北海水面、琼华岛和白塔等景观为代表。",
+      "timeline": [
+        {
+          "year": "金代",
+          "event": "北海一带成为皇家园林的重要组成部分。"
+        },
+        {
+          "year": "1925",
+          "event": "北海公园正式开放。"
+        }
+      ],
+      "highlights": [
+        "琼华岛白塔是北海公园标志性景观。",
+        "团城、九龙壁等遗存体现皇家园林层次。",
+        "水面与岛屿格局延续古代苑囿传统。"
+      ],
+      "visitTips": [
+        "可将琼华岛、白塔、九龙壁设为详情页看点。",
+        "北海与景山、什刹海距离较近，适合做周边推荐。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/beihai-park.jpg",
+          "caption": "北海公园",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117807",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北海公园",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "beijing-guozijian",
+      "name": "国子监",
+      "aliases": [
+        "北京国子监"
+      ],
+      "category": [
+        "教育遗址",
+        "古建筑"
+      ],
+      "tags": [
+        "元明清",
+        "最高学府",
+        "辟雍"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区国子监街15号",
+      "lat": 39.94732,
+      "lng": 116.408381,
+      "period": "元明清",
+      "summary": "北京国子监是元、明、清三代国家最高学府和教育管理机构所在地。",
+      "timeline": [
+        {
+          "year": "1306",
+          "event": "元代开始营建国子监。"
+        },
+        {
+          "year": "明清",
+          "event": "国子监延续作为国家最高学府和教育管理机构。"
+        }
+      ],
+      "highlights": [
+        "辟雍是国子监建筑群中的核心建筑之一。",
+        "国子监街保存有传统街巷和牌楼环境。",
+        "与北京孔庙相邻，体现学庙合一格局。"
+      ],
+      "visitTips": [
+        "适合与孔庙合并为一条儒学文化导览线。",
+        "详情页可重点解释辟雍与官学制度。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "北京国子监",
+          "source": "百度图片",
+          "searchQuery": "北京国子监 辟雍"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北京国子监",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "beijing-confucius-temple",
+      "name": "孔庙",
+      "aliases": [
+        "北京孔庙"
+      ],
+      "category": [
+        "坛庙",
+        "古建筑"
+      ],
+      "tags": [
+        "元明清",
+        "孔子",
+        "礼制"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区国子监街13号",
+      "lat": 39.947013,
+      "lng": 116.407532,
+      "period": "元明清",
+      "summary": "北京孔庙是祭祀孔子的庙宇，与国子监相邻，是北京传统教育与礼制空间的重要遗存。",
+      "timeline": [
+        {
+          "year": "1302",
+          "event": "北京孔庙始建。"
+        },
+        {
+          "year": "元明清",
+          "event": "长期作为祭祀孔子的礼制场所。"
+        }
+      ],
+      "highlights": [
+        "大成殿是孔庙的核心祭祀建筑。",
+        "进士题名碑记录科举制度相关信息。",
+        "孔庙与国子监相邻，适合连贯讲解。"
+      ],
+      "visitTips": [
+        "可与国子监共用地图片区筛选。",
+        "适合在 AI 导览中解释科举、儒学和礼制。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "北京孔庙",
+          "source": "百度图片",
+          "searchQuery": "北京孔庙 大成殿"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北京孔庙",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "yonghe-temple",
+      "name": "雍和宫",
+      "aliases": [
+        "雍和宫寺"
+      ],
+      "category": [
+        "寺庙",
+        "古建筑"
+      ],
+      "tags": [
+        "清代",
+        "藏传佛教",
+        "王府"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区雍和宫大街12号",
+      "lat": 39.947041,
+      "lng": 116.417305,
+      "period": "清代",
+      "summary": "雍和宫由清代王府改建为藏传佛教寺院，是北京重要的宗教和历史建筑群。",
+      "timeline": [
+        {
+          "year": "1694",
+          "event": "雍亲王府开始形成。"
+        },
+        {
+          "year": "1744",
+          "event": "雍和宫改为藏传佛教寺院。"
+        }
+      ],
+      "highlights": [
+        "建筑群保留清代王府与寺院空间转换痕迹。",
+        "万福阁是雍和宫重要建筑之一。",
+        "汉、满、蒙、藏文化元素在寺院空间中并存。"
+      ],
+      "visitTips": [
+        "宗教场所导览应提示游客保持安静并尊重礼仪。",
+        "可与国子监、孔庙组成雍和宫街区步行线路。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "雍和宫",
+          "source": "百度图片",
+          "searchQuery": "北京雍和宫"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：雍和宫",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "zhengyangmen",
+      "name": "正阳门",
+      "aliases": [
+        "前门"
+      ],
+      "category": [
+        "城门",
+        "古建筑",
+        "城市中轴线"
+      ],
+      "tags": [
+        "明清",
+        "北京城",
+        "中轴线"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区前门大街北端",
+      "lat": 39.899143,
+      "lng": 116.397065,
+      "period": "明清",
+      "summary": "正阳门是北京内城南垣正门，由城楼和箭楼等构成，是北京中轴线上的重要城门建筑。",
+      "timeline": [
+        {
+          "year": "1419",
+          "event": "正阳门始建。"
+        },
+        {
+          "year": "明清",
+          "event": "长期作为北京内城南侧的重要城门。"
+        }
+      ],
+      "highlights": [
+        "城楼与箭楼共同展示明清北京城防格局。",
+        "位于天安门广场南侧和前门大街北端。",
+        "是北京中轴线南段的重要节点。"
+      ],
+      "visitTips": [
+        "适合与前门大街、大栅栏形成步行导览。",
+        "地图 marker 可放在城楼与箭楼之间区域。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "正阳门",
+          "source": "百度图片",
+          "searchQuery": "北京正阳门 前门"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：正阳门",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "shichahai",
+      "name": "什刹海",
+      "aliases": [
+        "什刹海历史文化风景区"
+      ],
+      "category": [
+        "历史街区",
+        "水系景观"
+      ],
+      "tags": [
+        "胡同",
+        "北京老城",
+        "水系"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区地安门西大街附近",
+      "lat": 39.937104,
+      "lng": 116.386333,
+      "period": "元明清至近现代",
+      "summary": "什刹海由前海、后海、西海等水域及周边胡同街区组成，是北京老城水系和生活空间的重要片区。",
+      "timeline": [
+        {
+          "year": "元代",
+          "event": "什刹海一带与大都城市水系关系密切。"
+        },
+        {
+          "year": "明清",
+          "event": "周边形成王府、寺庙、胡同等多层历史空间。"
+        }
+      ],
+      "highlights": [
+        "前海、后海、西海共同构成老城水系景观。",
+        "周边分布恭王府、钟鼓楼等历史热点。",
+        "胡同街巷保留北京老城生活空间特征。"
+      ],
+      "visitTips": [
+        "适合做片区型热点，详情页可推荐周边步行点。",
+        "导览文案应区分自然水域、历史街区和商业街区。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/shichahai.jpg",
+          "caption": "什刹海",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117800",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：什刹海",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "nanluoguxiang",
+      "name": "南锣鼓巷",
+      "aliases": [],
+      "category": [
+        "历史街区",
+        "胡同"
+      ],
+      "tags": [
+        "元大都",
+        "胡同",
+        "北京老城"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区南锣鼓巷",
+      "lat": 39.939693,
+      "lng": 116.403662,
+      "period": "元明清至近现代",
+      "summary": "南锣鼓巷是北京老城内保存较完整的传统胡同街区，街巷格局与元大都坊巷制度相关。",
+      "timeline": [
+        {
+          "year": "元代",
+          "event": "南锣鼓巷所在片区形成与元大都相关的街巷格局。"
+        },
+        {
+          "year": "明清",
+          "event": "周边胡同和宅院持续发展。"
+        }
+      ],
+      "highlights": [
+        "主街两侧连接多条传统胡同。",
+        "街区内保留四合院和老城街巷肌理。",
+        "周边与鼓楼、什刹海片区距离较近。"
+      ],
+      "visitTips": [
+        "适合作为胡同片区入口 marker。",
+        "详情页应避免把现代商业内容当作历史事实。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/nanluoguxiang.jpg",
+          "caption": "南锣鼓巷",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101328",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：南锣鼓巷",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "lugou-bridge",
+      "name": "卢沟桥",
+      "aliases": [
+        "芦沟桥",
+        "永定河桥"
+      ],
+      "category": [
+        "古桥",
+        "近现代史遗址"
+      ],
+      "tags": [
+        "金代",
+        "石桥",
+        "七七事变"
+      ],
+      "city": "北京",
+      "district": "丰台区",
+      "address": "北京市丰台区宛平城西门外",
+      "lat": 39.849224,
+      "lng": 116.21739,
+      "period": "金代至近现代",
+      "summary": "卢沟桥是横跨永定河的古代石桥，也是1937年七七事变发生地附近的重要历史遗址。",
+      "timeline": [
+        {
+          "year": "1189",
+          "event": "卢沟桥始建。"
+        },
+        {
+          "year": "1192",
+          "event": "卢沟桥建成。"
+        },
+        {
+          "year": "1937",
+          "event": "七七事变在卢沟桥地区爆发。"
+        }
+      ],
+      "highlights": [
+        "桥上石狮是卢沟桥最具辨识度的景观。",
+        "桥东邻近宛平城和抗战纪念相关场馆。",
+        "古桥结构与近现代历史事件叠加。"
+      ],
+      "visitTips": [
+        "可与宛平城、中国人民抗日战争纪念馆联动讲解。",
+        "导览应区分古桥营建史与抗战史。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "卢沟桥",
+          "source": "百度图片",
+          "searchQuery": "北京卢沟桥 石狮"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：卢沟桥",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "prince-kung-mansion",
+      "name": "恭王府",
+      "aliases": [
+        "恭王府博物馆"
+      ],
+      "category": [
+        "王府",
+        "博物馆",
+        "古建筑"
+      ],
+      "tags": [
+        "清代",
+        "王府",
+        "什刹海"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区前海西街17号",
+      "lat": 39.935596,
+      "lng": 116.386095,
+      "period": "清代",
+      "summary": "恭王府位于什刹海西岸，是保存较完整并对外开放的清代王府建筑群。",
+      "timeline": [
+        {
+          "year": "清代",
+          "event": "恭王府府邸与花园形成清代王府建筑群。"
+        },
+        {
+          "year": "2008",
+          "event": "恭王府博物馆正式对社会开放。"
+        }
+      ],
+      "highlights": [
+        "府邸与花园共同构成王府空间。",
+        "银安殿、后罩楼、花园是重点参观点。",
+        "与什刹海历史街区关系密切。"
+      ],
+      "visitTips": [
+        "可与什刹海、胡同片区组成步行线路。",
+        "AI 导览可重点解释清代王府等级和空间布局。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/prince-kung-mansion.jpg",
+          "caption": "恭王府",
+          "source": "北京旅游网",
+          "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117810",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：恭王府",
+          "url": ""
+        },
+        {
+          "title": "文化和旅游部恭王府博物馆",
+          "url": "https://www.pgm.org.cn/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "beijing-ancient-observatory",
+      "name": "北京古观象台",
+      "aliases": [
+        "古观象台"
+      ],
+      "category": [
+        "古建筑",
+        "科技史遗址"
+      ],
+      "tags": [
+        "明清",
+        "天文",
+        "观象"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区建国门东裱褙胡同2号",
+      "lat": 39.90626,
+      "lng": 116.427493,
+      "period": "明清",
+      "summary": "北京古观象台是明清时期皇家天文观测机构遗存，台上陈列有古代天文仪器。",
+      "timeline": [
+        {
+          "year": "1442",
+          "event": "明代在北京城东南角楼附近建观星台。"
+        },
+        {
+          "year": "清代",
+          "event": "古观象台继续承担天文观测和历法相关职能。"
+        }
+      ],
+      "highlights": [
+        "台体位于明清北京城墙旧址附近。",
+        "陈列浑仪、简仪等古代天文仪器。",
+        "适合讲解中国古代天文学与历法制度。"
+      ],
+      "visitTips": [
+        "适合做科技史主题热点。",
+        "坐标可用于建国门附近的精确地图定位。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "北京古观象台",
+          "source": "百度图片",
+          "searchQuery": "北京古观象台 天文仪器"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北京古观象台",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "badaling-great-wall",
+      "name": "八达岭长城",
+      "aliases": [
+        "八达岭"
+      ],
+      "category": [
+        "长城",
+        "世界文化遗产"
+      ],
+      "tags": [
+        "明长城",
+        "关隘",
+        "延庆"
+      ],
+      "city": "北京",
+      "district": "延庆区",
+      "address": "北京市延庆区G6京藏高速58号出口",
+      "lat": 40.354335,
+      "lng": 116.006402,
+      "period": "明代",
+      "summary": "八达岭长城是明长城的重要关隘段，位于北京延庆，是长城代表性开放游览区。",
+      "timeline": [
+        {
+          "year": "明代",
+          "event": "八达岭一带成为明长城重要防御地段。"
+        },
+        {
+          "year": "1987",
+          "event": "长城被列入世界文化遗产名录。"
+        }
+      ],
+      "highlights": [
+        "城墙依山势修筑，展示明长城防御体系。",
+        "关城和敌台适合讲解军事防御功能。",
+        "是北京最具代表性的长城游览段之一。"
+      ],
+      "visitTips": [
+        "地图点可放在景区入口或关城区域。",
+        "导览应提示长城属于线性遗产，可按登城方向组织讲解。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "八达岭长城",
+          "source": "百度图片",
+          "searchQuery": "八达岭长城"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：八达岭长城",
+          "url": ""
+        },
+        {
+          "title": "八达岭长城",
+          "url": "https://www.badaling.cn/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "ming-tombs",
+      "name": "明十三陵",
+      "aliases": [
+        "十三陵"
+      ],
+      "category": [
+        "陵寝",
+        "世界文化遗产"
+      ],
+      "tags": [
+        "明代",
+        "皇家陵寝",
+        "昌平"
+      ],
+      "city": "北京",
+      "district": "昌平区",
+      "address": "北京市昌平区十三陵镇",
+      "lat": 40.25429,
+      "lng": 116.227306,
+      "period": "明代",
+      "summary": "明十三陵是明朝迁都北京后十三位皇帝陵墓的总称，位于北京昌平天寿山南麓。",
+      "timeline": [
+        {
+          "year": "1409",
+          "event": "明长陵开始营建。"
+        },
+        {
+          "year": "2003",
+          "event": "明十三陵作为明清皇家陵寝扩展项目列入世界文化遗产名录。"
+        }
+      ],
+      "highlights": [
+        "长陵是明十三陵中最早营建的陵寝。",
+        "神路石像生体现陵寝仪制。",
+        "定陵地宫是十三陵重要开放遗存之一。"
+      ],
+      "visitTips": [
+        "片区范围较大，建议在详情页标注长陵、定陵、神路等子点。",
+        "AI 导览可按皇家陵寝制度组织内容。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "明十三陵",
+          "source": "百度图片",
+          "searchQuery": "北京明十三陵 神路"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：明十三陵",
+          "url": ""
+        },
+        {
+          "title": "明十三陵官网",
+          "url": "https://www.mingshisanling.com/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "zhoukoudian-peking-man-site",
+      "name": "周口店北京人遗址",
+      "aliases": [
+        "周口店遗址",
+        "北京人遗址"
+      ],
+      "category": [
+        "考古遗址",
+        "世界文化遗产"
+      ],
+      "tags": [
+        "旧石器时代",
+        "古人类",
+        "房山"
+      ],
+      "city": "北京",
+      "district": "房山区",
+      "address": "北京市房山区周口店大街1号",
+      "lat": 39.689949,
+      "lng": 115.929621,
+      "period": "旧石器时代",
+      "summary": "周口店北京人遗址是重要古人类和旧石器时代考古遗址，发现有北京人化石和用火遗迹等资料。",
+      "timeline": [
+        {
+          "year": "1927",
+          "event": "周口店遗址开始大规模系统发掘。"
+        },
+        {
+          "year": "1929",
+          "event": "发现第一个完整的北京人头盖骨化石。"
+        },
+        {
+          "year": "1987",
+          "event": "周口店北京人遗址被列入世界文化遗产名录。"
+        }
+      ],
+      "highlights": [
+        "遗址展示北京人、新洞人、山顶洞人等考古信息。",
+        "博物馆与遗址区可结合参观。",
+        "适合讲解古人类演化和旧石器时代生活。"
+      ],
+      "visitTips": [
+        "地图 marker 可放在遗址博物馆入口区域。",
+        "详情页可区分博物馆展陈和实际遗址点。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "周口店北京人遗址",
+          "source": "百度图片",
+          "searchQuery": "周口店北京人遗址"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：周口店北京人遗址",
+          "url": ""
+        },
+        {
+          "title": "北京市文物局：周口店北京人遗址博物馆",
+          "url": "https://wwj.beijing.gov.cn/bjww/wwjzzcslm/1737418/1738088/1742745/545883/index.html"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "xiangshan-park",
+      "name": "香山公园",
+      "aliases": [
+        "香山",
+        "静宜园"
+      ],
+      "category": [
+        "皇家园林",
+        "历史园林"
+      ],
+      "tags": [
+        "清代",
+        "西山",
+        "静宜园"
+      ],
+      "city": "北京",
+      "district": "海淀区",
+      "address": "北京市海淀区买卖街40号",
+      "lat": 39.996444,
+      "lng": 116.188309,
+      "period": "金代至清代",
+      "summary": "香山公园位于北京西山，清代曾建静宜园，是兼具自然山林和皇家园林遗存的历史景区。",
+      "timeline": [
+        {
+          "year": "金代",
+          "event": "香山一带已有寺院和园林活动。"
+        },
+        {
+          "year": "1745",
+          "event": "清代静宜园建成。"
+        }
+      ],
+      "highlights": [
+        "静宜园遗存体现清代西山皇家园林体系。",
+        "香山寺、双清别墅等地点具有历史价值。",
+        "山地景观适合展示西山文化带信息。"
+      ],
+      "visitTips": [
+        "可按东门、香山寺、双清别墅组织导览。",
+        "秋季景观知名，但详情页事实摘要不写营销化表述。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "香山公园",
+          "source": "百度图片",
+          "searchQuery": "北京香山公园 静宜园"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：香山公园",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "dashilar",
+      "name": "大栅栏",
+      "aliases": [
+        "大栅栏商业街"
+      ],
+      "category": [
+        "历史街区",
+        "商业街"
+      ],
+      "tags": [
+        "北京老城",
+        "前门",
+        "商业"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区大栅栏街",
+      "lat": 39.894716,
+      "lng": 116.393006,
+      "period": "明清至近现代",
+      "summary": "大栅栏位于前门外，是北京老城传统商业街区，聚集多家老字号和历史街巷空间。",
+      "timeline": [
+        {
+          "year": "明代",
+          "event": "前门外商业活动逐渐兴盛。"
+        },
+        {
+          "year": "清代",
+          "event": "大栅栏成为北京重要商业街区。"
+        }
+      ],
+      "highlights": [
+        "与前门大街、正阳门共同构成老城南部商业空间。",
+        "保留传统街巷尺度和商业店铺形态。",
+        "适合讲解北京老字号和城市商业史。"
+      ],
+      "visitTips": [
+        "可与正阳门、琉璃厂组成老城南线。",
+        "列表页分类建议标为历史街区而非单体文物。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "大栅栏",
+          "source": "百度图片",
+          "searchQuery": "北京大栅栏"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：大栅栏",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "liulichang-cultural-street",
+      "name": "琉璃厂文化街",
+      "aliases": [
+        "琉璃厂",
+        "琉璃厂古文化街"
+      ],
+      "category": [
+        "历史街区",
+        "文化街"
+      ],
+      "tags": [
+        "书画",
+        "古籍",
+        "北京老城"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区琉璃厂东街、琉璃厂西街",
+      "lat": 39.894163,
+      "lng": 116.38471,
+      "period": "清代至近现代",
+      "summary": "琉璃厂文化街以书画、古籍、文房用品经营闻名，是北京老城重要文化商业街区。",
+      "timeline": [
+        {
+          "year": "清代",
+          "event": "琉璃厂一带逐渐形成书肆、古玩和文房用品集中的文化街区。"
+        },
+        {
+          "year": "近现代",
+          "event": "琉璃厂延续为北京文化商业地标。"
+        }
+      ],
+      "highlights": [
+        "街区与北京书画、古籍交易传统相关。",
+        "荣宝斋等老字号体现文化商业延续。",
+        "适合与大栅栏、前门片区联动。"
+      ],
+      "visitTips": [
+        "可按东西街方向做线性导览。",
+        "AI 讲解应避免对店铺年代做未核实断言。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "琉璃厂文化街",
+          "source": "百度图片",
+          "searchQuery": "北京琉璃厂文化街"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：琉璃厂文化街",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "beijing-bell-and-drum-towers",
+      "name": "北京钟鼓楼",
+      "aliases": [
+        "钟楼",
+        "鼓楼",
+        "钟鼓楼"
+      ],
+      "category": [
+        "古建筑",
+        "城市中轴线"
+      ],
+      "tags": [
+        "元明清",
+        "报时",
+        "中轴线"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区钟楼湾胡同临字9号",
+      "lat": 39.940922,
+      "lng": 116.396738,
+      "period": "元明清",
+      "summary": "北京钟鼓楼位于北京中轴线北端，是元明清城市报时制度相关的重要古建筑。",
+      "timeline": [
+        {
+          "year": "元代",
+          "event": "钟鼓楼制度在大都城市空间中形成。"
+        },
+        {
+          "year": "明清",
+          "event": "钟鼓楼长期承担城市报时功能。"
+        }
+      ],
+      "highlights": [
+        "鼓楼和钟楼前后相对，构成中轴线北端节点。",
+        "建筑与古代城市时间管理制度相关。",
+        "周边胡同可展示北京老城肌理。"
+      ],
+      "visitTips": [
+        "适合与什刹海、南锣鼓巷联动展示。",
+        "地图可用钟楼和鼓楼中间区域作为片区定位。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "北京钟鼓楼",
+          "source": "百度图片",
+          "searchQuery": "北京钟鼓楼"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北京钟鼓楼",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "miaoying-temple-white-stupa",
+      "name": "白塔寺",
+      "aliases": [
+        "妙应寺",
+        "妙应寺白塔"
+      ],
+      "category": [
+        "寺庙",
+        "古塔",
+        "古建筑"
+      ],
+      "tags": [
+        "元代",
+        "藏式佛塔",
+        "白塔"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区阜成门内大街171号",
+      "lat": 39.923512,
+      "lng": 116.360397,
+      "period": "元代至明清",
+      "summary": "白塔寺即妙应寺，以元代白塔著称，是北京现存重要藏式佛塔建筑。",
+      "timeline": [
+        {
+          "year": "1271",
+          "event": "元代开始建造白塔。"
+        },
+        {
+          "year": "1279",
+          "event": "白塔建成。"
+        }
+      ],
+      "highlights": [
+        "白塔是寺内最具代表性的历史建筑。",
+        "建筑体现元代大都佛教文化交流。",
+        "周边白塔寺街区保留老城生活空间。"
+      ],
+      "visitTips": [
+        "适合作为西城老城片区的宗教建筑热点。",
+        "导览可重点解释白塔的形制而不夸大传说。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "白塔寺",
+          "source": "百度图片",
+          "searchQuery": "北京白塔寺 妙应寺白塔"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：妙应寺白塔",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "fayuan-temple",
+      "name": "法源寺",
+      "aliases": [
+        "北京法源寺"
+      ],
+      "category": [
+        "寺庙",
+        "古建筑"
+      ],
+      "tags": [
+        "佛教",
+        "宣南",
+        "古寺"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区法源寺前街7号",
+      "lat": 39.885246,
+      "lng": 116.37166,
+      "period": "唐代至明清",
+      "summary": "法源寺是北京城内历史悠久的佛教寺院，现位于西城区法源寺前街。",
+      "timeline": [
+        {
+          "year": "645",
+          "event": "法源寺前身悯忠寺始建。"
+        },
+        {
+          "year": "清代",
+          "event": "寺名改为法源寺。"
+        }
+      ],
+      "highlights": [
+        "寺院格局体现传统佛寺轴线布局。",
+        "与宣南文化和北京佛教史关系密切。",
+        "寺内建筑适合做安静型导览点。"
+      ],
+      "visitTips": [
+        "宗教场所导览应提示保持安静。",
+        "可与牛街、宣南历史片区形成周边推荐。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "法源寺",
+          "source": "百度图片",
+          "searchQuery": "北京法源寺"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：法源寺",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "tanzhe-temple",
+      "name": "潭柘寺",
+      "aliases": [
+        "潭柘山寺"
+      ],
+      "category": [
+        "寺庙",
+        "古建筑"
+      ],
+      "tags": [
+        "佛教",
+        "门头沟",
+        "古寺"
+      ],
+      "city": "北京",
+      "district": "门头沟区",
+      "address": "北京市门头沟区潭柘寺镇潭柘山下",
+      "lat": 39.904589,
+      "lng": 116.027081,
+      "period": "晋代至明清",
+      "summary": "潭柘寺位于北京门头沟潭柘山下，是北京地区历史悠久的佛教寺院之一。",
+      "timeline": [
+        {
+          "year": "307",
+          "event": "潭柘寺前身嘉福寺始建。"
+        },
+        {
+          "year": "清代",
+          "event": "潭柘寺多次得到修缮和赐额。"
+        }
+      ],
+      "highlights": [
+        "寺院依山布局，体现山寺空间特征。",
+        "大雄宝殿、毗卢阁等为重要建筑。",
+        "与北京西山宗教文化关系密切。"
+      ],
+      "visitTips": [
+        "位置距中心城区较远，适合作为远郊专题热点。",
+        "宗教空间导览应强调文明参观。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "潭柘寺",
+          "source": "百度图片",
+          "searchQuery": "北京潭柘寺"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：潭柘寺",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "jietai-temple",
+      "name": "戒台寺",
+      "aliases": [
+        "戒坛寺"
+      ],
+      "category": [
+        "寺庙",
+        "古建筑"
+      ],
+      "tags": [
+        "佛教",
+        "戒坛",
+        "门头沟"
+      ],
+      "city": "北京",
+      "district": "门头沟区",
+      "address": "北京市门头沟区永定镇戒台寺",
+      "lat": 39.875188,
+      "lng": 116.093879,
+      "period": "唐代至明清",
+      "summary": "戒台寺以戒坛闻名，是北京西山地区重要佛教寺院和古建筑群。",
+      "timeline": [
+        {
+          "year": "622",
+          "event": "戒台寺始建，初名慧聚寺。"
+        },
+        {
+          "year": "明代",
+          "event": "寺院因戒坛而逐渐以戒台寺著称。"
+        }
+      ],
+      "highlights": [
+        "戒坛是寺院最具代表性的宗教建筑。",
+        "寺院古松和山地环境构成传统寺院景观。",
+        "与潭柘寺同属北京西山佛教文化热点。"
+      ],
+      "visitTips": [
+        "适合与潭柘寺组成门头沟宗教文化线路。",
+        "导览应突出戒坛功能，避免神秘化表述。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "戒台寺",
+          "source": "百度图片",
+          "searchQuery": "北京戒台寺 戒坛"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：戒台寺",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "capital-museum",
+      "name": "首都博物馆",
+      "aliases": [
+        "首博"
+      ],
+      "category": [
+        "博物馆"
+      ],
+      "tags": [
+        "北京历史",
+        "文物",
+        "城市史"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区复兴门外大街16号",
+      "lat": 39.906815,
+      "lng": 116.341351,
+      "period": "现代",
+      "summary": "首都博物馆是北京市大型综合性博物馆，展陈内容以北京历史文化和相关文物收藏为核心。",
+      "timeline": [
+        {
+          "year": "1981",
+          "event": "首都博物馆正式对外开放。"
+        },
+        {
+          "year": "2006",
+          "event": "首都博物馆新馆正式开放。"
+        }
+      ],
+      "highlights": [
+        "基本陈列适合了解北京城市发展脉络。",
+        "馆藏文物覆盖北京地区历史文化主题。",
+        "建筑位于复兴门外大街，交通定位明确。"
+      ],
+      "visitTips": [
+        "适合作为室内博物馆类热点。",
+        "后端可将其与古建筑类景点区分展示。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "首都博物馆",
+          "source": "百度图片",
+          "searchQuery": "首都博物馆"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：首都博物馆",
+          "url": ""
+        },
+        {
+          "title": "首都博物馆",
+          "url": "https://www.capitalmuseum.org.cn/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "national-museum-of-china",
+      "name": "中国国家博物馆",
+      "aliases": [
+        "国家博物馆",
+        "国博"
+      ],
+      "category": [
+        "博物馆"
+      ],
+      "tags": [
+        "国家级博物馆",
+        "中华文明",
+        "天安门广场"
+      ],
+      "city": "北京",
+      "district": "东城区",
+      "address": "北京市东城区东长安街16号",
+      "lat": 39.905078,
+      "lng": 116.401632,
+      "period": "现代",
+      "summary": "中国国家博物馆位于天安门广场东侧，是收藏、研究和展示中华文化代表性物证的国家级博物馆。",
+      "timeline": [
+        {
+          "year": "2003",
+          "event": "中国历史博物馆与中国革命博物馆合并组建中国国家博物馆。"
+        },
+        {
+          "year": "2011",
+          "event": "中国国家博物馆改扩建后重新开放。"
+        }
+      ],
+      "highlights": [
+        "“古代中国”等基本陈列适合做通史导览。",
+        "馆址位于天安门广场东侧。",
+        "展陈覆盖考古、历史、艺术等多类文物。"
+      ],
+      "visitTips": [
+        "适合为 AI 导览提供宏观历史背景材料。",
+        "地图 marker 可放在东长安街入口附近。"
+      ],
+      "images": [
+        {
+          "url": "https://diary.bkeel.com/uploads/attractions/national-museum-of-china.jpg",
+          "caption": "中国国家博物馆",
+          "source": "北京市人民政府网站",
+          "sourceUrl": "https://arabic.beijing.gov.cn/consuminginbeijing/onlyinbeijing/conventions/updatesofconventions/202105/t20210519_2392873.html",
+          "license": "教育版演示使用"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：中国国家博物馆",
+          "url": ""
+        },
+        {
+          "title": "中国国家博物馆",
+          "url": "https://www.chnmuseum.cn/"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "military-museum-of-chinese-peoples-revolution",
+      "name": "中国人民革命军事博物馆",
+      "aliases": [
+        "军事博物馆",
+        "军博"
+      ],
+      "category": [
+        "博物馆",
+        "近现代史"
+      ],
+      "tags": [
+        "军事史",
+        "革命史",
+        "复兴路"
+      ],
+      "city": "北京",
+      "district": "海淀区",
+      "address": "北京市海淀区复兴路9号",
+      "lat": 39.907726,
+      "lng": 116.322132,
+      "period": "现代",
+      "summary": "中国人民革命军事博物馆是展示中国军事历史、革命战争和军事文物的重要国家级博物馆。",
+      "timeline": [
+        {
+          "year": "1958",
+          "event": "军事博物馆展览大楼动工兴建。"
+        },
+        {
+          "year": "1959",
+          "event": "军事博物馆展览大楼建成。"
+        }
+      ],
+      "highlights": [
+        "展陈涉及中国革命战争和军事发展历程。",
+        "馆内收藏多类武器装备、文献和艺术品。",
+        "建筑位于复兴路，具有鲜明城市地标属性。"
+      ],
+      "visitTips": [
+        "适合归入近现代史和军事史专题。",
+        "详情页可将武器装备展示与历史展线分开介绍。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "中国人民革命军事博物馆",
+          "source": "百度图片",
+          "searchQuery": "中国人民革命军事博物馆"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：中国人民革命军事博物馆",
+          "url": ""
+        },
+        {
+          "title": "中国人民革命军事博物馆：军博简介",
+          "url": ""
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    },
+    {
+      "id": "beijing-lu-xun-museum",
+      "name": "北京鲁迅博物馆",
+      "aliases": [
+        "北京鲁迅博物馆（北京新文化运动纪念馆）"
+      ],
+      "category": [
+        "博物馆",
+        "名人故居",
+        "近现代史"
+      ],
+      "tags": [
+        "鲁迅",
+        "新文化运动",
+        "人物传记"
+      ],
+      "city": "北京",
+      "district": "西城区",
+      "address": "北京市西城区阜成门内宫门口二条19号",
+      "lat": 39.922284,
+      "lng": 116.356949,
+      "period": "近现代",
+      "summary": "北京鲁迅博物馆以鲁迅生平、著作和相关文物资料为主要展示内容，馆内包含鲁迅旧居。",
+      "timeline": [
+        {
+          "year": "1924",
+          "event": "鲁迅迁居北京阜成门内西三条胡同居住。"
+        },
+        {
+          "year": "1956",
+          "event": "北京鲁迅博物馆建成开放。"
+        }
+      ],
+      "highlights": [
+        "鲁迅旧居是馆区重要历史空间。",
+        "展品涉及鲁迅手稿、著译版本和生平资料。",
+        "适合讲解新文化运动和现代文学史。"
+      ],
+      "visitTips": [
+        "适合近现代人物主题导览。",
+        "AI 讲解应以鲁迅在北京的生活与写作为事实核心。"
+      ],
+      "images": [
+        {
+          "url": "",
+          "caption": "北京鲁迅博物馆",
+          "source": "百度图片",
+          "searchQuery": "北京鲁迅博物馆 鲁迅旧居"
+        }
+      ],
+      "sources": [
+        {
+          "title": "百度百科：北京鲁迅博物馆",
+          "url": ""
+        },
+        {
+          "title": "北京鲁迅博物馆：公开介绍",
+          "url": "https://govt.chinadaily.com.cn/s/202412/06/WS6752c8ac498eec7e1f72978f/beijing-lu-xun-museum.html"
+        }
+      ],
+      "confidence": "seed",
+      "updatedAt": "2026-07-06"
+    }
+  ]
+}

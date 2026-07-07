@@ -1,0 +1,143 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="status">正在加载地点资料...</view>
+
+  <view wx:elif="{{error && !place}}" class="status">
+    <view>{{error}}</view>
+    <button class="btn primary" bindtap="loadPlace">重试</button>
+  </view>
+
+  <view wx:elif="{{place}}">
+    <view class="hero {{place.coverUrl ? '' : 'hero-empty'}}">
+      <image wx:if="{{place.coverUrl}}" class="hero-img" mode="aspectFill" src="{{place.coverUrl}}" />
+      <view wx:else>
+        <view class="hero-title">图片待补充</view>
+        <view class="hero-subtitle">来源字段：百度图片</view>
+      </view>
+    </view>
+
+    <view class="topbar detail-head">
+      <view>
+        <view class="title">{{place.name}}</view>
+        <view class="subtitle">{{place.address}}</view>
+      </view>
+      <button class="favorite-btn {{favorite ? 'active' : ''}}" bindtap="toggleFavorite" aria-label="{{favorite ? '取消收藏' : '收藏'}}">
+        <text class="favorite-icon">{{favorite ? '♥' : '♡'}}</text>
+      </button>
+    </view>
+
+    <view class="tag-wrap">
+      <block wx:for="{{place.category}}" wx:key="*this">
+        <text class="tag">{{item}}</text>
+      </block>
+      <block wx:for="{{place.tags}}" wx:key="*this">
+        <text class="tag muted-tag">{{item}}</text>
+      </block>
+    </view>
+
+    <view class="card">
+      <view class="card-title">历史摘要</view>
+      <view class="body-text">{{place.summary || '资料不足，待补充。'}}</view>
+      <view class="audio-bar">
+        <button class="btn" bindtap="playSummary" loading="{{audio.status === 'loading'}}">播放</button>
+        <button class="btn" bindtap="pauseSummary">暂停</button>
+        <button class="btn" bindtap="resumeSummary">继续</button>
+        <button class="btn" bindtap="stopSummary">停止</button>
+        <text class="audio-state">{{audio.statusText}}</text>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">时间线</view>
+      <block wx:for="{{place.timeline}}" wx:key="year">
+        <view class="timeline-row">
+          <view class="timeline-year">{{item.year}}</view>
+          <view class="timeline-event">{{item.event}}</view>
+        </view>
+      </block>
+      <view wx:if="{{!place.timeline.length}}" class="meta">资料不足，待补充。</view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">看点</view>
+      <block wx:for="{{place.highlights}}" wx:key="*this">
+        <view class="list-line">{{item}}</view>
+      </block>
+      <view wx:if="{{!place.highlights.length}}" class="meta">资料不足，待补充。</view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">游览提示</view>
+      <block wx:for="{{place.visitTips}}" wx:key="*this">
+        <view class="list-line">{{item}}</view>
+      </block>
+      <view wx:if="{{!place.visitTips.length}}" class="meta">资料不足，待补充。</view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">图片资料</view>
+      <block wx:for="{{place.images}}" wx:key="caption">
+        <view class="image-row">
+          <view class="thumb {{item.url ? '' : 'thumb-empty'}}">
+            <image wx:if="{{item.url}}" class="thumb-img" mode="aspectFill" src="{{item.url}}" />
+            <text wx:else>图片待补充</text>
+          </view>
+          <view>
+            <view class="body-text">{{item.caption}}</view>
+            <view class="meta">来源：{{item.source}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="card">
+      <view class="card-title">资料来源</view>
+      <block wx:for="{{place.sources}}" wx:key="title">
+        <view class="source-item">
+          <view class="body-text">{{item.title}}</view>
+          <view wx:if="{{item.url}}" class="meta">{{item.url}}</view>
+        </view>
+      </block>
+    </view>
+
+    <view class="toolbar action-bar">
+      <button class="btn primary" bindtap="openNavigation">导航到这里</button>
+      <button class="btn primary" bindtap="generateGuide" loading="{{generating}}">生成导览</button>
+      <button class="btn" bindtap="openHistory">历史</button>
+    </view>
+
+    <view wx:if="{{error}}" class="status">{{error}}</view>
+
+    <view wx:if="{{story}}" class="guide-card">
+      <view class="card-title">{{story.title}}</view>
+      <view class="story-body">{{story.story}}</view>
+      <view class="audio-bar">
+        <button class="btn" bindtap="playGuide" loading="{{guideAudio.status === 'loading'}}">播放</button>
+        <button class="btn" bindtap="pauseGuide">暂停</button>
+        <button class="btn" bindtap="resumeGuide">继续</button>
+        <button class="btn" bindtap="stopGuide">停止</button>
+        <text class="audio-state">{{guideAudio.statusText}}</text>
+      </view>
+
+      <view class="section-title">使用事实</view>
+      <block wx:for="{{story.factsUsed}}" wx:key="*this">
+        <view class="meta">- {{item}}</view>
+      </block>
+
+      <view class="section-title">导览来源</view>
+      <block wx:for="{{story.sources}}" wx:key="title">
+        <view class="meta">- {{item.title}}{{item.url ? ' · ' + item.url : ''}}</view>
+      </block>
+
+      <view class="disclaimer">{{story.disclaimer}}</view>
+    </view>
+  </view>
+
+  <view class="ai-float" bindtap="openAi">AI</view>
+  <view class="bottom-nav">
+    <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
+    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
+    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
+    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
+  </view>
+</view>

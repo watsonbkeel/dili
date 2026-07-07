@@ -1,0 +1,48 @@
+.favorite-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.favorite-card-head .card-title {
+  min-width: 0;
+  flex: 1;
+}
+
+.favorite-remove {
+  width: 64rpx;
+  height: 64rpx;
+  min-height: 64rpx;
+  padding: 0;
+  border: 1rpx solid #f2b8b5;
+  border-radius: 8rpx;
+  background: #fff8f8;
+  color: #e53935;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.favorite-remove::after {
+  border: 0;
+}
+
+.favorite-icon {
+  font-size: 38rpx;
+  line-height: 1;
+}
+
+.preview {
+  margin: 18rpx 0;
+  color: #344054;
+  font-size: 27rpx;
+  line-height: 1.6;
+}
+
+.heart-active {
+  color: #e53935;
+}

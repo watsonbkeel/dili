@@ -1,0 +1,13 @@
+{
+  "name": "local-history-guide",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WeChat mini program and Node backend for location-based local history storytelling.",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "test": "node --test backend/test/*.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

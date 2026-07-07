@@ -1,0 +1,112 @@
+page {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #f6f4ef;
+}
+
+.start-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f6f4ef;
+}
+
+.start-underlay {
+  position: absolute;
+  inset: 0;
+  padding: calc(env(safe-area-inset-top) + 112rpx) 28rpx calc(env(safe-area-inset-bottom) + 28rpx);
+  box-sizing: border-box;
+  background: #f6f4ef;
+  opacity: 1;
+}
+
+.underlay-title {
+  color: #16202a;
+  font-size: 44rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.underlay-map {
+  height: 430rpx;
+  margin-top: 28rpx;
+  border-radius: 8rpx;
+  background: linear-gradient(135deg, #d8e7e1, #eff1e6);
+  border: 1rpx solid #e4e0d8;
+}
+
+.underlay-card {
+  height: 160rpx;
+  margin-top: 22rpx;
+  border-radius: 8rpx;
+  background: #ffffff;
+  border: 1rpx solid #e4e0d8;
+}
+
+.underlay-card.short {
+  width: 82%;
+}
+
+.cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 1;
+  transition: opacity 1500ms ease;
+}
+
+.start-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.26);
+  opacity: 1;
+  transition: opacity 1300ms ease;
+}
+
+.start-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 48rpx calc(env(safe-area-inset-bottom) + 36rpx);
+  box-sizing: border-box;
+  text-align: center;
+  color: #fff8df;
+  opacity: 1;
+  transition: opacity 700ms ease, transform 900ms ease;
+}
+
+.start-title {
+  font-family: "STKaiti", "KaiTi", "FangSong", serif;
+  font-size: 124rpx;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.1;
+  color: #fff1c2;
+  text-shadow: 0 8rpx 28rpx rgba(0, 0, 0, 0.55);
+}
+
+.start-subtitle {
+  margin-top: 28rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 4rpx 18rpx rgba(0, 0, 0, 0.55);
+}
+
+.start-page.leaving .cover-image {
+  opacity: 0;
+}
+
+.start-page.leaving .start-overlay {
+  opacity: 0;
+}
+
+.start-page.leaving .start-content {
+  opacity: 0;
+  transform: translateY(calc(-50% - 20rpx)) scale(0.96);
+}

@@ -1,0 +1,36 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="status">正在生成导览故事...</view>
+
+  <view wx:elif="{{error}}" class="status">
+    <view>{{error}}</view>
+    <button class="btn primary" bindtap="generate">重试</button>
+  </view>
+
+  <view wx:elif="{{story}}">
+    <view class="topbar">
+      <view>
+        <view class="title">{{story.title}}</view>
+        <view class="subtitle">{{place.title}} · {{place.address || '暂无地址'}}</view>
+      </view>
+    </view>
+
+    <view class="toolbar">
+      <button class="btn primary" bindtap="regenerate" loading="{{loading}}">重新生成</button>
+      <button class="btn" bindtap="openHistory">历史</button>
+    </view>
+
+    <view class="story-body">{{story.story}}</view>
+
+    <view class="card">
+      <view class="card-title">来源提示</view>
+      <block wx:for="{{story.sources}}" wx:key="*this">
+        <view class="meta">- {{item.title || item}}{{item.url ? ' · ' + item.url : ''}}</view>
+      </block>
+      <view wx:if="{{story.factsUsed && story.factsUsed.length}}" class="card-title facts-title">使用事实</view>
+      <block wx:for="{{story.factsUsed}}" wx:key="*this">
+        <view class="meta">- {{item}}</view>
+      </block>
+      <view class="disclaimer">{{story.disclaimer}}</view>
+    </view>
+  </view>
+</view>
