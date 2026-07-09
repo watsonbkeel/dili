@@ -6,6 +6,23 @@
   background: #ffffff;
 }
 
+.mode-switch-btn {
+  min-width: 152rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  padding: 0 18rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #1f6f68;
+  background: #ffffff;
+  color: #1f6f68;
+  font-size: 25rpx;
+  flex-shrink: 0;
+}
+
+.mode-switch-btn::after {
+  border: 0;
+}
+
 .city-row,
 .search-row {
   display: flex;

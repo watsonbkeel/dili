@@ -45,6 +45,36 @@ function buildAssistantMessages({ question, context }) {
   ];
 }
 
+function chatCompletionsUrl(config) {
+  const baseUrl = new URL(config.openaiBaseUrl || 'https://api.bkeel.com');
+  const configuredPath = String(config.openaiChatCompletionsPath || '').trim();
+  if (configuredPath) {
+    baseUrl.pathname = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+    return baseUrl.toString();
+  }
+
+  const normalizedPath = baseUrl.pathname.replace(/\/$/, '');
+  baseUrl.pathname = normalizedPath.endsWith('/v1')
+    ? `${normalizedPath}/chat/completions`
+    : `${normalizedPath}/v1/chat/completions`;
+  return baseUrl.toString();
+}
+
+function extractAnswer(payload) {
+  const content = payload?.choices?.[0]?.message?.content;
+  if (typeof content === 'string') return content.trim();
+  if (Array.isArray(content)) {
+    return content
+      .map((item) => {
+        if (typeof item === 'string') return item;
+        return item.text || item.content || '';
+      })
+      .join('')
+      .trim();
+  }
+  return '';
+}
+
 async function askAssistant({ config, question, context = {}, fetchImpl = fetch }) {
   if (!config.openaiApiKey) {
     return {
@@ -53,36 +83,45 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
     };
   }
 
-  const response = await fetchImpl(`${config.openaiBaseUrl}/chat/completions`, {
-    method: 'POST',
-    signal: AbortSignal.timeout(Number(config.openaiTimeoutMs || 4000)),
-    headers: {
-      Authorization: `Bearer ${config.openaiApiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: config.openaiModel,
-      temperature: 0.4,
-      messages: buildAssistantMessages({ question, context })
-    })
-  });
+  try {
+    const response = await fetchImpl(chatCompletionsUrl(config), {
+      method: 'POST',
+      signal: AbortSignal.timeout(Number(config.openaiTimeoutMs || 4000)),
+      headers: {
+        Authorization: `Bearer ${config.openaiApiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: config.openaiModel,
+        temperature: 0.4,
+        messages: buildAssistantMessages({ question, context })
+      })
+    });
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return {
+        answer: templateAnswer(question, context),
+        source: 'template-fallback'
+      };
+    }
+
+    const payload = await response.json();
+    const answer = extractAnswer(payload);
+    return {
+      answer: answer || templateAnswer(question, context),
+      source: answer ? 'ai' : 'template-fallback'
+    };
+  } catch {
     return {
       answer: templateAnswer(question, context),
       source: 'template-fallback'
     };
   }
-
-  const payload = await response.json();
-  const answer = payload.choices?.[0]?.message?.content;
-  return {
-    answer: answer || templateAnswer(question, context),
-    source: answer ? 'ai' : 'template-fallback'
-  };
 }
 
 module.exports = {
   askAssistant,
+  chatCompletionsUrl,
+  extractAnswer,
   templateAnswer
 };

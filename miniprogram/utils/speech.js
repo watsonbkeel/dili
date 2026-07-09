@@ -1,5 +1,6 @@
 function createSpeechController(page, dataKey) {
   const audio = wx.createInnerAudioContext();
+  let currentRate = 1;
 
   function current() {
     return page.data[dataKey] || {};
@@ -46,6 +47,7 @@ function createSpeechController(page, dataKey) {
           return;
         }
         audio.src = res.filename;
+        audio.playbackRate = currentRate;
         audio.play();
       },
       fail() {
@@ -61,6 +63,11 @@ function createSpeechController(page, dataKey) {
     },
     resume() {
       audio.play();
+    },
+    setRate(rate) {
+      currentRate = Number(rate) || 1;
+      audio.playbackRate = currentRate;
+      setState({ rate: currentRate, statusText: `${currentRate}x 倍速` });
     },
     stop() {
       audio.stop();

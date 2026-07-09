@@ -150,13 +150,24 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
 
       if (req.method === 'POST' && url.pathname === '/api/assistant') {
         const body = await readBody(req);
+        const userId = String(getUserId(req, url, body));
         const result = await askAssistant({
           config,
           fetchImpl,
           question: body.question || '',
           context: body.context || {}
         });
-        sendJson(res, 200, result);
+        const record = await store.addAssistantRecord({
+          userId,
+          question: body.question || '',
+          answer: result.answer || '',
+          source: result.source || '',
+          context: body.context || {}
+        });
+        sendJson(res, 200, {
+          ...result,
+          recordId: record.id
+        });
         return;
       }
 

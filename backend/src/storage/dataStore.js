@@ -4,7 +4,8 @@ const crypto = require('node:crypto');
 
 const INITIAL_DATA = {
   storyCache: {},
-  history: []
+  history: [],
+  assistantRecords: []
 };
 
 class DataStore {
@@ -64,6 +65,28 @@ class DataStore {
     data.history = data.history.slice(0, 500);
     await this.write(data);
     return record;
+  }
+
+  async addAssistantRecord({ userId, question, answer, source, context }) {
+    const data = await this.read();
+    const record = {
+      id: crypto.randomUUID(),
+      userId,
+      question: String(question || ''),
+      answer: String(answer || ''),
+      source: source || 'unknown',
+      context: context || {},
+      createdAt: new Date().toISOString()
+    };
+    data.assistantRecords.unshift(record);
+    data.assistantRecords = data.assistantRecords.slice(0, 500);
+    await this.write(data);
+    return record;
+  }
+
+  async listAssistantRecords(userId) {
+    const data = await this.read();
+    return data.assistantRecords.filter((record) => record.userId === userId);
   }
 
   async listHistory(userId) {

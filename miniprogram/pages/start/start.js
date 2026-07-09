@@ -1,3 +1,5 @@
+const userMode = require('../../utils/userMode');
+
 Page({
   data: {
     leaving: false,
@@ -12,8 +14,9 @@ Page({
     });
 
     setTimeout(() => {
+      const savedMode = userMode.getMode();
       wx.redirectTo({
-        url: '/pages/home/home'
+        url: savedMode ? userMode.homeUrlForMode(savedMode) : '/pages/mode-select/mode-select'
       });
     }, 1500);
   }

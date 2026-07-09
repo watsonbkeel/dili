@@ -1,0 +1,113 @@
+<view class="mh-page">
+  <view class="mh-head">
+    <view class="mh-title">轻松出行导览</view>
+    <button class="mh-mode-switch" bindtap="changeMode">切换模式</button>
+  </view>
+  <view class="mh-status">
+    <text>✓</text>
+    <view>已开启：少步行路线 · 少台阶提示 · 休息点提醒</view>
+    <text>›</text>
+  </view>
+
+  <view class="mh-feature-grid">
+    <view class="mh-feature green" bindtap="openShortRoute">
+      <view class="mh-feature-icon">♟</view>
+      <view class="mh-feature-title">找少步行路线</view>
+      <view class="mh-feature-desc">优先推荐少步行路线</view>
+      <view class="mh-feature-arrow">›</view>
+    </view>
+    <view class="mh-feature blue">
+      <view class="mh-feature-icon">▣</view>
+      <view class="mh-feature-title">查看无障碍景点</view>
+      <view class="mh-feature-desc">适合到达和游览</view>
+      <view class="mh-feature-arrow">›</view>
+    </view>
+    <view class="mh-feature purple" bindtap="openAi">
+      <view class="mh-feature-icon">AI</view>
+      <view class="mh-feature-title">问 AI 规划轻松行程</view>
+      <view class="mh-feature-desc">AI 帮你规划不累行程</view>
+      <view class="mh-feature-arrow">›</view>
+    </view>
+  </view>
+
+  <view class="location-card">
+    <view>
+      <view class="location-main">当前位置：天安门东地铁站附近</view>
+      <view class="location-sub">精度约 30 米｜更新时间：09:40</view>
+    </view>
+    <view class="refresh" bindtap="refreshLocation">刷新定位</view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-head">
+      <view class="section-title">附近无障碍友好景点</view>
+      <view class="section-more">更多 ›</view>
+    </view>
+    <view wx:if="{{loading}}" class="mh-meta">正在加载...</view>
+    <view wx:elif="{{error}}" class="mh-meta">{{error}}</view>
+    <view wx:elif="{{featured}}" class="friendly-card">
+      <image wx:if="{{featured.coverUrl}}" class="friendly-img" src="{{featured.coverUrl}}" mode="aspectFill" />
+      <view class="friendly-main">
+        <view class="friendly-title">{{featured.name}}</view>
+        <view class="mh-meta">{{featured.distanceText}}</view>
+        <view class="mh-meta">路线强度：<text class="orange">{{featured.intensity}}</text></view>
+        <view class="chip-wrap">
+          <text class="chip">少步行</text>
+          <text class="chip blue-chip">有休息点</text>
+          <text class="chip purple-chip">适合老人</text>
+          <text class="chip orange-chip">轮椅部分友好</text>
+          <text class="chip blue-chip">近停车点</text>
+        </view>
+        <view class="friendly-actions">
+          <button class="outline-btn" bindtap="openPlace" data-id="{{featured.id}}">查看无障碍信息</button>
+          <button class="solid-btn" bindtap="openNavigation">导航到这里</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card">
+    <view class="section-head">
+      <view class="section-title">少步行路线推荐</view>
+      <view class="section-more">更多路线 ›</view>
+    </view>
+    <view class="route-lite">
+      <view><text class="recommend">推荐</text> 天安门东站 → 景山公园（南门） <text class="chip">少步行</text></view>
+      <view class="route-stats">
+        <view>总距离<text>1.2 公里</text></view>
+        <view>预计步行<text>约 650 米</text></view>
+        <view>路线强度<text>轻松</text></view>
+      </view>
+      <view class="mh-meta">特点：台阶少 · 坡度平缓 · 有休息点</view>
+    </view>
+  </view>
+
+  <view class="two-col">
+    <view class="info-card">
+      <view class="section-title">休息点提示</view>
+      <view class="mh-meta">附近 3 个休息点，最近 120 米</view>
+      <view class="small-line">1. 天安门广场西侧休息区 120 米</view>
+      <view class="small-line">2. 国家博物馆东侧休息区 300 米</view>
+    </view>
+    <view class="info-card">
+      <view class="section-title">交通提示</view>
+      <view class="mh-meta">优先推荐无障碍交通方式</view>
+      <view class="small-line">地铁 1 号线（无障碍电梯）</view>
+      <view class="small-line">无障碍出租车：附近约 3 分钟</view>
+    </view>
+  </view>
+
+  <view class="risk-card">
+    <view class="risk-title">出行风险提示</view>
+    <view>部分路段在雨雪天气可能湿滑；景区人流量较大时，建议避开高峰时段。</view>
+  </view>
+
+  <view class="ai-float" bindtap="openAi">AI</view>
+  <view class="bottom-nav">
+    <view class="nav-item active" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
+    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
+    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
+    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
+  </view>
+</view>

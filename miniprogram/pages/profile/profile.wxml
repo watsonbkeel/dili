@@ -27,6 +27,13 @@
 
   <view class="card">
     <view class="card-title">设置</view>
+    <view class="mode-setting" bindtap="changeMode">
+      <view>
+        <view class="mode-title">当前使用方式</view>
+        <view class="meta">{{currentModeLabel}}</view>
+      </view>
+      <view class="mode-action">重新选择</view>
+    </view>
     <view class="list-line" bindtap="openHistory">浏览历史</view>
     <view class="list-line">隐私说明：位置仅用于附近景点推荐，语音播报不采集用户声音。</view>
     <view class="list-line">关于产品：北京历史旅行导览第一版。</view>

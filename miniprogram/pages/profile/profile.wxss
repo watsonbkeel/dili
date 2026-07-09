@@ -37,6 +37,35 @@
   font-weight: 800;
 }
 
+.mode-setting {
+  min-height: 92rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #ece8df;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.mode-title {
+  color: #18212f;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.mode-action {
+  min-width: 136rpx;
+  height: 60rpx;
+  border-radius: 8rpx;
+  background: #edf4f2;
+  color: #1f6f68;
+  font-size: 25rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .list-line {
   padding: 20rpx 0;
   border-bottom: 1rpx solid #ece8df;

@@ -24,6 +24,7 @@ async function startTestServer() {
   const { port } = server.address();
   return {
     baseUrl: `http://127.0.0.1:${port}`,
+    store,
     close: () => new Promise((resolve) => server.close(resolve))
   };
 }
@@ -146,7 +147,14 @@ test('POST /api/assistant returns template answer without AI key', async (t) => 
   const payload = await res.json();
 
   assert.equal(res.status, 200);
+  assert.ok(payload.recordId);
   assert.match(payload.answer, /天安门|故宫|路线/);
+
+  const records = await server.store.listAssistantRecords('anonymous');
+  assert.equal(records.length, 1);
+  assert.equal(records[0].question, '推荐一条适合亲子游的路线');
+  assert.match(records[0].answer, /天安门|故宫|路线/);
+  assert.equal(records[0].source, 'template');
 });
 
 test('story and history endpoints work together', async (t) => {

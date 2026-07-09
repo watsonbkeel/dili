@@ -1,10 +1,13 @@
-<view class="page">
+<view class="page route-page {{mode == 'lowVision' ? 'route-low-vision' : ''}} {{mode == 'mobility' ? 'route-mobility' : ''}}">
   <view class="topbar">
     <view>
-      <view class="title">推荐路线</view>
-      <view class="subtitle">按北京核心历史文化区域规划，适合现场探索。</view>
+      <view class="title">{{pageTitle}}</view>
+      <view class="subtitle">{{pageSubtitle}}</view>
     </view>
   </view>
+
+  <view wx:if="{{mode == 'mobility'}}" class="route-mode-note">已开启：少步行路线 · 少台阶提示 · 休息点提醒</view>
+  <view wx:elif="{{mode == 'lowVision'}}" class="route-mode-note">已开启：大字模式 · 高对比度 · 语音优先</view>
 
   <view wx:if="{{loading}}" class="status">正在加载推荐路线...</view>
   <view wx:elif="{{error}}" class="status">

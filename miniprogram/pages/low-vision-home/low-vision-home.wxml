@@ -1,0 +1,36 @@
+<view class="lv-page">
+  <view class="lv-mode-switch" bindtap="changeMode">切换使用方式</view>
+  <view class="lv-title">大字语音导览</view>
+  <view class="lv-status">已开启：大字模式 · 高对比度 · 语音优先</view>
+
+  <view class="lv-actions">
+    <view class="lv-action" bindtap="listenNearby">听附近历史 <text>›</text></view>
+    <view class="lv-action" bindtap="openNearest">找最近景点 <text>›</text></view>
+    <view class="lv-action" bindtap="openAi">问 AI 助手 <text>›</text></view>
+  </view>
+
+  <view class="lv-listen-panel">
+    <view class="lv-listen-title">语音播放状态</view>
+    <view class="lv-listen-state">{{audio.statusText}}</view>
+    <view class="lv-listen-stop" bindtap="stopListening">停止播放</view>
+  </view>
+
+  <view class="lv-section-title">附近景点推荐</view>
+  <view wx:if="{{loading}}" class="lv-card">正在加载附近景点</view>
+  <view wx:elif="{{error}}" class="lv-card">{{error}}</view>
+  <view wx:elif="{{!places.length}}" class="lv-card">暂无景点推荐</view>
+
+  <block wx:else>
+    <block wx:for="{{visiblePlaces}}" wx:key="id">
+      <view class="lv-place">
+        <view class="lv-place-name" bindtap="openPlace" data-index="{{index}}">{{item.name}}</view>
+        <view class="lv-distance">{{item.distanceText}}</view>
+        <view class="lv-summary">{{item.briefSummary}}</view>
+        <view class="lv-place-actions">
+          <view class="lv-big-btn" bindtap="playIntro" data-index="{{index}}">))) 听介绍</view>
+          <view class="lv-big-btn" bindtap="openNavigation" data-index="{{index}}">▲ 导航到这里</view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

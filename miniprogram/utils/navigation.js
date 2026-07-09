@@ -1,3 +1,5 @@
+const userMode = require('./userMode');
+
 const tabPages = {
   home: '/pages/home/home',
   map: '/pages/map/map',
@@ -8,7 +10,7 @@ const tabPages = {
 
 function goTab(event) {
   const key = event.currentTarget.dataset.tab;
-  const url = tabPages[key];
+  const url = key === 'home' ? userMode.homeUrlForMode() : tabPages[key];
   if (!url) return;
   const pages = getCurrentPages();
   const current = pages[pages.length - 1];

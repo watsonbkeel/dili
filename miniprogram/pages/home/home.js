@@ -130,6 +130,10 @@ Page({
     nav.openAi({ type: 'city', city: this.data.city });
   },
 
+  changeMode() {
+    wx.navigateTo({ url: '/pages/mode-select/mode-select?force=1' });
+  },
+
   goTab: nav.goTab,
 
   switchCity() {

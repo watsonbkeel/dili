@@ -1,6 +1,9 @@
 {
   "pages": [
+    "pages/mode-select/mode-select",
     "pages/start/start",
+    "pages/low-vision-home/low-vision-home",
+    "pages/mobility-home/mobility-home",
     "pages/home/home",
     "pages/place/place",
     "pages/map/map",
@@ -25,5 +28,11 @@
   "requiredPrivateInfos": [
     "getLocation"
   ],
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.5",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
   "sitemapLocation": "sitemap.json"
 }

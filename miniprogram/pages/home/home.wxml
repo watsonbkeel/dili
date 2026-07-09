@@ -4,6 +4,7 @@
       <view class="title">旅行 · 历史 · 发现</view>
       <view class="subtitle">探索北京足迹，了解历史故事，让每一次旅行更有深度。</view>
     </view>
+    <button class="mode-switch-btn" bindtap="changeMode">切换模式</button>
   </view>
 
   <view class="search-panel">

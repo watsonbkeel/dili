@@ -76,3 +76,96 @@
 .toolbar {
   margin-top: 22rpx;
 }
+
+.route-mode-note {
+  margin-bottom: 20rpx;
+  padding: 20rpx 22rpx;
+  border-radius: 8rpx;
+  background: #edf4f2;
+  color: #1f6f68;
+  font-size: 26rpx;
+  line-height: 1.45;
+}
+
+.route-low-vision {
+  background: #ffffff;
+  color: #000000;
+}
+
+.route-low-vision .title {
+  color: #000000;
+  font-size: 56rpx;
+  font-weight: 900;
+}
+
+.route-low-vision .subtitle,
+.route-low-vision .route-desc,
+.route-low-vision .route-meta,
+.route-low-vision .meta {
+  color: #000000;
+  font-size: 34rpx;
+  line-height: 1.45;
+}
+
+.route-low-vision .route-mode-note,
+.route-low-vision .route-card {
+  border: 4rpx solid #000000;
+  background: #ffffff;
+  color: #000000;
+}
+
+.route-low-vision .route-hero {
+  min-height: 190rpx;
+  border: 4rpx solid #000000;
+  background: #000000;
+  color: #ffffff;
+}
+
+.route-low-vision .route-title {
+  font-size: 44rpx;
+}
+
+.route-low-vision .stop-row {
+  min-height: 104rpx;
+  border-bottom: 3rpx solid #000000;
+}
+
+.route-low-vision .stop-name {
+  color: #000000;
+  font-size: 36rpx;
+}
+
+.route-low-vision .btn {
+  min-height: 86rpx;
+  border: 4rpx solid #000000;
+  color: #000000;
+  background: #ffffff;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.route-low-vision .btn.primary {
+  color: #ffffff;
+  background: #000000;
+}
+
+.route-mobility .route-mode-note {
+  background: #e5f7ef;
+  border: 1rpx solid #c5ead9;
+  color: #127653;
+}
+
+.route-mobility .route-card {
+  border-color: #e2efe7;
+  border-radius: 18rpx;
+  box-shadow: 0 10rpx 28rpx rgba(41, 86, 68, 0.08);
+}
+
+.route-mobility .route-hero {
+  background: #edf8f2;
+  color: #0f6e52;
+}
+
+.route-mobility .stop-order {
+  background: #0f8b66;
+}

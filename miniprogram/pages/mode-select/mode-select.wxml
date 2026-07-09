@@ -1,0 +1,51 @@
+<view class="mode-page">
+  <view class="mode-brand">
+    <view class="brand-icon">亭</view>
+    <view class="brand-name">历史旅行导览</view>
+  </view>
+
+  <view class="mode-title">请选择适合你的使用方式</view>
+  <view class="mode-subtitle">我们会根据你的需要调整字号、对比度、语音和路线推荐</view>
+
+  <view class="mode-card simple" bindtap="selectMode" data-mode="normal">
+    <view class="simple-icon">♙</view>
+    <view class="simple-main">
+      <view class="simple-title">普通用户</view>
+      <view class="simple-desc">标准字号 地图发现 历史讲解 路线推荐</view>
+    </view>
+    <view class="arrow">›</view>
+  </view>
+
+  <view class="vision-card" bindtap="selectMode" data-mode="lowVision">
+    <view class="vision-head">
+      <view class="vision-icon">◉</view>
+      <view class="vision-title">视力障碍 /<br />低视力用户</view>
+    </view>
+    <view class="vision-features">
+      <view><text class="feature-big">AA</text><text>大字显示</text></view>
+      <view><text class="feature-big">◐</text><text>高对比度</text></view>
+      <view><text class="feature-big">◔</text><text>语音朗读</text></view>
+      <view><text class="feature-big">□</text><text>更清楚的按钮</text></view>
+    </view>
+    <view class="vision-demo">
+      <view class="demo-label">示例</view>
+      <view class="demo-place">故宫博物院</view>
+      <view class="demo-actions">
+        <view class="demo-btn light">播放讲解</view>
+        <view class="demo-btn dark">导航到这里</view>
+      </view>
+    </view>
+    <view class="vision-choose">选择这个模式 <text>›</text></view>
+  </view>
+
+  <view class="mode-card simple" bindtap="selectMode" data-mode="mobility">
+    <view class="simple-icon">♿</view>
+    <view class="simple-main">
+      <view class="simple-title">行动不便用户</view>
+      <view class="simple-desc">少步行路线 少台阶提示 休息点提醒 适合老人和轮椅用户</view>
+    </view>
+    <view class="arrow">›</view>
+  </view>
+
+  <view class="mode-footer">让每个人都能轻松看见、听见、走近城市历史</view>
+</view>
