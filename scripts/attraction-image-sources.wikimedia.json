@@ -1,0 +1,142 @@
+[
+  {
+    "id": "beijing-guozijian",
+    "name": "国子监",
+    "commonsTitle": "File:国子监辟雍殿.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "黄雨橙"
+  },
+  {
+    "id": "beijing-confucius-temple",
+    "name": "孔庙",
+    "commonsTitle": "File:Peking Konfuzius Tempel -20071022-RM-091826.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "Ermell"
+  },
+  {
+    "id": "yonghe-temple",
+    "name": "雍和宫",
+    "commonsTitle": "File:Yonghe Gong Lama Temple.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "Jesse"
+  },
+  {
+    "id": "zhengyangmen",
+    "name": "正阳门",
+    "commonsTitle": "File:Zhengyangmen gatehouse.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "TarnishedPath"
+  },
+  {
+    "id": "lugou-bridge",
+    "name": "卢沟桥",
+    "commonsTitle": "File:Marco Polo bridge Beijing.jpg",
+    "expectedLicense": "CC BY-SA 3.0",
+    "expectedAuthor": "Naplee12"
+  },
+  {
+    "id": "beijing-ancient-observatory",
+    "name": "北京古观象台",
+    "commonsTitle": "File:Beijing Ancient Observatory 91060.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "G41rn8"
+  },
+  {
+    "id": "badaling-great-wall",
+    "name": "八达岭长城",
+    "commonsTitle": "File:Badaling China Great-Wall-of-China-01.jpg",
+    "expectedLicense": "CC BY-SA 3.0",
+    "expectedAuthor": "CEphoto, Uwe Aranas"
+  },
+  {
+    "id": "ming-tombs",
+    "name": "明十三陵",
+    "commonsTitle": "File:Ming Tombs Sacred Way (9863969363).jpg",
+    "expectedLicense": "CC0",
+    "expectedAuthor": "Gary Todd"
+  },
+  {
+    "id": "zhoukoudian-peking-man-site",
+    "name": "周口店北京人遗址",
+    "commonsTitle": "File:Zhoukoudian Site Entrance.JPG",
+    "expectedLicense": "CC BY-SA 3.0",
+    "expectedAuthor": "Siyuwj"
+  },
+  {
+    "id": "xiangshan-park",
+    "name": "香山公园",
+    "commonsTitle": "File:北京，香山红叶 - panoramio.jpg",
+    "expectedLicense": "CC BY-SA 3.0",
+    "expectedAuthor": "zengsx"
+  },
+  {
+    "id": "dashilar",
+    "name": "大栅栏",
+    "commonsTitle": "File:大栅栏 - panoramio.jpg",
+    "expectedLicense": "CC BY 3.0",
+    "expectedAuthor": "wuqiang_beijing"
+  },
+  {
+    "id": "liulichang-cultural-street",
+    "name": "琉璃厂文化街",
+    "commonsTitle": "File:Beijing-Liulichang Dongjie-02-gje.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "Gerd Eichmann"
+  },
+  {
+    "id": "beijing-bell-and-drum-towers",
+    "name": "北京钟鼓楼",
+    "commonsTitle": "File:Beijing Drum Tower.jpg",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "Toadspike"
+  },
+  {
+    "id": "miaoying-temple-white-stupa",
+    "name": "白塔寺",
+    "commonsTitle": "File:妙应寺白塔 - Miaoying Temple White Pagoda (8003103598).jpg",
+    "expectedLicense": "CC BY-SA 2.0",
+    "expectedAuthor": "Nikolaj Potanin"
+  },
+  {
+    "id": "fayuan-temple",
+    "name": "法源寺",
+    "commonsTitle": "File:法源寺 (唐 悯忠寺址) 悯忠阁 - panoramio.jpg",
+    "expectedLicense": "CC BY-SA 3.0",
+    "expectedAuthor": "mayanming"
+  },
+  {
+    "id": "tanzhe-temple",
+    "name": "潭柘寺",
+    "commonsTitle": "File:Tanzhe Temple .pic.jpg",
+    "expectedLicense": "CC0",
+    "expectedAuthor": "Kikolipu"
+  },
+  {
+    "id": "jietai-temple",
+    "name": "戒台寺",
+    "commonsTitle": "File:Entrance to Jietai Temple (20150117133227).JPG",
+    "expectedLicense": "CC BY-SA 4.0",
+    "expectedAuthor": "N509FZ"
+  },
+  {
+    "id": "capital-museum",
+    "name": "首都博物馆",
+    "commonsTitle": "File:Capital Museum in Beijing.jpg",
+    "expectedLicense": "CC BY-SA 3.0",
+    "expectedAuthor": "PENG Yanan"
+  },
+  {
+    "id": "military-museum-of-chinese-peoples-revolution",
+    "name": "中国人民革命军事博物馆",
+    "commonsTitle": "File:Beijing Military Museum Main Hall.jpg",
+    "expectedLicense": "Public domain",
+    "expectedAuthor": "Max Smith"
+  },
+  {
+    "id": "beijing-lu-xun-museum",
+    "name": "北京鲁迅博物馆",
+    "commonsTitle": "File:Beijing Lu Xun Museum 2.jpg",
+    "expectedLicense": "CC0",
+    "expectedAuthor": "EditQ"
+  }
+]

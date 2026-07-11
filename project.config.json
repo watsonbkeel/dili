@@ -19,7 +19,7 @@
     "minifyWXSS": true,
     "localPlugins": false,
     "disableUseStrict": false,
-    "condition": false,
+    "condition": true,
     "swc": false,
     "disableSWC": true
   },

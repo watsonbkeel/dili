@@ -2,9 +2,8 @@ const userMode = require('./userMode');
 
 const tabPages = {
   home: '/pages/home/home',
-  map: '/pages/map/map',
+  camera: '/pages/camera/camera',
   routes: '/pages/routes/routes',
-  favorites: '/pages/favorites/favorites',
   profile: '/pages/profile/profile'
 };
 
@@ -21,6 +20,10 @@ function goTab(event) {
 function openAi(context = {}) {
   wx.setStorageSync('aiAssistantContext', context);
   wx.navigateTo({ url: '/pages/assistant/assistant' });
+}
+
+function openModeSelect() {
+  wx.redirectTo({ url: '/pages/mode-select/mode-select?force=1' });
 }
 
 function openPlace(id) {
@@ -48,6 +51,7 @@ module.exports = {
   goTab,
   openAi,
   openLocation,
+  openModeSelect,
   openPlace,
   tabPages
 };

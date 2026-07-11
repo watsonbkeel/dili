@@ -1,50 +1,55 @@
-<view class="page">
+<view class="page profile-page">
   <view class="topbar">
     <view>
       <view class="title">我的</view>
-      <view class="subtitle">浏览历史、收藏与隐私说明。</view>
+      <view class="subtitle">管理资料、收藏和模式设置。</view>
     </view>
   </view>
 
-  <view class="card profile-card">
-    <view class="avatar">旅</view>
-    <view>
-      <view class="card-title">本地访客</view>
-      <view class="meta">{{userId}}</view>
+  <view class="profile-card">
+    <view class="avatar">
+      <image wx:if="{{profile.avatar}}" class="avatar-img" src="{{profile.avatar}}" mode="aspectFill" />
+      <text wx:else>{{profile.avatarText}}</text>
     </view>
+    <view class="profile-main">
+      <view class="profile-name">{{profile.nickname}}</view>
+      <view class="profile-meta">{{profile.city}} · {{currentModeLabel}}</view>
+      <view class="pref-row">
+        <block wx:for="{{profile.preferences}}" wx:key="*this">
+          <text class="tag">{{item}}</text>
+        </block>
+      </view>
+    </view>
+    <button class="edit-btn" bindtap="editProfile">编辑</button>
   </view>
 
   <view class="stats">
-    <view class="stat-card">
+    <view class="stat-card" bindtap="openFavorites">
       <view class="stat-num">{{favoriteCount}}</view>
-      <view class="meta">收藏</view>
+      <view class="meta">收藏地点</view>
     </view>
     <view class="stat-card" bindtap="openHistory">
       <view class="stat-num">{{historyCount}}</view>
-      <view class="meta">历史记录</view>
+      <view class="meta">浏览历史</view>
     </view>
   </view>
 
-  <view class="card">
-    <view class="card-title">设置</view>
-    <view class="mode-setting" bindtap="changeMode">
-      <view>
-        <view class="mode-title">当前使用方式</view>
-        <view class="meta">{{currentModeLabel}}</view>
-      </view>
-      <view class="mode-action">重新选择</view>
-    </view>
-    <view class="list-line" bindtap="openHistory">浏览历史</view>
-    <view class="list-line">隐私说明：位置仅用于附近景点推荐，语音播报不采集用户声音。</view>
-    <view class="list-line">关于产品：北京历史旅行导览第一版。</view>
+  <view class="setting-card">
+    <view class="card-title">功能与设置</view>
+    <view class="setting-line" bindtap="changeMode"><text>模式设置</text><text>{{currentModeLabel}} ›</text></view>
+    <view class="setting-line" bindtap="openFavorites"><text>我的收藏</text><text>›</text></view>
   </view>
 
-  <view class="ai-float" bindtap="openAi">AI</view>
+  <view class="setting-card">
+    <view class="card-title">通用设置</view>
+    <view class="setting-line" bindtap="openAccessibility"><text>无障碍出行支持</text><text>开启 ›</text></view>
+    <view class="privacy-note">位置仅用于附近景点推荐，语音播报不采集用户声音。</view>
+  </view>
+
   <view class="bottom-nav">
     <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="camera" bindtap="goTab"><view class="nav-icon">◉</view><view>拍照</view></view>
     <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
     <view class="nav-item active" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
   </view>
 </view>

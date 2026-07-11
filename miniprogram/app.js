@@ -1,7 +1,7 @@
 App({
   globalData: {
-    apiBaseUrl: 'http://175.178.194.44:3000',
-    assetBaseUrl: 'https://diary.bkeel.com/uploads/attractions'
+    apiBaseUrl: 'https://dili.bkeel.com',
+    assetBaseUrl: 'https://dili.bkeel.com/assets'
   },
 
   onLaunch() {

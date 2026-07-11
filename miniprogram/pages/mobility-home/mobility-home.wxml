@@ -3,111 +3,113 @@
     <view class="mh-title">轻松出行导览</view>
     <button class="mh-mode-switch" bindtap="changeMode">切换模式</button>
   </view>
+
   <view class="mh-status">
-    <text>✓</text>
-    <view>已开启：少步行路线 · 少台阶提示 · 休息点提醒</view>
-    <text>›</text>
+    <text class="mh-status-icon">✓</text>
+    <view>已开启少步行与无障碍信息优先</view>
   </view>
 
   <view class="mh-feature-grid">
     <view class="mh-feature green" bindtap="openShortRoute">
-      <view class="mh-feature-icon">♟</view>
+      <view class="mh-feature-icon">少</view>
       <view class="mh-feature-title">找少步行路线</view>
-      <view class="mh-feature-desc">优先推荐少步行路线</view>
-      <view class="mh-feature-arrow">›</view>
+      <view class="mh-feature-desc">附近与步行时长综合排序</view>
     </view>
-    <view class="mh-feature blue">
-      <view class="mh-feature-icon">▣</view>
-      <view class="mh-feature-title">查看无障碍景点</view>
-      <view class="mh-feature-desc">适合到达和游览</view>
-      <view class="mh-feature-arrow">›</view>
+    <view class="mh-feature blue" bindtap="openAccessiblePlaces">
+      <view class="mh-feature-icon">♿</view>
+      <view class="mh-feature-title">找无障碍景点</view>
+      <view class="mh-feature-desc">优先完整无障碍通行</view>
     </view>
-    <view class="mh-feature purple" bindtap="openAi">
+    <view class="mh-feature neutral" bindtap="openAi">
       <view class="mh-feature-icon">AI</view>
-      <view class="mh-feature-title">问 AI 规划轻松行程</view>
-      <view class="mh-feature-desc">AI 帮你规划不累行程</view>
-      <view class="mh-feature-arrow">›</view>
+      <view class="mh-feature-title">规划轻松行程</view>
+      <view class="mh-feature-desc">按你的需要生成路线</view>
     </view>
   </view>
 
   <view class="location-card">
-    <view>
-      <view class="location-main">当前位置：天安门东地铁站附近</view>
-      <view class="location-sub">精度约 30 米｜更新时间：09:40</view>
+    <view class="location-copy">
+      <view class="location-main">当前位置：{{locationLabel}}</view>
+      <view class="location-sub">{{locationSourceText}}｜更新于 {{locationUpdatedText}}</view>
     </view>
-    <view class="refresh" bindtap="refreshLocation">刷新定位</view>
+    <button class="refresh" bindtap="refreshLocation" loading="{{locating}}" disabled="{{locating}}">{{locating ? '定位中' : '刷新定位'}}</button>
   </view>
 
-  <view class="section-card">
+  <view wx:if="{{loading}}" class="mh-state">正在根据位置整理景点...</view>
+  <view wx:elif="{{error}}" class="mh-state error-state">
+    <view>{{error}}</view>
+    <button class="retry-btn" bindtap="refreshLocation">重新定位加载</button>
+  </view>
+
+  <view wx:else id="accessible-places" class="place-section">
     <view class="section-head">
-      <view class="section-title">附近无障碍友好景点</view>
-      <view class="section-more">更多 ›</view>
+      <view>
+        <view class="section-title">无障碍友好景点</view>
+        <view class="section-sub">按无障碍通行程度和距离排序</view>
+      </view>
+      <button class="section-more" bindtap="openAccessiblePlaces">{{showAccessiblePlaces ? '收起' : '查看更多'}}</button>
     </view>
-    <view wx:if="{{loading}}" class="mh-meta">正在加载...</view>
-    <view wx:elif="{{error}}" class="mh-meta">{{error}}</view>
-    <view wx:elif="{{featured}}" class="friendly-card">
-      <image wx:if="{{featured.coverUrl}}" class="friendly-img" src="{{featured.coverUrl}}" mode="aspectFill" />
-      <view class="friendly-main">
-        <view class="friendly-title">{{featured.name}}</view>
-        <view class="mh-meta">{{featured.distanceText}}</view>
-        <view class="mh-meta">路线强度：<text class="orange">{{featured.intensity}}</text></view>
-        <view class="chip-wrap">
-          <text class="chip">少步行</text>
-          <text class="chip blue-chip">有休息点</text>
-          <text class="chip purple-chip">适合老人</text>
-          <text class="chip orange-chip">轮椅部分友好</text>
-          <text class="chip blue-chip">近停车点</text>
-        </view>
-        <view class="friendly-actions">
-          <button class="outline-btn" bindtap="openPlace" data-id="{{featured.id}}">查看无障碍信息</button>
-          <button class="solid-btn" bindtap="openNavigation">导航到这里</button>
+
+    <view wx:if="{{!visibleAccessiblePlaces.length}}" class="mh-state">附近暂无已确认可使用轮椅游览的景点</view>
+    <view class="place-list">
+      <view class="place-card" wx:for="{{visibleAccessiblePlaces}}" wx:key="id">
+        <image wx:if="{{item.coverUrl}}" class="place-image" src="{{item.coverUrl}}" mode="aspectFill" />
+        <view class="place-main">
+          <view class="place-title-row">
+            <view class="place-name">{{item.name}}</view>
+            <text class="access-badge {{item.accessibilityTone}}">{{item.accessibilityLabel}}</text>
+          </view>
+          <view class="place-meta">{{item.distanceText}} · {{item.walkingTimeText}}</view>
+          <view class="place-summary">{{item.accessibilitySummary}}</view>
+          <view class="place-actions">
+            <button class="outline-btn" bindtap="openPlace" data-id="{{item.id}}">查看无障碍信息</button>
+            <button class="solid-btn" bindtap="openNavigation" data-id="{{item.id}}">导航到这里</button>
+          </view>
         </view>
       </view>
     </view>
   </view>
 
-  <view class="section-card">
+  <view wx:if="{{!loading && !error}}" id="short-routes" class="place-section">
     <view class="section-head">
-      <view class="section-title">少步行路线推荐</view>
-      <view class="section-more">更多路线 ›</view>
-    </view>
-    <view class="route-lite">
-      <view><text class="recommend">推荐</text> 天安门东站 → 景山公园（南门） <text class="chip">少步行</text></view>
-      <view class="route-stats">
-        <view>总距离<text>1.2 公里</text></view>
-        <view>预计步行<text>约 650 米</text></view>
-        <view>路线强度<text>轻松</text></view>
+      <view>
+        <view class="section-title">少步行景点推荐</view>
+        <view class="section-sub">综合当前位置距离与景区步行时长</view>
       </view>
-      <view class="mh-meta">特点：台阶少 · 坡度平缓 · 有休息点</view>
+      <button class="section-more" bindtap="openShortRoute">{{showShortWalkPlaces ? '收起' : '查看推荐'}}</button>
+    </view>
+
+    <view wx:if="{{!visibleShortWalkPlaces.length}}" class="mh-state">暂无可推荐的少步行景点</view>
+    <view class="place-list">
+      <view class="place-card" wx:for="{{visibleShortWalkPlaces}}" wx:key="id">
+        <image wx:if="{{item.coverUrl}}" class="place-image" src="{{item.coverUrl}}" mode="aspectFill" />
+        <view class="place-main">
+          <view class="place-title-row">
+            <view class="place-name">{{item.name}}</view>
+            <text class="recommend-badge">推荐</text>
+          </view>
+          <view class="place-meta">{{item.distanceText}} · {{item.walkingTimeText}}</view>
+          <view class="place-summary">{{item.summary}}</view>
+          <view class="access-line">{{item.accessibilityLabel}}</view>
+          <view class="place-actions">
+            <button class="outline-btn" bindtap="openPlace" data-id="{{item.id}}">查看景点详情</button>
+            <button class="solid-btn" bindtap="openNavigation" data-id="{{item.id}}">导航到这里</button>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 
-  <view class="two-col">
-    <view class="info-card">
-      <view class="section-title">休息点提示</view>
-      <view class="mh-meta">附近 3 个休息点，最近 120 米</view>
-      <view class="small-line">1. 天安门广场西侧休息区 120 米</view>
-      <view class="small-line">2. 国家博物馆东侧休息区 300 米</view>
-    </view>
-    <view class="info-card">
-      <view class="section-title">交通提示</view>
-      <view class="mh-meta">优先推荐无障碍交通方式</view>
-      <view class="small-line">地铁 1 号线（无障碍电梯）</view>
-      <view class="small-line">无障碍出租车：附近约 3 分钟</view>
-    </view>
-  </view>
-
-  <view class="risk-card">
-    <view class="risk-title">出行风险提示</view>
-    <view>部分路段在雨雪天气可能湿滑；景区人流量较大时，建议避开高峰时段。</view>
+  <view class="risk-band">
+    <view class="risk-title">出行提示</view>
+    <view>无障碍设施可能随开放区域、维护和客流情况变化，出发前请向景区确认。</view>
   </view>
 
   <view class="ai-float" bindtap="openAi">AI</view>
   <view class="bottom-nav">
     <view class="nav-item active" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="camera" bindtap="goTab"><view class="nav-icon">◉</view><view>拍照</view></view>
     <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
     <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
   </view>
 </view>

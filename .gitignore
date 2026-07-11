@@ -7,3 +7,5 @@ backend/coverage/
 miniprogram/project.private.config.json
 project.private.config.json
 docs/QQ*.png
+.workbuddy/
+outputs/

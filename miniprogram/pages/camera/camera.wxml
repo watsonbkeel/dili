@@ -1,0 +1,42 @@
+<view class="page camera-page">
+  <view class="topbar">
+    <view>
+      <view class="title">拍照识别</view>
+      <view class="subtitle">对准景点、文物或建筑细节</view>
+    </view>
+  </view>
+
+  <view class="camera-frame" data-source="camera" bindtap="chooseSource">
+    <view class="scan-corners">
+      <view class="corner tl"></view>
+      <view class="corner tr"></view>
+      <view class="corner bl"></view>
+      <view class="corner br"></view>
+    </view>
+    <view class="camera-icon">▣</view>
+    <view class="camera-title">将景点或文物置于框内</view>
+    <view class="camera-sub">点击拍摄，AI 将识别当前图片</view>
+  </view>
+
+  <view class="camera-actions">
+    <button class="capture-btn" data-source="camera" bindtap="chooseSource" loading="{{choosing}}" disabled="{{choosing}}">拍摄识别</button>
+    <button class="album-btn" data-source="album" bindtap="chooseSource" disabled="{{choosing}}">从相册选择</button>
+  </view>
+
+  <view class="tip-card">
+    <view class="tip-title">拍摄建议</view>
+    <view class="tip-text">建议拍清楚匾额、雕刻、建筑轮廓或展品说明牌。</view>
+    <view class="tip-tags">
+      <block wx:for="{{tips}}" wx:key="*this">
+        <text class="tag">{{item}}</text>
+      </block>
+    </view>
+  </view>
+
+  <view class="bottom-nav">
+    <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
+    <view class="nav-item active" data-tab="camera" bindtap="goTab"><view class="nav-icon">◉</view><view>拍照</view></view>
+    <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
+    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
+  </view>
+</view>

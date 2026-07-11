@@ -5,7 +5,8 @@ const crypto = require('node:crypto');
 const INITIAL_DATA = {
   storyCache: {},
   history: [],
-  assistantRecords: []
+  assistantRecords: [],
+  placeReactions: {}
 };
 
 class DataStore {
@@ -26,12 +27,16 @@ class DataStore {
 
   async write(data) {
     this.writeQueue = this.writeQueue.then(async () => {
-      await fs.mkdir(path.dirname(this.filePath), { recursive: true });
-      const tmpPath = `${this.filePath}.tmp`;
-      await fs.writeFile(tmpPath, JSON.stringify(data, null, 2));
-      await fs.rename(tmpPath, this.filePath);
+      await this.writeFile(data);
     });
     return this.writeQueue;
+  }
+
+  async writeFile(data) {
+    await fs.mkdir(path.dirname(this.filePath), { recursive: true });
+    const tmpPath = `${this.filePath}.tmp`;
+    await fs.writeFile(tmpPath, JSON.stringify(data, null, 2));
+    await fs.rename(tmpPath, this.filePath);
   }
 
   async getStoryCache(cacheKey) {
@@ -100,6 +105,38 @@ class DataStore {
     data.history = data.history.filter((record) => !(record.userId === userId && record.id === id));
     await this.write(data);
     return data.history.length !== originalLength;
+  }
+
+  async getPlaceReactions(placeId) {
+    const data = await this.read();
+    const counts = data.placeReactions[placeId] || {};
+    return {
+      recommend: Math.max(0, Number(counts.recommend) || 0),
+      notRecommend: Math.max(0, Number(counts.notRecommend) || 0)
+    };
+  }
+
+  async updatePlaceReaction(placeId, previous, reaction) {
+    let result;
+    this.writeQueue = this.writeQueue.then(async () => {
+      const data = await this.read();
+      data.placeReactions = { ...(data.placeReactions || {}) };
+      const current = data.placeReactions[placeId] || {};
+      const counts = {
+        recommend: Math.max(0, Number(current.recommend) || 0),
+        notRecommend: Math.max(0, Number(current.notRecommend) || 0)
+      };
+      if (previous && previous !== reaction) counts[previous] = Math.max(0, counts[previous] - 1);
+      if (reaction && reaction !== previous) counts[reaction] += 1;
+      data.placeReactions[placeId] = {
+        ...counts,
+        updatedAt: new Date().toISOString()
+      };
+      await this.writeFile(data);
+      result = counts;
+    });
+    await this.writeQueue;
+    return result;
   }
 }
 

@@ -1,0 +1,33 @@
+<view class="page edit-page">
+  <view class="topbar">
+    <view>
+      <view class="title">编辑资料</view>
+      <view class="subtitle">设置你的城市和旅行偏好。</view>
+    </view>
+  </view>
+
+  <view class="edit-card">
+    <button class="avatar-picker" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image wx:if="{{profile.avatar}}" class="avatar-img" src="{{profile.avatar}}" mode="aspectFill" />
+      <text wx:else>头像</text>
+    </button>
+
+    <view class="form-label">昵称</view>
+    <input class="form-input" value="{{profile.nickname}}" bindinput="onNicknameInput" placeholder="请输入昵称" />
+
+    <view class="form-label">城市偏好</view>
+    <input class="form-input" value="{{profile.city}}" bindinput="onCityInput" placeholder="例如 北京" />
+
+    <view class="form-label">旅行偏好</view>
+    <checkbox-group bindchange="onPreferencesChange">
+      <view class="pref-grid">
+        <label wx:for="{{preferenceItems}}" wx:key="name" class="pref-item">
+          <checkbox value="{{item.name}}" checked="{{item.checked}}" color="#1f6f68" />
+          <text>{{item.name}}</text>
+        </label>
+      </view>
+    </checkbox-group>
+  </view>
+
+  <button class="save-btn" bindtap="saveProfile">保存资料</button>
+</view>

@@ -6,7 +6,7 @@ const path = require('node:path');
 const { createApp } = require('../src/server');
 const { DataStore } = require('../src/storage/dataStore');
 
-async function startTestServer() {
+async function startTestServer(options = {}) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'lhg-server-'));
   const store = new DataStore(dir);
   const server = createApp({
@@ -17,8 +17,11 @@ async function startTestServer() {
       openaiApiKey: '',
       openaiBaseUrl: 'https://api.openai.com/v1',
       openaiModel: 'mock-model',
-      promptVersion: 'test-v1'
-    }
+      speechToTextUrl: 'http://127.0.0.1:3102/v1/audio/transcriptions',
+      promptVersion: 'test-v1',
+      ...(options.config || {})
+    },
+    fetchImpl: options.fetchImpl || fetch
   });
   await new Promise((resolve) => server.listen(0, resolve));
   const { port } = server.address();
@@ -106,6 +109,36 @@ test('GET /api/places with coordinates returns distance sorted places', async (t
   assert.ok(payload.places[0].distance <= payload.places[1].distance);
 });
 
+test('place reaction counts support selecting, switching and cancelling without identity verification', async (t) => {
+  const server = await startTestServer();
+  t.after(server.close);
+  const url = `${server.baseUrl}/api/places/beijing-palace-museum/reactions`;
+
+  const initial = await fetch(url).then((res) => res.json());
+  assert.deepEqual(initial.counts, { recommend: 0, notRecommend: 0 });
+
+  const recommend = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ previous: '', reaction: 'recommend' })
+  }).then((res) => res.json());
+  assert.deepEqual(recommend.counts, { recommend: 1, notRecommend: 0 });
+
+  const switched = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ previous: 'recommend', reaction: 'notRecommend' })
+  }).then((res) => res.json());
+  assert.deepEqual(switched.counts, { recommend: 0, notRecommend: 1 });
+
+  const cancelled = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ previous: 'notRecommend', reaction: '' })
+  }).then((res) => res.json());
+  assert.deepEqual(cancelled.counts, { recommend: 0, notRecommend: 0 });
+});
+
 test('GET /assets serves attraction images from backend public directory', async (t) => {
   const server = await startTestServer();
   t.after(server.close);
@@ -155,6 +188,92 @@ test('POST /api/assistant returns template answer without AI key', async (t) => 
   assert.equal(records[0].question, '推荐一条适合亲子游的路线');
   assert.match(records[0].answer, /天安门|故宫|路线/);
   assert.equal(records[0].source, 'template');
+});
+
+test('POST /api/transcriptions proxies multipart audio to local ASR', async (t) => {
+  let capturedUrl = '';
+  let capturedOptions = null;
+  const server = await startTestServer({
+    fetchImpl: async (url, options) => {
+      capturedUrl = url;
+      capturedOptions = options;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ text: '故宫中轴线有什么意义？' })
+      };
+    }
+  });
+  t.after(server.close);
+
+  const form = new FormData();
+  form.append('file', new Blob([Buffer.from('RIFF-test-audio')], { type: 'audio/wav' }), 'question.wav');
+  form.append('model', 'Qwen/Qwen3-ASR-1.7B');
+  form.append('language', 'Chinese');
+  const res = await fetch(`${server.baseUrl}/api/transcriptions`, {
+    method: 'POST',
+    body: form
+  });
+  const payload = await res.json();
+
+  assert.equal(res.status, 200);
+  assert.equal(payload.text, '故宫中轴线有什么意义？');
+  assert.equal(capturedUrl, 'http://127.0.0.1:3102/v1/audio/transcriptions');
+  assert.match(capturedOptions.headers['Content-Type'], /^multipart\/form-data; boundary=/);
+  assert.ok(Buffer.isBuffer(capturedOptions.body));
+  assert.match(capturedOptions.body.toString(), /Qwen\/Qwen3-ASR-1.7B/);
+  assert.match(capturedOptions.body.toString(), /Chinese/);
+});
+
+test('POST /api/recognize returns a dynamic vision-model result', async (t) => {
+  const server = await startTestServer({
+    config: { openaiApiKey: 'vision-test-key', openaiVisionModel: 'gpt-5.6-terra' },
+    fetchImpl: async (_url, options) => {
+      const request = JSON.parse(options.body);
+      assert.equal(request.model, 'gpt-5.6-terra');
+      assert.match(request.messages[1].content[1].image_url.url, /^data:image\/jpeg;base64,/);
+      const prompt = JSON.parse(request.messages[1].content[0].text);
+      assert.equal(prompt.locationContext.latitude, 39.905078);
+      assert.ok(prompt.locationContext.nearbyKnownPlaces.length > 0);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          choices: [
+            {
+              message: {
+                content: JSON.stringify({
+                  recognized: true,
+                  name: '天坛',
+                  confidence: 91,
+                  type: '坛庙建筑',
+                  tags: ['祈年殿'],
+                  visualEvidence: '蓝色琉璃瓦和圆形攒尖顶清晰可见',
+                  summary: '图片中是天坛代表建筑。',
+                  story: '天坛是明清皇家祭天场所。'
+                })
+              }
+            }
+          ]
+        })
+      };
+    }
+  });
+  t.after(server.close);
+
+  const form = new FormData();
+  form.append('file', new Blob([Buffer.from('fake-jpeg-data')], { type: 'image/jpeg' }), 'temple.jpg');
+  form.append('latitude', '39.905078');
+  form.append('longitude', '116.401632');
+  form.append('accuracy', '20');
+  const res = await fetch(`${server.baseUrl}/api/recognize`, { method: 'POST', body: form });
+  const payload = await res.json();
+
+  assert.equal(res.status, 200);
+  assert.equal(payload.result.name, '天坛');
+  assert.equal(payload.result.source, 'ai');
+  assert.equal(payload.result.knownPlaceId, 'temple-of-heaven');
+  assert.equal(payload.result.locationUsed, true);
 });
 
 test('story and history endpoints work together', async (t) => {

@@ -1,22 +1,6 @@
 const api = require('../../utils/api');
 const nav = require('../../utils/navigation');
-
-function distanceText(distance) {
-  const value = Number(distance || 0);
-  if (!value) return '';
-  if (value >= 1000) return `${(value / 1000).toFixed(1)} km`;
-  return `${Math.round(value)} m`;
-}
-
-function normalizePlace(place) {
-  return {
-    ...place,
-    categoryText: (place.category || []).slice(0, 3).join(' / '),
-    distanceText: distanceText(place.distance),
-    sourceText: (place.sources || []).map((source) => source.title).join('、') || '种子资料',
-    coverUrl: place.coverImage && place.coverImage.url ? place.coverImage.url : ''
-  };
-}
+const { getFallbackPlaces, preparePlaces } = require('../../utils/placeList');
 
 Page({
   data: {
@@ -27,7 +11,7 @@ Page({
     locationMode: false,
     latitude: 39.916345,
     longitude: 116.397155,
-    places: [],
+    places: getFallbackPlaces(),
     markers: []
   },
 
@@ -49,7 +33,7 @@ Page({
         params.radius = options.radius || 20000;
       }
       const payload = await api.listPlaces(params);
-      const places = (payload.places || []).map(normalizePlace);
+      const places = preparePlaces(payload.places);
       const markers = places.map((place, index) => ({
         id: index,
         latitude: place.lat,
@@ -70,7 +54,8 @@ Page({
     } catch (error) {
       this.setData({
         loading: false,
-        error: error.message || '历史地点加载失败'
+        error: '',
+        places: getFallbackPlaces()
       });
     }
   },
@@ -114,6 +99,10 @@ Page({
     this.openPlaceById(event.currentTarget.dataset.id);
   },
 
+  openPlaceByTap(event) {
+    this.openPlaceById(event.currentTarget.dataset.id);
+  },
+
   openPlaceById(id) {
     wx.navigateTo({ url: `/pages/place/place?id=${encodeURIComponent(id)}` });
   },
@@ -128,10 +117,6 @@ Page({
 
   openAi() {
     nav.openAi({ type: 'city', city: this.data.city });
-  },
-
-  changeMode() {
-    wx.navigateTo({ url: '/pages/mode-select/mode-select?force=1' });
   },
 
   goTab: nav.goTab,

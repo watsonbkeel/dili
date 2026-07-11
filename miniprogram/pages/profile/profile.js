@@ -1,11 +1,24 @@
 const nav = require('../../utils/navigation');
 const favorites = require('../../utils/favorites');
-const api = require('../../utils/api');
 const userMode = require('../../utils/userMode');
+const viewHistory = require('../../utils/viewHistory');
+
+function getProfile() {
+  const profile = wx.getStorageSync('userProfile') || {
+    avatar: '',
+    nickname: '本地访客',
+    city: '北京',
+    preferences: ['历史故事', '语音讲解']
+  };
+  return {
+    ...profile,
+    avatarText: String(profile.nickname || '旅').slice(0, 1)
+  };
+}
 
 Page({
   data: {
-    userId: '',
+    profile: getProfile(),
     favoriteCount: 0,
     historyCount: 0,
     currentModeLabel: ''
@@ -15,33 +28,37 @@ Page({
     this.loadProfile();
   },
 
-  async loadProfile() {
-    const userId = getApp().ensureUserId();
-    let historyCount = 0;
-    try {
-      const payload = await api.listHistory();
-      historyCount = (payload.history || []).length;
-    } catch {
-      historyCount = 0;
-    }
+  loadProfile() {
     this.setData({
-      userId,
+      profile: getProfile(),
       favoriteCount: favorites.listFavorites().length,
-      historyCount,
+      historyCount: viewHistory.listHistory().length,
       currentModeLabel: userMode.labelForMode()
     });
+  },
+
+  editProfile() {
+    wx.navigateTo({ url: '/pages/profile-edit/profile-edit' });
+  },
+
+  openFavorites() {
+    wx.navigateTo({ url: '/pages/favorites/favorites' });
   },
 
   openHistory() {
     wx.navigateTo({ url: '/pages/history/history' });
   },
 
-  openAi() {
-    nav.openAi({ type: 'city', city: '北京' });
+  changeMode() {
+    nav.openModeSelect();
   },
 
-  changeMode() {
-    wx.navigateTo({ url: '/pages/mode-select/mode-select?force=1' });
+  openAccessibility() {
+    nav.openModeSelect();
+  },
+
+  openAi() {
+    nav.openAi({ type: 'city', city: '北京' });
   },
 
   goTab: nav.goTab

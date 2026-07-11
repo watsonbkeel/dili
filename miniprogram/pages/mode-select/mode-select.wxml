@@ -19,7 +19,10 @@
   <view class="vision-card" bindtap="selectMode" data-mode="lowVision">
     <view class="vision-head">
       <view class="vision-icon">◉</view>
-      <view class="vision-title">视力障碍 /<br />低视力用户</view>
+      <view class="vision-title">
+        <view>视力障碍 /</view>
+        <view>低视力用户</view>
+      </view>
     </view>
     <view class="vision-features">
       <view><text class="feature-big">AA</text><text>大字显示</text></view>
@@ -31,9 +34,9 @@
       <view class="demo-label">示例</view>
       <view class="demo-place">故宫博物院</view>
       <view class="demo-actions">
-        <view class="demo-btn light">播放讲解</view>
-        <view class="demo-btn dark">导航到这里</view>
+        <view class="demo-btn dark">播放 / 暂停 / 继续</view>
       </view>
+      <view class="voice-note">未播放显示“播放”，播放中显示“暂停”，已暂停显示“继续”。</view>
     </view>
     <view class="vision-choose">选择这个模式 <text>›</text></view>
   </view>

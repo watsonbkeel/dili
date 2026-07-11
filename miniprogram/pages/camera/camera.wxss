@@ -1,0 +1,139 @@
+.camera-page {
+  background: #f7f6f1;
+}
+
+.camera-frame {
+  position: relative;
+  height: 720rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #d8ded8;
+  background: #1d2433;
+  color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.scan-corners {
+  position: absolute;
+  left: 56rpx;
+  right: 56rpx;
+  top: 78rpx;
+  bottom: 78rpx;
+}
+
+.corner {
+  position: absolute;
+  width: 88rpx;
+  height: 88rpx;
+  border-color: #ffffff;
+}
+
+.tl {
+  left: 0;
+  top: 0;
+  border-left: 6rpx solid;
+  border-top: 6rpx solid;
+}
+
+.tr {
+  right: 0;
+  top: 0;
+  border-right: 6rpx solid;
+  border-top: 6rpx solid;
+}
+
+.bl {
+  left: 0;
+  bottom: 0;
+  border-left: 6rpx solid;
+  border-bottom: 6rpx solid;
+}
+
+.br {
+  right: 0;
+  bottom: 0;
+  border-right: 6rpx solid;
+  border-bottom: 6rpx solid;
+}
+
+.camera-icon {
+  font-size: 90rpx;
+  line-height: 1;
+}
+
+.camera-title {
+  margin-top: 24rpx;
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.camera-sub {
+  margin-top: 12rpx;
+  color: #d7dde8;
+  font-size: 25rpx;
+}
+
+.camera-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18rpx;
+  margin: 24rpx 0;
+}
+
+.capture-btn,
+.album-btn {
+  min-height: 92rpx;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capture-btn {
+  background: #1f6f68;
+  color: #ffffff;
+}
+
+.album-btn {
+  background: #ffffff;
+  color: #1f6f68;
+  border: 1rpx solid #1f6f68;
+}
+
+.capture-btn::after,
+.album-btn::after {
+  border: 0;
+}
+
+.tip-card {
+  padding: 26rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #e1ded5;
+  background: #ffffff;
+}
+
+.tip-title {
+  color: #18212f;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.tip-text {
+  margin-top: 12rpx;
+  color: #344054;
+  font-size: 27rpx;
+  line-height: 1.55;
+}
+
+.tip-tags {
+  display: flex;
+  gap: 10rpx;
+  flex-wrap: wrap;
+  margin-top: 18rpx;
+}

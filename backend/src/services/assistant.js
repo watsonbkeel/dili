@@ -4,13 +4,32 @@ const { getRouteById } = require('./routeStore');
 function contextText(context = {}) {
   if (context.type === 'place' && context.id) {
     const place = getPlaceById(context.id);
-    if (place) return `当前景点：${place.name}。${place.summary || ''}`;
+    if (place) {
+      const accessibility = place.accessibility || {};
+      const facts = [
+        `当前景点：${place.name}`,
+        place.summary || '',
+        (place.highlights || []).length ? `现场看点：${place.highlights.join('；')}` : '',
+        place.walkingTimeMinutes ? `预计步行时间：${place.walkingTimeMinutes}分钟。${place.walkingTimeNote || ''}` : '',
+        accessibility.label ? `无障碍情况：${accessibility.label}。${accessibility.summary || ''}` : ''
+      ].filter(Boolean);
+      return facts.join('。');
+    }
   }
   if (context.type === 'route' && context.id) {
     const route = getRouteById(context.id);
     if (route) return `当前路线：${route.title}，${route.description}`;
   }
-  return '当前城市：北京。';
+  if (context.type === 'recognition') {
+    return `当前图片识别对象：${context.name || '未知'}。${context.summary || ''}`;
+  }
+  if (context.type === 'mode' && context.mode === 'mobility') {
+    return '当前城市：北京。用户从行动不便人士首页进入，回答时优先考虑无障碍通行、步行时长和休息安排。';
+  }
+  if (context.type === 'mode' && context.mode === 'lowVision') {
+    return '当前城市：北京。用户从视障人士首页进入，回答应清晰、简洁，适合语音播报。';
+  }
+  return `当前城市：${context.city || '北京'}。`;
 }
 
 function templateAnswer(question, context = {}) {
@@ -94,6 +113,7 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
       body: JSON.stringify({
         model: config.openaiModel,
         temperature: 0.4,
+        max_tokens: Number(config.openaiMaxTokens || 600),
         messages: buildAssistantMessages({ question, context })
       })
     });
@@ -122,6 +142,7 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
 module.exports = {
   askAssistant,
   chatCompletionsUrl,
+  contextText,
   extractAnswer,
   templateAnswer
 };

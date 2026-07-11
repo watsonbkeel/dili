@@ -1,36 +1,58 @@
 <view class="lv-page">
-  <view class="lv-mode-switch" bindtap="changeMode">切换使用方式</view>
-  <view class="lv-title">大字语音导览</view>
-  <view class="lv-status">已开启：大字模式 · 高对比度 · 语音优先</view>
+  <view class="lv-fixed-header" style="padding-top: {{headerTopPadding}}px;">
+    <view class="lv-top-row">
+      <view class="lv-title">语音大字导览</view>
+      <view class="lv-mode-switch" bindtap="changeMode">切换模式</view>
+    </view>
+  </view>
+  <view class="lv-header-placeholder" style="height: {{headerHeight}}px;"></view>
 
-  <view class="lv-actions">
-    <view class="lv-action" bindtap="listenNearby">听附近历史 <text>›</text></view>
-    <view class="lv-action" bindtap="openNearest">找最近景点 <text>›</text></view>
-    <view class="lv-action" bindtap="openAi">问 AI 助手 <text>›</text></view>
+  <view class="lv-status">大字 · 高对比 · 语音优先 · 少步行</view>
+  <view class="lv-city">城市：北京</view>
+
+  <view wx:if="{{searchQuery || searchResults.length}}" id="voice-search-results" class="lv-search-results">
+    <view wx:if="{{searchQuery}}" class="lv-search-query">你说：{{searchQuery}}</view>
+    <view wx:if="{{searchResultTitle}}" class="lv-search-result-title">{{searchResultTitle}}</view>
+    <block wx:for="{{searchResults}}" wx:key="id">
+      <view class="lv-search-result" bindtap="openPlace" data-id="{{item.id}}">
+        <view class="lv-place-name">{{item.name}}</view>
+        <view class="lv-summary">{{item.briefSummary}}</view>
+      </view>
+    </block>
   </view>
 
-  <view class="lv-listen-panel">
-    <view class="lv-listen-title">语音播放状态</view>
-    <view class="lv-listen-state">{{audio.statusText}}</view>
-    <view class="lv-listen-stop" bindtap="stopListening">停止播放</view>
-  </view>
-
-  <view class="lv-section-title">附近景点推荐</view>
-  <view wx:if="{{loading}}" class="lv-card">正在加载附近景点</view>
+  <view class="lv-section-title">全部景点列表</view>
+  <view wx:if="{{loading}}" class="lv-card">正在加载景点</view>
   <view wx:elif="{{error}}" class="lv-card">{{error}}</view>
-  <view wx:elif="{{!places.length}}" class="lv-card">暂无景点推荐</view>
-
+  <view wx:elif="{{!visiblePlaces.length}}" class="lv-card">暂无景点</view>
   <block wx:else>
     <block wx:for="{{visiblePlaces}}" wx:key="id">
-      <view class="lv-place">
-        <view class="lv-place-name" bindtap="openPlace" data-index="{{index}}">{{item.name}}</view>
-        <view class="lv-distance">{{item.distanceText}}</view>
+      <view class="lv-place" bindtap="openPlace" data-id="{{item.id}}">
+        <view class="lv-place-name">{{item.name}}</view>
         <view class="lv-summary">{{item.briefSummary}}</view>
         <view class="lv-place-actions">
-          <view class="lv-big-btn" bindtap="playIntro" data-index="{{index}}">))) 听介绍</view>
-          <view class="lv-big-btn" bindtap="openNavigation" data-index="{{index}}">▲ 导航到这里</view>
+          <view class="lv-big-btn" catchtap="playIntro" data-id="{{item.id}}">听介绍</view>
+          <view class="lv-big-btn" catchtap="openNavigation" data-id="{{item.id}}">导航</view>
         </view>
       </view>
     </block>
   </block>
+
+  <view class="lv-section-title">附近景点</view>
+  <view wx:if="{{nearbyPlace}}" class="lv-nearby-card" bindtap="openPlace" data-id="{{nearbyPlace.id}}">
+    <view class="lv-place-name">{{nearbyPlace.name}}</view>
+    <view class="lv-distance">{{nearbyPlace.distanceText}} · {{nearbyPlace.routeNote}}</view>
+  </view>
+
+  <view class="lv-voice-dock">
+    <view class="lv-listen-title">语音搜索</view>
+    <view class="lv-listen-state">{{searchStatus}}</view>
+    <view class="lv-listen-actions">
+      <view class="lv-main-btn {{processing ? 'is-processing' : ''}}" bindtap="toggleVoiceSearch">
+        <text wx:if="{{recording}}">停止</text>
+        <text wx:elif="{{processing}}">处理中</text>
+        <text wx:else>开始</text>
+      </view>
+    </view>
+  </view>
 </view>

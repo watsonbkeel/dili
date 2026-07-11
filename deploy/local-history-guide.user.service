@@ -1,0 +1,16 @@
+[Unit]
+Description=Local History Guide API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/chennuo/project/dili
+Environment=NODE_ENV=production
+EnvironmentFile=/home/chennuo/project/dili/.env
+ExecStart=/usr/bin/node /home/chennuo/project/dili/backend/src/server.js
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

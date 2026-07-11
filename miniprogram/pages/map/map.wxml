@@ -26,9 +26,8 @@
   <view class="ai-float" bindtap="openAi">AI</view>
   <view class="bottom-nav">
     <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item active" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="camera" bindtap="goTab"><view class="nav-icon">◉</view><view>拍照</view></view>
     <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
     <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
   </view>
 </view>

@@ -1,37 +1,40 @@
-<view class="page">
+<view class="page favorites-page">
   <view class="topbar">
     <view>
       <view class="title">我的收藏</view>
-      <view class="subtitle">保存想再次查看的历史地点。</view>
+      <view class="subtitle">保存想再次查看、加入路线或分享给朋友的历史地点。</view>
     </view>
   </view>
 
-  <view wx:if="{{!items.length}}" class="status">暂无收藏。可在景点详情页点击收藏。</view>
+  <view wx:if="{{!items.length}}" class="status">暂无收藏。可在地点详情或识别结果中点击收藏。</view>
 
   <block wx:else>
-    <block wx:for="{{items}}" wx:key="id">
-      <view class="card">
-        <view class="favorite-card-head">
-          <view class="card-title">{{item.name}}</view>
-          <button class="favorite-remove" bindtap="remove" data-id="{{item.id}}" aria-label="取消收藏">
-            <text class="favorite-icon">♥</text>
-          </button>
+    <block wx:for="{{groups}}" wx:key="city" wx:for-item="group">
+      <view class="city-heading">
+        <view class="city-name">{{group.city}}</view>
+        <view class="city-count">{{group.count}} 个收藏</view>
+      </view>
+      <block wx:for="{{group.items}}" wx:key="id" wx:for-item="item">
+      <view class="favorite-card" bindtap="openPlace" data-id="{{item.id}}">
+        <view class="fav-cover {{item.coverUrl ? '' : 'fav-cover-empty'}}">
+          <image wx:if="{{item.coverUrl}}" class="fav-img" mode="aspectFill" src="{{item.coverUrl}}" />
+          <text wx:else>收藏</text>
         </view>
-        <view class="meta">{{item.address || '暂无地址'}} · {{item.savedText}}</view>
-        <view class="meta">{{item.categoryText}}</view>
-        <view class="preview">{{item.summary}}</view>
-        <view class="toolbar">
-          <button class="btn primary" bindtap="openPlace" data-id="{{item.id}}">查看</button>
+        <view class="fav-main">
+          <view class="fav-head">
+            <view class="card-title">{{item.name}}</view>
+            <view class="saved-mark">已收藏</view>
+          </view>
+          <view class="meta">{{item.categoryText || '历史地点'}} · {{item.savedText}}</view>
+          <view class="preview">{{item.summary}}</view>
+          <view class="fav-actions">
+            <button class="mini-action primary" data-id="{{item.id}}" catchtap="addToRoute">加入路线</button>
+            <button class="mini-action" open-type="share" catchtap="shareItem">分享</button>
+            <button class="mini-action danger" catchtap="remove" data-id="{{item.id}}">♥ 快速删除</button>
+          </view>
         </view>
       </view>
+      </block>
     </block>
   </block>
-
-  <view class="bottom-nav">
-    <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
-    <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item active" data-tab="favorites" bindtap="goTab"><view class="nav-icon heart-active">♥</view><view>收藏</view></view>
-    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
-  </view>
 </view>

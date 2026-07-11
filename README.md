@@ -62,13 +62,15 @@ npm start
 - `GET /api/routes`：返回推荐路线。
 - `POST /api/story`：根据 `placeId` 或完整地点资料生成可信导览。
 - `POST /api/assistant`：AI 助手问答。后端记录问题和回答，并在有模型配置时转发到外部模型。
+- `POST /api/transcriptions`：接收小程序录音，并转发到本机 Qwen3 ASR 服务完成语音转文字。
+- `POST /api/recognize`：接收拍摄图片和地理位置，并调用 `gpt-5.6-terra` 视觉模型返回动态景点或文物识别结果。
 - `GET /api/history?userId=`：读取用户历史记录。
 - `DELETE /api/history/:id?userId=`：删除单条历史记录。
 
 `POST /api/assistant` 示例：
 
 ```bash
-curl -X POST http://127.0.0.1:3000/api/assistant \
+curl -X POST http://127.0.0.1:13104/api/assistant \
   -H 'Content-Type: application/json' \
   -H 'X-User-Id: local-user' \
   -d '{"question":"故宫有什么建筑特色？","context":{"type":"city","city":"北京"}}'
@@ -85,14 +87,19 @@ curl -X POST http://127.0.0.1:3000/api/assistant \
 在 `.env` 中配置：
 
 ```bash
-PORT=3000
+PORT=13104
 DATA_DIR=backend/data
+ASSET_DIR=backend/public/assets
 TENCENT_MAP_KEY=你的腾讯位置服务Key
 OPENAI_BASE_URL=https://api.bkeel.com
 OPENAI_CHAT_COMPLETIONS_PATH=/v1/chat/completions
 OPENAI_API_KEY=你的模型Key
 OPENAI_MODEL=gpt-5.4-mini
-OPENAI_TIMEOUT_MS=4000
+OPENAI_VISION_MODEL=gpt-5.6-terra
+OPENAI_TIMEOUT_MS=30000
+OPENAI_MAX_TOKENS=600
+SPEECH_TO_TEXT_URL=http://127.0.0.1:3102/v1/audio/transcriptions
+SPEECH_TO_TEXT_TIMEOUT_MS=60000
 ```
 
 安全要求：
@@ -101,7 +108,13 @@ OPENAI_TIMEOUT_MS=4000
 - 不要把 `OPENAI_API_KEY` 写进小程序前端、seed 数据或文档。
 - 小程序只请求自己的后端，由后端带 key 转发。
 
-AI 助手接口按 OpenAI Chat Completions 兼容格式调用。默认请求路径为：
+本地静态资源：
+
+- `ASSET_DIR` 会被后端映射到 `/assets`。
+- 默认目录是 `backend/public/assets`。
+- 例如把 `demo.jpg` 放到 `backend/public/assets/images/demo.jpg` 后，可通过 `https://dili.bkeel.com/assets/images/demo.jpg` 访问。
+
+AI 助手使用 `OPENAI_MODEL`，拍照识别使用 `OPENAI_VISION_MODEL`；两者共用同一个 API Key、Base URL 和 Chat Completions 兼容接口。默认请求路径为：
 
 ```text
 https://api.bkeel.com/v1/chat/completions
@@ -113,9 +126,9 @@ https://api.bkeel.com/v1/chat/completions
 
 微信体验版/正式版需要：
 
-- `apiBaseUrl` 使用 HTTPS 域名，例如 `https://api.example.com`。
+- `apiBaseUrl` 使用 HTTPS 域名，例如 `https://dili.bkeel.com`。
 - 在微信公众平台配置 request 合法域名。
-- 图片域名 `https://diary.bkeel.com` 如继续使用，也要在下载/图片相关合法域名中确认。
+- 图片资源通过 `https://dili.bkeel.com/assets/...` 访问时，也要在下载/图片相关合法域名中确认。
 - 不要使用 `http://IP:端口` 作为正式后端地址。
 
 如果迁移到另一台服务器：
@@ -133,8 +146,8 @@ https://api.bkeel.com/v1/chat/completions
 
 ## 设计与数据说明
 
-- 景点图片 URL 当前主要指向 `https://diary.bkeel.com/uploads/attractions/`。
-- 如新增景点图片，先上传到图片服务器，再把 seed 数据中的 `images[].url` 更新为完整 HTTPS 地址。
+- 景点图片 URL 当前主要指向 `https://dili.bkeel.com/assets/images/attractions/`。
+- 如新增景点图片，可放入 `backend/public/assets/images/attractions/`，再把 seed 数据中的 `images[].url` 更新为完整 HTTPS 地址。
 - 故事导览仍优先使用本地结构化资料模板，避免编造未在资料库中出现的历史细节。
 - 行动不便模式中的无障碍信息包含演示数据，页面中已提示出发前以景区官方信息为准。
 

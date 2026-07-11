@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { askAssistant, chatCompletionsUrl } = require('../src/services/assistant');
+const { askAssistant, chatCompletionsUrl, contextText } = require('../src/services/assistant');
 
 test('chatCompletionsUrl uses Bkeel OpenAI-compatible v1 path by default', () => {
   assert.equal(
@@ -24,6 +24,14 @@ test('chatCompletionsUrl supports explicit path override', () => {
     }),
     'https://api.bkeel.com/chat/completions'
   );
+});
+
+test('place context includes the selected attraction and structured visit facts', () => {
+  const context = contextText({ type: 'place', id: 'beijing-palace-museum', mode: 'mobility' });
+  assert.match(context, /当前景点：北京故宫/);
+  assert.match(context, /现场看点/);
+  assert.match(context, /预计步行时间/);
+  assert.match(context, /无障碍情况/);
 });
 
 test('askAssistant calls configured external model and returns AI answer', async () => {
@@ -61,6 +69,7 @@ test('askAssistant calls configured external model and returns AI answer', async
   assert.equal(capturedOptions.headers.Authorization, 'Bearer test-key');
   const body = JSON.parse(capturedOptions.body);
   assert.equal(body.model, 'gpt-5.4-mini');
+  assert.equal(body.max_tokens, 600);
   assert.equal(body.messages[0].role, 'system');
   assert.equal(result.source, 'ai');
   assert.match(result.answer, /故宫建筑/);

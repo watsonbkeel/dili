@@ -1,4 +1,4 @@
-<view wx:if="{{mode == 'lowVision'}}" class="lv-detail-page">
+<view class="page detail-page">
   <view wx:if="{{loading}}" class="status">正在加载地点资料...</view>
 
   <view wx:elif="{{error && !place}}" class="status">
@@ -7,261 +7,84 @@
   </view>
 
   <view wx:elif="{{place}}">
-    <view class="lv-detail-status">大字模式 · 高对比度 · 语音优先</view>
-    <view class="lv-detail-tools">
-      <button bindtap="goBack">返回</button>
-      <button bindtap="goHome">主页</button>
-      <button bindtap="openNavigation">导航</button>
-      <button class="{{favorite ? 'selected' : ''}}" bindtap="toggleFavorite">{{favorite ? '已收藏' : '收藏'}}</button>
-    </view>
-    <view class="lv-detail-title">{{place.name}}</view>
-    <view class="lv-detail-meta">{{place.address}}</view>
-    <view class="lv-detail-meta">{{place.distanceText}}</view>
-
-    <view wx:if="{{place.coverUrl}}" class="lv-detail-image-wrap">
-      <image class="lv-detail-image" mode="aspectFill" src="{{place.coverUrl}}" />
-    </view>
-
-    <view class="lv-audio-panel">
-      <view class="lv-panel-title">语音讲解</view>
-      <view class="lv-audio-actions">
-        <button bindtap="playSummary" loading="{{audio.status === 'loading'}}">播放</button>
-        <button bindtap="stopSummary">停止</button>
+    <view wx:if="{{mode == 'mobility' && place.accessibility}}" class="accessibility-panel {{place.accessibility.tone}}">
+      <view class="accessibility-heading-row">
+        <view class="accessibility-heading">无障碍游览信息</view>
+        <text class="accessibility-level">{{place.accessibility.label}}</text>
       </view>
-      <view class="lv-audio-state">{{audio.statusText}}</view>
-    </view>
-
-    <view class="lv-summary-panel">
-      <view class="lv-panel-title">要点摘要</view>
-      <block wx:for="{{summaryPoints}}" wx:key="title">
-        <view class="lv-summary-item">
-          <view class="lv-summary-title">{{item.title}}</view>
-          <view class="lv-summary-text">{{item.text}}</view>
-        </view>
-      </block>
-    </view>
-
-    <view class="lv-summary-panel">
-      <view class="lv-panel-title">现场看什么</view>
-      <block wx:for="{{place.highlights}}" wx:key="*this">
-        <view class="lv-short-line">{{item}}</view>
-      </block>
-      <view wx:if="{{!place.highlights.length}}" class="lv-short-line">建议观察建筑空间、地名和周边城市关系。</view>
-    </view>
-
-    <view class="lv-summary-panel">
-      <view class="lv-panel-title">游览提示</view>
-      <block wx:for="{{place.visitTips}}" wx:key="*this">
-        <view class="lv-short-line">{{item}}</view>
-      </block>
-      <view wx:if="{{!place.visitTips.length}}" class="lv-short-line">资料不足，待补充。</view>
-    </view>
-
-    <view wx:if="{{story}}" class="lv-summary-panel">
-      <view class="lv-panel-title">{{story.title}}</view>
-      <view class="lv-story-text">{{story.story}}</view>
-      <view class="lv-audio-actions">
-        <button bindtap="playGuide" loading="{{guideAudio.status === 'loading'}}">播放</button>
-        <button bindtap="stopGuide">停止</button>
+      <view class="accessibility-summary">{{place.accessibility.summary}}</view>
+      <view class="accessibility-route-state">
+        {{place.accessibility.hasAccessibleRoute ? '已确认设有无障碍通道' : '暂未确认设有连续无障碍通道'}}
       </view>
-      <view class="lv-audio-state">{{guideAudio.statusText}}</view>
-    </view>
-
-    <view class="lv-main-actions">
-      <button bindtap="openNavigation">导航到这里</button>
-      <button bindtap="generateGuide" loading="{{generating}}">生成导览</button>
-      <button bindtap="openAi">问 AI 助手</button>
-    </view>
-    <view wx:if="{{error}}" class="lv-error">{{error}}</view>
-  </view>
-
-  <view class="ai-float lv-ai-float" bindtap="openAi">AI</view>
-  <view class="bottom-nav lv-bottom-nav">
-    <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
-    <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
-    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
-  </view>
-</view>
-
-<view wx:elif="{{mode == 'mobility'}}" class="mobility-detail-page">
-  <view wx:if="{{loading}}" class="status">正在加载地点资料...</view>
-
-  <view wx:elif="{{error && !place}}" class="status">
-    <view>{{error}}</view>
-    <button class="btn primary" bindtap="loadPlace">重试</button>
-  </view>
-
-  <view wx:elif="{{place}}">
-    <view class="mobility-mode-head">
-      <view>
-        <view class="mobility-mode-title">轻松出行模式</view>
-        <view class="mobility-mode-sub">少步行路线 · 少台阶提示 · 休息点提醒</view>
+      <view wx:if="{{place.accessibility.mapUrl}}" class="accessibility-map-block">
+        <view class="accessibility-map-title">官方无障碍路线图（点击可放大）</view>
+        <image class="accessibility-map" src="{{place.accessibility.mapUrl}}" mode="widthFix" bindtap="previewAccessibilityMap" />
       </view>
-      <button class="mobility-switch" bindtap="goHome">首页</button>
+      <view class="accessibility-disclaimer">{{place.accessibility.disclaimer}}</view>
     </view>
 
-    <view class="mobility-place-card">
-      <image wx:if="{{place.coverUrl}}" class="mobility-cover" mode="aspectFill" src="{{place.coverUrl}}" />
-      <view class="mobility-info-main">
-        <view class="mobility-name">{{place.name}}</view>
-        <view class="mobility-meta">{{place.address}}</view>
-        <view class="mobility-meta">{{place.distanceText}}</view>
-        <button class="mobility-fav {{favorite ? 'active' : ''}}" bindtap="toggleFavorite">{{favorite ? '已收藏' : '收藏'}}</button>
-      </view>
+    <view class="hero {{place.coverUrl ? '' : 'hero-empty'}}">
+      <image wx:if="{{place.coverUrl}}" class="hero-img" mode="aspectFill" src="{{place.coverUrl}}" />
+      <view wx:else>图片待补充</view>
     </view>
 
-    <view class="mobility-section">
-      <view class="mobility-section-title">无障碍信息</view>
-      <view class="mobility-demo-note">演示数据，建议出发前以景区官方信息为准。</view>
-      <view class="mobility-grid">
-        <block wx:for="{{mobilityInfo}}" wx:key="label">
-          <view class="mobility-grid-item">
-            <view class="mobility-grid-label">{{item.label}}</view>
-            <view class="mobility-grid-value">{{item.value}}</view>
-          </view>
+    <view class="detail-head">
+      <view class="title">{{place.name}}</view>
+      <view class="detail-meta">{{place.distanceText}} · {{place.walkingTimeText}}</view>
+      <view wx:if="{{place.walkingTimeNote}}" class="walking-note">{{place.walkingTimeNote}}</view>
+      <view class="tag-wrap">
+        <block wx:for="{{place.category}}" wx:key="*this">
+          <text class="tag">{{item}}</text>
+        </block>
+        <block wx:for="{{place.tags}}" wx:key="*this">
+          <text class="tag muted-tag">{{item}}</text>
         </block>
       </view>
     </view>
 
-    <view class="mobility-section">
-      <view class="mobility-section-title">推荐游览方式</view>
-      <view class="mobility-route-card">
-        <view class="mobility-route-title">短路线优先</view>
-        <view class="mobility-route-desc">优先选择主入口和核心看点，减少折返，预留休息时间。</view>
-        <button class="mobility-outline-btn" bindtap="openShortRoute">查看短路线</button>
-      </view>
-    </view>
-
-    <view class="mobility-section">
-      <view class="mobility-section-title">出行提示</view>
-      <view class="mobility-tip">景点面积较大，建议由家人或陪同者同行。</view>
-      <view class="mobility-tip">如遇排队或道路不平，可优先选择附近短路线。</view>
-      <view class="mobility-tip">涉及故宫无障碍路线的信息，建议出发前以景区官方信息为准。</view>
-    </view>
-
-    <view class="mobility-section">
-      <view class="mobility-section-title">简明历史介绍</view>
-      <block wx:for="{{summaryPoints}}" wx:key="title">
-        <view class="mobility-summary-item">
-          <view class="mobility-summary-title">{{item.title}}</view>
-          <view class="mobility-summary-text">{{item.text}}</view>
-        </view>
-      </block>
-    </view>
-
-    <view class="mobility-section">
-      <view class="mobility-section-title">语音讲解</view>
-      <view class="audio-bar mobility-audio-bar">
-        <button class="btn" bindtap="playSummary" loading="{{audio.status === 'loading'}}">播放</button>
-        <button class="btn" bindtap="pauseSummary">暂停</button>
-        <button class="btn" bindtap="resumeSummary">继续</button>
-        <button class="btn" bindtap="stopSummary">停止</button>
-        <button class="btn" data-rate="0.75" bindtap="setSummaryRate">0.75x</button>
-        <button class="btn" data-rate="1" bindtap="setSummaryRate">1x</button>
-        <button class="btn" data-rate="1.25" bindtap="setSummaryRate">1.25x</button>
-        <text class="audio-state">{{audio.statusText}}</text>
-      </view>
-    </view>
-
-    <view wx:if="{{story}}" class="mobility-section">
-      <view class="mobility-section-title">{{story.title}}</view>
-      <view class="mobility-story">{{story.story}}</view>
-      <view class="audio-bar mobility-audio-bar">
-        <button class="btn" bindtap="playGuide" loading="{{guideAudio.status === 'loading'}}">播放</button>
-        <button class="btn" bindtap="pauseGuide">暂停</button>
-        <button class="btn" bindtap="resumeGuide">继续</button>
-        <button class="btn" bindtap="stopGuide">停止</button>
-        <button class="btn" data-rate="0.75" bindtap="setGuideRate">0.75x</button>
-        <button class="btn" data-rate="1" bindtap="setGuideRate">1x</button>
-        <button class="btn" data-rate="1.25" bindtap="setGuideRate">1.25x</button>
-        <text class="audio-state">{{guideAudio.statusText}}</text>
-      </view>
-    </view>
-
-    <view class="mobility-bottom-actions">
-      <button bindtap="openNavigation">导航到这里</button>
-      <button bindtap="openAi">问 AI 规划轻松行程</button>
-    </view>
-    <view wx:if="{{error}}" class="status">{{error}}</view>
-  </view>
-
-  <view class="ai-float" bindtap="openAi">AI</view>
-  <view class="bottom-nav">
-    <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
-    <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
-    <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
-  </view>
-</view>
-
-<view wx:else class="page">
-  <view wx:if="{{loading}}" class="status">正在加载地点资料...</view>
-
-  <view wx:elif="{{error && !place}}" class="status">
-    <view>{{error}}</view>
-    <button class="btn primary" bindtap="loadPlace">重试</button>
-  </view>
-
-  <view wx:elif="{{place}}">
-    <view class="hero {{place.coverUrl ? '' : 'hero-empty'}}">
-      <image wx:if="{{place.coverUrl}}" class="hero-img" mode="aspectFill" src="{{place.coverUrl}}" />
-      <view wx:else>
-        <view class="hero-title">图片待补充</view>
-        <view class="hero-subtitle">来源字段：百度图片</view>
-      </view>
-    </view>
-
-    <view class="topbar detail-head">
+    <view class="audio-card">
       <view>
-        <view class="title">{{place.name}}</view>
-        <view class="subtitle">{{place.address}}</view>
+        <view class="card-title">语音讲解</view>
+        <view class="audio-state">{{audio.statusText}}</view>
       </view>
-      <button class="favorite-btn {{favorite ? 'active' : ''}}" bindtap="toggleFavorite" aria-label="{{favorite ? '取消收藏' : '收藏'}}">
-        <text class="favorite-icon">{{favorite ? '♥' : '♡'}}</text>
+      <view class="audio-actions">
+        <button class="btn primary" bindtap="toggleSummaryAudio" loading="{{audio.status == 'loading'}}">
+          <text wx:if="{{audio.status == 'playing'}}">暂停</text>
+          <text wx:elif="{{audio.status == 'paused'}}">继续</text>
+          <text wx:else>播放历史讲解</text>
+        </button>
+      </view>
+    </view>
+
+    <view class="feature-grid primary-feature-grid">
+      <button class="feature-btn favorite-action {{favorite ? 'favorite-active' : ''}}" bindtap="toggleFavorite" aria-label="{{favorite ? '取消收藏' : '收藏'}}">
+        <text class="favorite-heart">♥</text>
+        <text>{{favorite ? '已收藏' : '待收藏'}}</text>
+      </button>
+      <button class="feature-btn" bindtap="addToRoute">加入路线</button>
+      <button class="feature-btn" open-type="share" bindtap="sharePlace">分享</button>
+    </view>
+
+    <view class="reaction-grid">
+      <button class="reaction-btn {{reaction == 'recommend' ? 'selected' : ''}}" bindtap="recommendPlace" disabled="{{reactionBusy}}">
+        <text>推荐</text><text class="reaction-count">{{reactionCounts.recommend}}</text>
+      </button>
+      <button class="reaction-btn {{reaction == 'notRecommend' ? 'selected' : ''}}" bindtap="rejectPlace" disabled="{{reactionBusy}}">
+        <text>不推荐</text><text class="reaction-count">{{reactionCounts.notRecommend}}</text>
       </button>
     </view>
 
-    <view class="tag-wrap">
-      <block wx:for="{{place.category}}" wx:key="*this">
-        <text class="tag">{{item}}</text>
-      </block>
-      <block wx:for="{{place.tags}}" wx:key="*this">
-        <text class="tag muted-tag">{{item}}</text>
-      </block>
-    </view>
-
-    <view class="card">
-      <view class="card-title">历史摘要</view>
+    <view class="card intro-card">
+      <view class="card-title">历史简介</view>
       <view class="body-text">{{place.summary || '资料不足，待补充。'}}</view>
-      <view class="audio-bar">
-        <button class="btn" bindtap="playSummary" loading="{{audio.status === 'loading'}}">播放</button>
-        <button class="btn" bindtap="pauseSummary">暂停</button>
-        <button class="btn" bindtap="resumeSummary">继续</button>
-        <button class="btn" bindtap="stopSummary">停止</button>
-        <text class="audio-state">{{audio.statusText}}</text>
-      </view>
     </view>
 
     <view class="card">
-      <view class="card-title">时间线</view>
-      <block wx:for="{{place.timeline}}" wx:key="year">
-        <view class="timeline-row">
-          <view class="timeline-year">{{item.year}}</view>
-          <view class="timeline-event">{{item.event}}</view>
-        </view>
-      </block>
-      <view wx:if="{{!place.timeline.length}}" class="meta">资料不足，待补充。</view>
-    </view>
-
-    <view class="card">
-      <view class="card-title">看点</view>
+      <view class="card-title">现场看什么</view>
       <block wx:for="{{place.highlights}}" wx:key="*this">
         <view class="list-line">{{item}}</view>
       </block>
-      <view wx:if="{{!place.highlights.length}}" class="meta">资料不足，待补充。</view>
+      <view wx:if="{{!place.highlights.length}}" class="meta">建议观察建筑空间、地名和周边城市关系。</view>
     </view>
 
     <view class="card">
@@ -269,74 +92,46 @@
       <block wx:for="{{place.visitTips}}" wx:key="*this">
         <view class="list-line">{{item}}</view>
       </block>
-      <view wx:if="{{!place.visitTips.length}}" class="meta">资料不足，待补充。</view>
-    </view>
-
-    <view class="card">
-      <view class="card-title">图片资料</view>
-      <block wx:for="{{place.images}}" wx:key="caption">
-        <view class="image-row">
-          <view class="thumb {{item.url ? '' : 'thumb-empty'}}">
-            <image wx:if="{{item.url}}" class="thumb-img" mode="aspectFill" src="{{item.url}}" />
-            <text wx:else>图片待补充</text>
-          </view>
-          <view>
-            <view class="body-text">{{item.caption}}</view>
-            <view class="meta">来源：{{item.source}}</view>
-          </view>
-        </view>
-      </block>
-    </view>
-
-    <view class="card">
-      <view class="card-title">资料来源</view>
-      <block wx:for="{{place.sources}}" wx:key="title">
-        <view class="source-item">
-          <view class="body-text">{{item.title}}</view>
-          <view wx:if="{{item.url}}" class="meta">{{item.url}}</view>
-        </view>
-      </block>
+      <view wx:if="{{!place.visitTips.length}}" class="meta">建议以景区现场信息为准。</view>
     </view>
 
     <view class="toolbar action-bar">
       <button class="btn primary" bindtap="openNavigation">导航到这里</button>
-      <button class="btn primary" bindtap="generateGuide" loading="{{generating}}">生成导览</button>
-      <button class="btn" bindtap="openHistory">历史</button>
-    </view>
-
-    <view wx:if="{{error}}" class="status">{{error}}</view>
-
-    <view wx:if="{{story}}" class="guide-card">
-      <view class="card-title">{{story.title}}</view>
-      <view class="story-body">{{story.story}}</view>
-      <view class="audio-bar">
-        <button class="btn" bindtap="playGuide" loading="{{guideAudio.status === 'loading'}}">播放</button>
-        <button class="btn" bindtap="pauseGuide">暂停</button>
-        <button class="btn" bindtap="resumeGuide">继续</button>
-        <button class="btn" bindtap="stopGuide">停止</button>
-        <text class="audio-state">{{guideAudio.statusText}}</text>
-      </view>
-
-      <view class="section-title">使用事实</view>
-      <block wx:for="{{story.factsUsed}}" wx:key="*this">
-        <view class="meta">- {{item}}</view>
-      </block>
-
-      <view class="section-title">导览来源</view>
-      <block wx:for="{{story.sources}}" wx:key="title">
-        <view class="meta">- {{item.title}}{{item.url ? ' · ' + item.url : ''}}</view>
-      </block>
-
-      <view class="disclaimer">{{story.disclaimer}}</view>
+      <button class="btn" bindtap="openAi">问 AI</button>
     </view>
   </view>
 
-  <view class="ai-float" bindtap="openAi">AI</view>
+  <view wx:if="{{showRouteSheet}}" class="modal-mask" bindtap="closeRouteSheet">
+    <view class="route-sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">加入路线</view>
+      <radio-group class="route-choice-list" bindchange="selectRoute">
+        <label class="route-choice {{selectedRouteId == item.id ? 'selected' : ''}}" wx:for="{{routeOptions}}" wx:key="id">
+          <radio value="{{item.id}}" checked="{{selectedRouteId == item.id}}" color="#2f6fed" />
+          <view class="route-choice-main">
+            <view class="route-choice-name">{{item.name}}</view>
+            <view class="route-choice-count">{{item.stopCount}} 个景点</view>
+          </view>
+        </label>
+      </radio-group>
+
+      <button class="create-route-toggle" bindtap="toggleCreateRoute">＋ 新建路线</button>
+      <view wx:if="{{creatingRoute}}" class="create-route-row">
+        <input class="route-name-input" value="{{newRouteName}}" bindinput="onNewRouteName" placeholder="路线名称" maxlength="30" focus />
+        <button class="create-route-btn" bindtap="createRoute">新建并选择</button>
+      </view>
+
+      <view class="sheet-actions">
+        <button class="btn" bindtap="closeRouteSheet">取消</button>
+        <button class="btn primary" bindtap="confirmAddToRoute">确认加入</button>
+      </view>
+    </view>
+  </view>
+
   <view class="bottom-nav">
     <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="camera" bindtap="goTab"><view class="nav-icon">◉</view><view>拍照</view></view>
     <view class="nav-item" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
     <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
   </view>
 </view>

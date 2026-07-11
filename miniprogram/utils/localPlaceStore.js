@@ -45,6 +45,9 @@ function listItem(place, distance) {
     lng: place.lng,
     location: { lat: place.lat, lng: place.lng },
     summary: place.summary || '',
+    walkingTimeMinutes: Number(place.walkingTimeMinutes) || 0,
+    walkingTimeNote: place.walkingTimeNote || '',
+    accessibility: place.accessibility || null,
     coverImage: coverImage(place),
     sources: place.sources || [],
     confidence: place.confidence || 'seed'

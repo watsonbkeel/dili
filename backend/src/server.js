@@ -8,6 +8,8 @@ const { geocodeAddress, getNearbyPlaces } = require('./services/tencentMap');
 const { generateStory } = require('./services/storyGenerator');
 const { getMetadata, getPlaceById, listPlaces } = require('./services/placeStore');
 const { askAssistant } = require('./services/assistant');
+const { transcribeAudio } = require('./services/transcription');
+const { recognizeImage } = require('./services/recognition');
 const { listRoutes } = require('./services/routeStore');
 
 function sendJson(res, status, payload) {
@@ -24,15 +26,22 @@ const STATIC_TYPES = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.png': 'image/png',
-  '.webp': 'image/webp'
+  '.webp': 'image/webp',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.json': 'application/json; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8',
+  '.pdf': 'application/pdf',
+  '.mp3': 'audio/mpeg',
+  '.mp4': 'video/mp4'
 };
 
-async function sendStaticAsset(req, res, pathname) {
-  const publicRoot = path.join(process.cwd(), 'backend', 'public');
+async function sendStaticAsset(req, res, pathname, assetDir) {
+  const publicRoot = path.resolve(assetDir || path.join(process.cwd(), 'backend', 'public', 'assets'));
   const decodedPath = decodeURIComponent(pathname);
-  const relativePath = decodedPath.replace(/^\/+/, '');
+  const relativePath = decodedPath.replace(/^\/assets\/?/, '');
   const filePath = path.resolve(publicRoot, relativePath);
-  if (!filePath.startsWith(publicRoot + path.sep)) {
+  if (filePath !== publicRoot && !filePath.startsWith(publicRoot + path.sep)) {
     sendJson(res, 403, { error: 'Forbidden' });
     return true;
   }
@@ -74,6 +83,21 @@ async function readBody(req) {
   }
 }
 
+async function readRawBody(req, maxBytes = 15 * 1024 * 1024) {
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of req) {
+    size += chunk.length;
+    if (size > maxBytes) {
+      const error = new Error('Audio upload is too large');
+      error.status = 413;
+      throw error;
+    }
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
 function getUserId(req, url, body = {}) {
   return (
     req.headers['x-user-id'] ||
@@ -95,7 +119,7 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
       const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
 
       if ((req.method === 'GET' || req.method === 'HEAD') && url.pathname.startsWith('/assets/')) {
-        await sendStaticAsset(req, res, url.pathname);
+        await sendStaticAsset(req, res, url.pathname, config.assetDir);
         return;
       }
 
@@ -148,6 +172,30 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
         return;
       }
 
+      if (req.method === 'POST' && url.pathname === '/api/transcriptions') {
+        const body = await readRawBody(req);
+        const result = await transcribeAudio({
+          body,
+          contentType: req.headers['content-type'],
+          config,
+          fetchImpl
+        });
+        sendJson(res, 200, result);
+        return;
+      }
+
+      if (req.method === 'POST' && url.pathname === '/api/recognize') {
+        const body = await readRawBody(req);
+        const result = await recognizeImage({
+          body,
+          contentType: req.headers['content-type'],
+          config,
+          fetchImpl
+        });
+        sendJson(res, 200, { result });
+        return;
+      }
+
       if (req.method === 'POST' && url.pathname === '/api/assistant') {
         const body = await readBody(req);
         const userId = String(getUserId(req, url, body));
@@ -169,6 +217,33 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
           recordId: record.id
         });
         return;
+      }
+
+      const reactionMatch = url.pathname.match(/^\/api\/places\/([^/]+)\/reactions$/);
+      if (reactionMatch) {
+        const placeId = decodeURIComponent(reactionMatch[1]);
+        if (!getPlaceById(placeId)) {
+          sendJson(res, 404, { error: 'Place not found' });
+          return;
+        }
+        if (req.method === 'GET') {
+          const counts = await store.getPlaceReactions(placeId);
+          sendJson(res, 200, { placeId, counts });
+          return;
+        }
+        if (req.method === 'POST') {
+          const body = await readBody(req);
+          const allowed = new Set(['', 'recommend', 'notRecommend']);
+          const previous = body.previous || '';
+          const reaction = body.reaction || '';
+          if (!allowed.has(previous) || !allowed.has(reaction)) {
+            sendJson(res, 400, { error: 'Reaction must be recommend, notRecommend or empty' });
+            return;
+          }
+          const counts = await store.updatePlaceReaction(placeId, previous, reaction);
+          sendJson(res, 200, { placeId, reaction, counts });
+          return;
+        }
       }
 
       const placeMatch = url.pathname.match(/^\/api\/places\/([^/]+)$/);
@@ -247,5 +322,6 @@ if (require.main === module) {
 module.exports = {
   createApp,
   readBody,
+  readRawBody,
   sendJson
 };

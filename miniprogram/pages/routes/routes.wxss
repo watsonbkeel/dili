@@ -1,65 +1,156 @@
-.route-card {
-  margin-bottom: 28rpx;
-  padding: 24rpx;
-  border: 1rpx solid #e4e0d8;
+.routes-page {
+  padding-bottom: 270rpx;
+  background: #f7f6f1;
+}
+
+.route-name-card {
+  padding: 28rpx;
+  border: 1rpx solid #e1ded5;
   border-radius: 8rpx;
   background: #ffffff;
 }
 
-.route-hero {
-  min-height: 220rpx;
-  border-radius: 8rpx;
-  padding: 28rpx;
+.edit-name-row {
   display: flex;
-  align-items: flex-end;
-  background: linear-gradient(135deg, #1f6f68, #c7954a);
-  color: #ffffff;
-  box-sizing: border-box;
+  align-items: center;
+  gap: 18rpx;
 }
 
-.route-title {
-  font-size: 38rpx;
-  font-weight: 800;
-}
-
-.route-desc {
-  margin-top: 12rpx;
-  font-size: 25rpx;
-  line-height: 1.5;
-}
-
-.route-meta {
-  margin-top: 12rpx;
+.route-label {
+  color: #667085;
   font-size: 24rpx;
 }
 
-.tag-wrap {
-  display: flex;
-  gap: 12rpx;
-  flex-wrap: wrap;
-  margin: 20rpx 0;
+.route-name {
+  color: #18212f;
+  font-size: 36rpx;
+  font-weight: 900;
 }
 
-.stop-row {
+.route-picker {
+  margin-top: 8rpx;
+}
+
+.route-picker-value {
+  min-height: 70rpx;
   display: flex;
-  gap: 18rpx;
   align-items: center;
-  padding: 18rpx 0;
-  border-bottom: 1rpx solid #ece8df;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.route-picker-arrow {
+  color: #1f6f68;
+  font-size: 25rpx;
+  flex-shrink: 0;
+}
+
+.route-manage-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rpx;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #ece8df;
+}
+
+.route-manage-actions .small-btn {
+  width: 100%;
+  min-width: 0;
+  padding: 0 8rpx;
+  font-size: 24rpx;
+}
+
+.route-name-input {
+  flex: 1;
+  min-width: 0;
+  height: 76rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #c8d1dc;
+  border-radius: 8rpx;
+  background: #f9fafb;
+  color: #18212f;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.small-btn {
+  min-width: 104rpx;
+  height: 64rpx;
+  min-height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 18rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #c8d1dc;
+  background: #ffffff;
+  color: #1d2433;
+  font-size: 25rpx;
+}
+
+.primary-small {
+  background: #1f6f68;
+  color: #ffffff;
+  border-color: #1f6f68;
+}
+
+.danger-small {
+  border-color: #e0bbb7;
+  color: #b3261e;
+}
+
+.small-btn::after,
+.drag-tools button::after {
+  border: 0;
+}
+
+.route-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+  margin: 22rpx 0;
+}
+
+.stop-card {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 18rpx;
+  margin-bottom: 16rpx;
+  border: 1rpx solid #e1ded5;
+  border-radius: 8rpx;
+  background: #ffffff;
 }
 
 .stop-order {
-  width: 44rpx;
-  height: 44rpx;
-  border-radius: 22rpx;
-  background: #15937f;
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 26rpx;
+  background: #1f6f68;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24rpx;
-  font-weight: 700;
+  font-size: 26rpx;
+  font-weight: 800;
   flex-shrink: 0;
+}
+
+.stop-image {
+  width: 116rpx;
+  height: 92rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+  background: #e8f1ee;
+  color: #1f6f68;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stop-img {
+  width: 100%;
+  height: 100%;
 }
 
 .stop-main {
@@ -69,103 +160,155 @@
 
 .stop-name {
   color: #18212f;
-  font-size: 29rpx;
-  font-weight: 700;
+  font-size: 30rpx;
+  font-weight: 800;
 }
 
-.toolbar {
-  margin-top: 22rpx;
+.stop-stay,
+.stop-note {
+  margin-top: 6rpx;
+  color: #667085;
+  font-size: 24rpx;
 }
 
-.route-mode-note {
-  margin-bottom: 20rpx;
-  padding: 20rpx 22rpx;
+.stop-note {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.drag-tools {
+  display: grid;
+  gap: 8rpx;
+  width: 64rpx;
+  flex-shrink: 0;
+}
+
+.drag-tools button {
+  width: 64rpx;
+  height: 44rpx;
+  min-height: 44rpx;
+  line-height: 44rpx;
+  padding: 0;
+  border: 1rpx solid #c8d1dc;
   border-radius: 8rpx;
+  background: #ffffff;
+  color: #1d2433;
+  font-size: 24rpx;
+}
+
+.drag-tools .delete-stop {
+  border-color: #e0bbb7;
+  color: #b3261e;
+}
+
+.route-bottom-actions {
+  position: fixed;
+  left: 24rpx;
+  right: 24rpx;
+  bottom: 142rpx;
+  z-index: 18;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16rpx;
+  padding: 18rpx;
+  border: 1rpx solid #dbe4e0;
+  border-radius: 8rpx;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12rpx 34rpx rgba(27, 64, 58, 0.12);
+}
+
+.modal-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.42);
+  display: flex;
+  align-items: flex-end;
+}
+
+.add-sheet {
+  width: 100%;
+  padding: 18rpx 28rpx 40rpx;
+  border-radius: 8rpx 8rpx 0 0;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.route-create-sheet {
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+}
+
+.sheet-handle {
+  width: 72rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: #d0d5dd;
+  margin: 0 auto 22rpx;
+}
+
+.sheet-title {
+  color: #18212f;
+  font-size: 36rpx;
+  font-weight: 900;
+}
+
+.sheet-current {
+  margin-top: 12rpx;
+  color: #344054;
+  font-size: 27rpx;
+}
+
+.form-label {
+  margin-top: 24rpx;
+  color: #18212f;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.route-options {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-top: 14rpx;
+}
+
+.route-option {
+  min-height: 58rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #d0d5dd;
+  border-radius: 8rpx;
+  color: #344054;
+  font-size: 25rpx;
+  display: flex;
+  align-items: center;
+}
+
+.route-option.selected {
+  border-color: #1f6f68;
   background: #edf4f2;
   color: #1f6f68;
-  font-size: 26rpx;
-  line-height: 1.45;
+  font-weight: 800;
 }
 
-.route-low-vision {
-  background: #ffffff;
-  color: #000000;
+.sheet-input {
+  height: 76rpx;
+  margin-top: 14rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #c8d1dc;
+  border-radius: 8rpx;
+  color: #18212f;
+  font-size: 28rpx;
+  box-sizing: border-box;
 }
 
-.route-low-vision .title {
-  color: #000000;
-  font-size: 56rpx;
-  font-weight: 900;
-}
-
-.route-low-vision .subtitle,
-.route-low-vision .route-desc,
-.route-low-vision .route-meta,
-.route-low-vision .meta {
-  color: #000000;
-  font-size: 34rpx;
-  line-height: 1.45;
-}
-
-.route-low-vision .route-mode-note,
-.route-low-vision .route-card {
-  border: 4rpx solid #000000;
-  background: #ffffff;
-  color: #000000;
-}
-
-.route-low-vision .route-hero {
-  min-height: 190rpx;
-  border: 4rpx solid #000000;
-  background: #000000;
-  color: #ffffff;
-}
-
-.route-low-vision .route-title {
-  font-size: 44rpx;
-}
-
-.route-low-vision .stop-row {
-  min-height: 104rpx;
-  border-bottom: 3rpx solid #000000;
-}
-
-.route-low-vision .stop-name {
-  color: #000000;
-  font-size: 36rpx;
-}
-
-.route-low-vision .btn {
-  min-height: 86rpx;
-  border: 4rpx solid #000000;
-  color: #000000;
-  background: #ffffff;
-  font-size: 32rpx;
-  font-weight: 900;
-}
-
-.route-low-vision .btn.primary {
-  color: #ffffff;
-  background: #000000;
-}
-
-.route-mobility .route-mode-note {
-  background: #e5f7ef;
-  border: 1rpx solid #c5ead9;
-  color: #127653;
-}
-
-.route-mobility .route-card {
-  border-color: #e2efe7;
-  border-radius: 18rpx;
-  box-shadow: 0 10rpx 28rpx rgba(41, 86, 68, 0.08);
-}
-
-.route-mobility .route-hero {
-  background: #edf8f2;
-  color: #0f6e52;
-}
-
-.route-mobility .stop-order {
-  background: #0f8b66;
+.sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+  margin-top: 26rpx;
 }

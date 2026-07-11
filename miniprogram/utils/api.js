@@ -9,9 +9,10 @@ function assetUrl(url) {
   if (!url || typeof url !== 'string') return url;
   if (/^https?:\/\//.test(url)) return url;
   if (url.startsWith('/assets/')) {
-    const filename = url.split('/').pop();
-    if (app.globalData.assetBaseUrl && filename) {
-      return `${app.globalData.assetBaseUrl}/${filename}`;
+    const assetBaseUrl = (app.globalData.assetBaseUrl || `${app.globalData.apiBaseUrl}/assets`).replace(/\/$/, '');
+    const assetPath = url.replace(/^\/assets\/?/, '');
+    if (assetPath) {
+      return `${assetBaseUrl}/${assetPath}`;
     }
     return `${app.globalData.apiBaseUrl}${url}`;
   }
@@ -85,6 +86,17 @@ function getPlace(id) {
   return request(`/api/places/${encodeURIComponent(id)}`).catch(() => withAssetHost(localStore.getPlace(id)));
 }
 
+function getPlaceReactions(id) {
+  return request(`/api/places/${encodeURIComponent(id)}/reactions`);
+}
+
+function updatePlaceReaction(id, previous, reaction) {
+  return request(`/api/places/${encodeURIComponent(id)}/reactions`, {
+    method: 'POST',
+    data: { previous: previous || '', reaction: reaction || '' }
+  });
+}
+
 function geocode(address) {
   return request(`/api/geocode?address=${encodeURIComponent(address)}`);
 }
@@ -110,7 +122,81 @@ function askAssistant(payload) {
   return request('/api/assistant', {
     method: 'POST',
     data: payload
-  }).catch(() => localStore.askAssistant(payload));
+  });
+}
+
+function transcribeAudio(filePath) {
+  return new Promise((resolve, reject) => {
+    wx.uploadFile({
+      url: `${app.globalData.apiBaseUrl}/api/transcriptions`,
+      filePath,
+      name: 'file',
+      header: {
+        'X-User-Id': userId()
+      },
+      formData: {
+        model: 'Qwen/Qwen3-ASR-1.7B',
+        language: 'Chinese',
+        response_format: 'json'
+      },
+      success(res) {
+        let payload;
+        try {
+          payload = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+        } catch {
+          reject(new Error('语音识别返回格式错误'));
+          return;
+        }
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(payload);
+          return;
+        }
+        reject(new Error((payload && payload.error) || `语音识别失败：${res.statusCode}`));
+      },
+      fail(error) {
+        reject(new Error(error.errMsg || '语音上传失败'));
+      }
+    });
+  });
+}
+
+function recognizeImage(filePath, location = null) {
+  const formData = {};
+  if (location && Number.isFinite(Number(location.lat)) && Number.isFinite(Number(location.lng))) {
+    formData.latitude = String(location.lat);
+    formData.longitude = String(location.lng);
+    if (location.accuracy !== undefined && location.accuracy !== '') {
+      formData.accuracy = String(location.accuracy);
+    }
+  }
+  return new Promise((resolve, reject) => {
+    wx.uploadFile({
+      url: `${app.globalData.apiBaseUrl}/api/recognize`,
+      filePath,
+      name: 'file',
+      header: {
+        'X-User-Id': userId()
+      },
+      formData,
+      success(res) {
+        let payload;
+        try {
+          payload = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
+        } catch {
+          reject(new Error('图片识别返回格式错误'));
+          return;
+        }
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(payload);
+          return;
+        }
+        reject(new Error((payload && payload.error) || `图片识别失败：${res.statusCode}`));
+      },
+      fail(error) {
+        reject(new Error(error.errMsg || '图片上传失败'));
+      }
+    });
+  });
 }
 
 function listHistory() {
@@ -131,8 +217,12 @@ module.exports = {
   deleteHistory,
   geocode,
   getPlace,
+  getPlaceReactions,
   getNearby,
   listRoutes,
   listPlaces,
-  listHistory
+  listHistory,
+  recognizeImage,
+  transcribeAudio,
+  updatePlaceReaction
 };

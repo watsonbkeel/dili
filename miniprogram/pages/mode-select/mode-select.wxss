@@ -179,13 +179,11 @@
 }
 
 .demo-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24rpx;
   margin-top: 28rpx;
 }
 
 .demo-btn {
+  width: 100%;
   min-height: 82rpx;
   border-radius: 12rpx;
   border: 4rpx solid #000000;
@@ -194,11 +192,21 @@
   justify-content: center;
   font-size: 30rpx;
   font-weight: 800;
+  text-align: center;
+  line-height: 1.25;
 }
 
 .demo-btn.dark {
   background: #000000;
   color: #ffffff;
+}
+
+.voice-note {
+  margin-top: 22rpx;
+  color: #000000;
+  font-size: 28rpx;
+  line-height: 1.45;
+  font-weight: 800;
 }
 
 .vision-choose {

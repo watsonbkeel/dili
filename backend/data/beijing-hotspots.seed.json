@@ -59,7 +59,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/beijing-palace-museum.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/beijing-palace-museum.jpg",
           "caption": "北京故宫",
           "source": "故宫博物院官网",
           "sourceUrl": "https://www.dpm.org.cn/",
@@ -77,7 +77,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 180,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "午门至神武门等主要开放区域设有无障碍通道，部分宫殿室内和台基区域仍受台阶限制。",
+        "mapUrl": "https://dili.bkeel.com/assets/images/accessibility/beijing-palace-museum-map.jpg",
+        "sourceUrl": "https://www.dpm.org.cn/Visit.html",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "temple-of-heaven",
@@ -128,7 +141,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/temple-of-heaven.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/temple-of-heaven.jpg",
           "caption": "天坛",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101409",
@@ -146,7 +159,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 120,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "园区主路可轮椅通行，圜丘、祈年殿台基及部分核心建筑仍有台阶。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "summer-palace",
@@ -195,7 +221,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/summer-palace.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/summer-palace.jpg",
           "caption": "颐和园",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101407",
@@ -213,7 +239,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 180,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "东宫门、昆明湖东岸等部分区域可轮椅游览，万寿山和长廊部分节点存在坡道或台阶。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "old-summer-palace-ruins",
@@ -263,7 +302,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/old-summer-palace-ruins.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/old-summer-palace-ruins.jpg",
           "caption": "圆明园遗址",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101422",
@@ -281,7 +320,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 150,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "主要园路较平缓，部分遗址区路面、桥梁和远距离游线对轮椅通行有影响。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "jingshan-park",
@@ -326,7 +378,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/jingshan-park.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/jingshan-park.jpg",
           "caption": "景山公园",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117811",
@@ -340,7 +392,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "none",
+        "hasAccessibleRoute": false,
+        "label": "暂无连续无障碍通道",
+        "wheelchairTourable": false,
+        "summary": "山顶主要观景线路依赖坡道和台阶，轮椅难以完成核心登高游览。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "beihai-park",
@@ -385,7 +450,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/beihai-park.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/beihai-park.jpg",
           "caption": "北海公园",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117807",
@@ -399,7 +464,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 120,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "湖岸和主要园路部分可轮椅通行，琼华岛、白塔等区域存在较多台阶。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "beijing-guozijian",
@@ -444,10 +522,14 @@
       ],
       "images": [
         {
-          "url": "",
-          "caption": "北京国子监",
-          "source": "百度图片",
-          "searchQuery": "北京国子监 辟雍"
+          "url": "https://dili.bkeel.com/assets/images/attractions/beijing-guozijian.jpg",
+          "caption": "国子监",
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%9B%BD%E5%AD%90%E7%9B%91%E8%BE%9F%E9%9B%8D%E6%AE%BF.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "黄雨橙",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/49/%E5%9B%BD%E5%AD%90%E7%9B%91%E8%BE%9F%E9%9B%8D%E6%AE%BF.jpg"
         }
       ],
       "sources": [
@@ -457,7 +539,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "主要院落可在工作人员指引下通行，古建筑门槛和部分殿宇台阶会限制轮椅进入。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "beijing-confucius-temple",
@@ -502,10 +597,14 @@
       ],
       "images": [
         {
-          "url": "",
-          "caption": "北京孔庙",
-          "source": "百度图片",
-          "searchQuery": "北京孔庙 大成殿"
+          "url": "https://dili.bkeel.com/assets/images/attractions/beijing-confucius-temple.jpg",
+          "caption": "孔庙",
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Peking_Konfuzius_Tempel_-20071022-RM-091826.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "Ermell",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/02/Peking_Konfuzius_Tempel_-20071022-RM-091826.jpg"
         }
       ],
       "sources": [
@@ -515,7 +614,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "院落部分区域可轮椅游览，古建筑门槛、碑林和殿宇台阶需现场绕行。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "yonghe-temple",
@@ -560,10 +672,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/yonghe-temple.jpg",
           "caption": "雍和宫",
-          "source": "百度图片",
-          "searchQuery": "北京雍和宫"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Yonghe_Gong_Lama_Temple.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "Jesse",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Yonghe_Gong_Lama_Temple.jpg"
         }
       ],
       "sources": [
@@ -573,7 +689,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "中轴院落部分路段可通行，殿宇门槛和台阶较多，建议提前联系现场工作人员。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "zhengyangmen",
@@ -619,10 +748,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/zhengyangmen.jpg",
           "caption": "正阳门",
-          "source": "百度图片",
-          "searchQuery": "北京正阳门 前门"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Zhengyangmen_gatehouse.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "TarnishedPath",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Zhengyangmen_gatehouse.jpg"
         }
       ],
       "sources": [
@@ -632,7 +765,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 45,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "none",
+        "hasAccessibleRoute": false,
+        "label": "暂无连续无障碍通道",
+        "wheelchairTourable": false,
+        "summary": "外围广场可到达，城楼主要参观空间依赖台阶，不构成连续轮椅游览路线。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "shichahai",
@@ -677,7 +823,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/shichahai.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/shichahai.jpg",
           "caption": "什刹海",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117800",
@@ -691,7 +837,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 90,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "湖畔主要公共道路可轮椅通行，个别胡同、桥面和沿岸路段可能不平整。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "nanluoguxiang",
@@ -734,7 +893,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/nanluoguxiang.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/nanluoguxiang.jpg",
           "caption": "南锣鼓巷",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/101328",
@@ -748,7 +907,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "主街整体可轮椅通行，部分商铺存在门槛，客流高峰时通行空间较拥挤。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "lugou-bridge",
@@ -798,10 +970,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/lugou-bridge.jpg",
           "caption": "卢沟桥",
-          "source": "百度图片",
-          "searchQuery": "北京卢沟桥 石狮"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Marco_Polo_bridge_Beijing.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "author": "Naplee12",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/83/Marco_Polo_bridge_Beijing.jpg"
         }
       ],
       "sources": [
@@ -811,7 +987,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "桥面可到达，但石质路面不平且接缝明显，建议有人协助轮椅通行。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "prince-kung-mansion",
@@ -857,7 +1046,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/prince-kung-mansion.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/prince-kung-mansion.jpg",
           "caption": "恭王府",
           "source": "北京旅游网",
           "sourceUrl": "https://s.visitbeijing.com.cn/attraction/117810",
@@ -875,7 +1064,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 90,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "府邸部分院落设有辅助通道，花园假山、门槛和部分室内空间仍受台阶限制。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "beijing-ancient-observatory",
@@ -920,10 +1122,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/beijing-ancient-observatory.jpg",
           "caption": "北京古观象台",
-          "source": "百度图片",
-          "searchQuery": "北京古观象台 天文仪器"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beijing_Ancient_Observatory_91060.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "G41rn8",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/42/Beijing_Ancient_Observatory_91060.jpg"
         }
       ],
       "sources": [
@@ -933,7 +1139,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 45,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "none",
+        "hasAccessibleRoute": false,
+        "label": "暂无连续无障碍通道",
+        "wheelchairTourable": false,
+        "summary": "院落可部分到达，核心屋顶天文仪器展区主要依赖楼梯。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "badaling-great-wall",
@@ -978,10 +1197,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/badaling-great-wall.jpg",
           "caption": "八达岭长城",
-          "source": "百度图片",
-          "searchQuery": "八达岭长城"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Badaling_China_Great-Wall-of-China-01.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "author": "CEphoto, Uwe Aranas",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/Badaling_China_Great-Wall-of-China-01.jpg"
         }
       ],
       "sources": [
@@ -995,7 +1218,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 150,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "设有面向轮椅游客的辅助通行线路，但开放范围和电梯、缆车运行情况需提前确认。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "ming-tombs",
@@ -1040,10 +1276,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/ming-tombs.jpg",
           "caption": "明十三陵",
-          "source": "百度图片",
-          "searchQuery": "北京明十三陵 神路"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ming_Tombs_Sacred_Way_(9863969363).jpg",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "author": "Gary Todd from Xinzheng, China",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Ming_Tombs_Sacred_Way_%289863969363%29.jpg"
         }
       ],
       "sources": [
@@ -1057,7 +1297,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 180,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "神路及部分陵区地面区域可轮椅通行，不同陵园的坡度、台阶和开放条件差异较大。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "zhoukoudian-peking-man-site",
@@ -1107,10 +1360,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/zhoukoudian-peking-man-site.jpg",
           "caption": "周口店北京人遗址",
-          "source": "百度图片",
-          "searchQuery": "周口店北京人遗址"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Zhoukoudian_Site_Entrance.JPG",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "author": "Siyuwj",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Zhoukoudian_Site_Entrance.JPG"
         }
       ],
       "sources": [
@@ -1124,7 +1381,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 120,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "博物馆主要展厅可轮椅参观，遗址洞穴和山地路线通行条件有限。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "xiangshan-park",
@@ -1170,10 +1440,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/xiangshan-park.jpg",
           "caption": "香山公园",
-          "source": "百度图片",
-          "searchQuery": "北京香山公园 静宜园"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%8C%97%E4%BA%AC%EF%BC%8C%E9%A6%99%E5%B1%B1%E7%BA%A2%E5%8F%B6_-_panoramio.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "author": "zengsx",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f7/%E5%8C%97%E4%BA%AC%EF%BC%8C%E9%A6%99%E5%B1%B1%E7%BA%A2%E5%8F%B6_-_panoramio.jpg"
         }
       ],
       "sources": [
@@ -1183,7 +1457,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 180,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "none",
+        "hasAccessibleRoute": false,
+        "label": "暂无连续无障碍通道",
+        "wheelchairTourable": false,
+        "summary": "核心游线为山地坡道和台阶，轮椅不适合完成主要登山景点游览。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "dashilar",
@@ -1228,10 +1515,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/dashilar.jpg",
           "caption": "大栅栏",
-          "source": "百度图片",
-          "searchQuery": "北京大栅栏"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E6%A0%85%E6%A0%8F_-_panoramio.jpg",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+          "author": "wuqiang_beijing",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5c/%E5%A4%A7%E6%A0%85%E6%A0%8F_-_panoramio.jpg"
         }
       ],
       "sources": [
@@ -1241,7 +1532,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "主步行街整体可轮椅通行，部分老店入口有门槛，客流密集时需放慢速度。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "liulichang-cultural-street",
@@ -1287,10 +1591,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/liulichang-cultural-street.jpg",
           "caption": "琉璃厂文化街",
-          "source": "百度图片",
-          "searchQuery": "北京琉璃厂文化街"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beijing-Liulichang_Dongjie-02-gje.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "Gerd Eichmann",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Beijing-Liulichang_Dongjie-02-gje.jpg"
         }
       ],
       "sources": [
@@ -1300,7 +1608,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "主街路面整体较平缓，可轮椅通行，部分店铺入口仍有传统门槛。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "beijing-bell-and-drum-towers",
@@ -1347,10 +1668,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/beijing-bell-and-drum-towers.jpg",
           "caption": "北京钟鼓楼",
-          "source": "百度图片",
-          "searchQuery": "北京钟鼓楼"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beijing_Drum_Tower.jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "Toadspike",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Beijing_Drum_Tower.jpg"
         }
       ],
       "sources": [
@@ -1360,7 +1685,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "none",
+        "hasAccessibleRoute": false,
+        "label": "暂无连续无障碍通道",
+        "wheelchairTourable": false,
+        "summary": "广场区域可到达，钟楼和鼓楼内部核心参观路线为陡峭楼梯。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "miaoying-temple-white-stupa",
@@ -1407,10 +1745,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/miaoying-temple-white-stupa.jpg",
           "caption": "白塔寺",
-          "source": "百度图片",
-          "searchQuery": "北京白塔寺 妙应寺白塔"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E5%A6%99%E5%BA%94%E5%AF%BA%E7%99%BD%E5%A1%94_-_Miaoying_Temple_White_Pagoda_(8003103598).jpg",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+          "author": "Nikolaj Potanin from Russia",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0c/%E5%A6%99%E5%BA%94%E5%AF%BA%E7%99%BD%E5%A1%94_-_Miaoying_Temple_White_Pagoda_%288003103598%29.jpg"
         }
       ],
       "sources": [
@@ -1420,7 +1762,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 45,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "主要院落可部分轮椅通行，殿宇门槛及白塔周边部分区域存在台阶。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "fayuan-temple",
@@ -1465,10 +1820,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/fayuan-temple.jpg",
           "caption": "法源寺",
-          "source": "百度图片",
-          "searchQuery": "北京法源寺"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:%E6%B3%95%E6%BA%90%E5%AF%BA_(%E5%94%90_%E6%82%AF%E5%BF%A0%E5%AF%BA%E5%9D%80)_%E6%82%AF%E5%BF%A0%E9%98%81_-_panoramio.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "author": "mayanming",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/%E6%B3%95%E6%BA%90%E5%AF%BA_%28%E5%94%90_%E6%82%AF%E5%BF%A0%E5%AF%BA%E5%9D%80%29_%E6%82%AF%E5%BF%A0%E9%98%81_-_panoramio.jpg"
         }
       ],
       "sources": [
@@ -1478,7 +1837,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 45,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "院落部分区域可通行，古寺门槛和殿宇台阶需现场协助。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "tanzhe-temple",
@@ -1523,10 +1895,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/tanzhe-temple.jpg",
           "caption": "潭柘寺",
-          "source": "百度图片",
-          "searchQuery": "北京潭柘寺"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tanzhe_Temple_.pic.jpg",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "author": "Kikolipu",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/74/Tanzhe_Temple_.pic.jpg"
         }
       ],
       "sources": [
@@ -1536,7 +1912,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 90,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "山门及部分院落可到达，寺内高差、坡道和台阶较多，轮椅可游范围有限。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "jietai-temple",
@@ -1581,10 +1970,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/jietai-temple.jpg",
           "caption": "戒台寺",
-          "source": "百度图片",
-          "searchQuery": "北京戒台寺 戒坛"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Entrance_to_Jietai_Temple_(20150117133227).JPG",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "author": "N509FZ",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/10/Entrance_to_Jietai_Temple_%2820150117133227%29.JPG"
         }
       ],
       "sources": [
@@ -1594,7 +1987,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 90,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "部分院落可到达，寺院地形和戒坛周边台阶会限制连续轮椅游览。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "capital-museum",
@@ -1638,10 +2044,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/capital-museum.jpg",
           "caption": "首都博物馆",
-          "source": "百度图片",
-          "searchQuery": "首都博物馆"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Capital_Museum_in_Beijing.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "author": "PENG Yanan (Neo-Jay/鸟甲)",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Capital_Museum_in_Beijing.jpg"
         }
       ],
       "sources": [
@@ -1655,7 +2065,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 120,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "馆内设无障碍入口、电梯和无障碍卫生间，主要展厅可轮椅参观。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "national-museum-of-china",
@@ -1700,7 +2123,7 @@
       ],
       "images": [
         {
-          "url": "https://diary.bkeel.com/uploads/attractions/national-museum-of-china.jpg",
+          "url": "https://dili.bkeel.com/assets/images/attractions/national-museum-of-china.jpg",
           "caption": "中国国家博物馆",
           "source": "北京市人民政府网站",
           "sourceUrl": "https://arabic.beijing.gov.cn/consuminginbeijing/onlyinbeijing/conventions/updatesofconventions/202105/t20210519_2392873.html",
@@ -1718,7 +2141,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 180,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "馆内设无障碍入口、电梯和无障碍卫生间，主要开放展厅可轮椅参观。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "military-museum-of-chinese-peoples-revolution",
@@ -1764,10 +2200,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/military-museum-of-chinese-peoples-revolution.jpg",
           "caption": "中国人民革命军事博物馆",
-          "source": "百度图片",
-          "searchQuery": "中国人民革命军事博物馆"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beijing_Military_Museum_Main_Hall.jpg",
+          "license": "Public domain",
+          "licenseUrl": "",
+          "author": "Max Smith",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Beijing_Military_Museum_Main_Hall.jpg"
         }
       ],
       "sources": [
@@ -1781,7 +2221,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 150,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "full",
+        "hasAccessibleRoute": true,
+        "label": "有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "馆内主要展厅设电梯和无障碍通道，可按开放区域进行轮椅参观。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     },
     {
       "id": "beijing-lu-xun-museum",
@@ -1827,10 +2280,14 @@
       ],
       "images": [
         {
-          "url": "",
+          "url": "https://dili.bkeel.com/assets/images/attractions/beijing-lu-xun-museum.jpg",
           "caption": "北京鲁迅博物馆",
-          "source": "百度图片",
-          "searchQuery": "北京鲁迅博物馆 鲁迅旧居"
+          "source": "Wikimedia Commons",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Beijing_Lu_Xun_Museum_2.jpg",
+          "license": "CC0",
+          "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+          "author": "EditQ",
+          "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/02/Beijing_Lu_Xun_Museum_2.jpg"
         }
       ],
       "sources": [
@@ -1844,7 +2301,20 @@
         }
       ],
       "confidence": "seed",
-      "updatedAt": "2026-07-06"
+      "updatedAt": "2026-07-06",
+      "walkingTimeMinutes": 60,
+      "walkingTimeNote": "按主要开放区域的一般游览过程估算",
+      "accessibility": {
+        "level": "partial",
+        "hasAccessibleRoute": true,
+        "label": "部分区域有无障碍通道",
+        "wheelchairTourable": true,
+        "summary": "现代展厅主要区域可轮椅参观，鲁迅旧居院落的传统门槛可能需要协助。",
+        "mapUrl": "",
+        "sourceUrl": "",
+        "updatedAt": "2026-07-10",
+        "disclaimer": "无障碍设施可能随开放区域和维护情况变化，出发前请向景区确认。"
+      }
     }
   ]
 }

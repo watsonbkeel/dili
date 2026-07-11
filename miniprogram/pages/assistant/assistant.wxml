@@ -2,23 +2,28 @@
   <view class="assistant-head">
     <view>
       <view class="title">AI 助手</view>
-      <view class="subtitle">你的专属历史旅行助手</view>
+      <view class="subtitle">根据当前导览内容继续提问</view>
     </view>
     <view class="robot">AI</view>
   </view>
 
+  <view class="context-band">
+    <view class="context-source">{{sourceText}}</view>
+    <view wx:if="{{contextLoading}}" class="context-title">正在读取来源信息...</view>
+    <view wx:else class="context-title">{{focusTitle}}</view>
+    <view wx:if="{{focusDescription}}" class="context-description">{{focusDescription}}</view>
+  </view>
+
   <view class="quick-panel">
-    <view class="card-title">你可以问我</view>
+    <view class="card-title">与当前内容相关的问题</view>
     <block wx:for="{{quickQuestions}}" wx:key="*this">
       <view class="quick-item" bindtap="askQuick" data-text="{{item}}">{{item}}</view>
     </block>
 
-    <view class="popular-title">热门推荐</view>
+    <view class="popular-title">继续了解</view>
     <view class="popular-grid">
       <block wx:for="{{popularRecommendations}}" wx:key="title">
-        <view class="popular-item" bindtap="askPopular" data-question="{{item.question}}">
-          <view class="popular-name">{{item.title}}</view>
-        </view>
+        <button class="popular-item" bindtap="askPopular" data-question="{{item.question}}">{{item.title}}</button>
       </block>
     </view>
   </view>
@@ -27,22 +32,35 @@
     <block wx:for="{{messages}}" wx:key="index">
       <view class="message {{item.role}}">
         <view class="bubble">{{item.content}}</view>
-        <button wx:if="{{item.role === 'assistant'}}" class="mini-btn" bindtap="playAnswer" data-index="{{index}}">播报</button>
+        <button wx:if="{{item.role === 'assistant'}}" class="message-audio-btn {{audioMessageIndex === index && audio.status === 'playing' ? 'is-playing' : ''}}" bindtap="toggleMessageAudio" data-index="{{index}}" loading="{{audioMessageIndex === index && audio.status === 'loading'}}">
+          {{audioMessageIndex === index && audio.status === 'playing' ? '暂停' : audioMessageIndex === index && audio.status === 'loading' ? '正在生成语音' : '播报'}}
+        </button>
       </view>
     </block>
     <view wx:if="{{loading}}" class="status compact">AI 回复中...</view>
     <view wx:if="{{error}}" class="status compact">{{error}}</view>
   </scroll-view>
 
-  <view class="audio-bar assistant-audio">
-    <button class="btn" bindtap="pauseAudio">暂停</button>
-    <button class="btn" bindtap="resumeAudio">继续</button>
-    <button class="btn" bindtap="stopAudio">停止</button>
-    <text class="audio-state">{{audio.statusText}}</text>
-  </view>
+  <view class="input-dock">
+    <view class="input-mode-row">
+      <view class="input-mode-label">{{inputMode === 'voice' ? '语音输入' : '文字输入'}}</view>
+      <button class="input-mode-toggle" bindtap="toggleInputMode" disabled="{{recording || processingVoice}}">
+        {{inputMode === 'voice' ? '切换到文字' : '切换到语音'}}
+      </button>
+    </view>
 
-  <view class="input-bar">
-    <input class="chat-input" value="{{input}}" placeholder="请输入你的问题..." confirm-type="send" bindinput="onInput" bindconfirm="send" />
-    <button class="send-btn" bindtap="send" loading="{{loading}}">发送</button>
+    <view wx:if="{{inputMode === 'voice'}}" class="voice-input-row">
+      <button class="voice-input-btn {{recording ? 'recording' : ''}}" bindtap="toggleVoiceInput" loading="{{processingVoice}}" disabled="{{loading}}">
+        <text wx:if="{{recording}}">停止</text>
+        <text wx:elif="{{processingVoice}}">处理中</text>
+        <text wx:else>开始</text>
+      </button>
+      <view class="voice-status">{{voiceStatus}}</view>
+    </view>
+
+    <view wx:else class="input-bar">
+      <input class="chat-input" value="{{input}}" placeholder="请输入你的问题..." confirm-type="send" bindinput="onInput" bindconfirm="send" />
+      <button class="send-btn" bindtap="send" loading="{{loading}}">发送</button>
+    </view>
   </view>
 </view>

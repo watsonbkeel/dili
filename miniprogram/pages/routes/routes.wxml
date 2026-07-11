@@ -1,61 +1,105 @@
-<view class="page route-page {{mode == 'lowVision' ? 'route-low-vision' : ''}} {{mode == 'mobility' ? 'route-mobility' : ''}}">
+<view class="page routes-page">
   <view class="topbar">
     <view>
-      <view class="title">{{pageTitle}}</view>
-      <view class="subtitle">{{pageSubtitle}}</view>
+      <view class="title">我的路线</view>
+      <view class="subtitle">安排今天想看的历史地点。</view>
     </view>
   </view>
 
-  <view wx:if="{{mode == 'mobility'}}" class="route-mode-note">已开启：少步行路线 · 少台阶提示 · 休息点提醒</view>
-  <view wx:elif="{{mode == 'lowVision'}}" class="route-mode-note">已开启：大字模式 · 高对比度 · 语音优先</view>
-
-  <view wx:if="{{loading}}" class="status">正在加载推荐路线...</view>
-  <view wx:elif="{{error}}" class="status">
-    <view>{{error}}</view>
-    <button class="btn primary" bindtap="loadRoutes">重试</button>
+  <view class="route-name-card">
+    <view class="route-label">当前路线</view>
+    <picker
+      wx:if="{{!editingName}}"
+      class="route-picker"
+      mode="selector"
+      range="{{routeNames}}"
+      value="{{currentRouteIndex}}"
+      bindchange="switchRoute"
+    >
+      <view class="route-picker-value">
+        <text class="route-name">{{routeName}}</text>
+        <text class="route-picker-arrow">切换⌄</text>
+      </view>
+    </picker>
+    <view wx:else class="edit-name-row">
+      <input class="route-name-input" value="{{draftName}}" bindinput="onNameInput" confirm-type="done" bindconfirm="saveName" focus />
+      <button class="small-btn primary-small" bindtap="saveName">保存</button>
+      <button class="small-btn" bindtap="cancelEditName">取消</button>
+    </view>
+    <view wx:if="{{!editingName}}" class="route-manage-actions">
+      <button class="small-btn" bindtap="startEditName">编辑名称</button>
+      <button class="small-btn" bindtap="openCreateModal">新增路线</button>
+      <button class="small-btn danger-small" bindtap="deleteCurrentRoute">删除路线</button>
+    </view>
   </view>
-  <view wx:elif="{{!routes.length}}" class="status">暂无推荐路线。</view>
 
-  <block wx:else>
-    <block wx:for="{{routes}}" wx:key="id">
-      <view class="route-card">
-        <view class="route-hero">
-          <view>
-            <view class="route-title">{{item.title}}</view>
-            <view class="route-desc">{{item.description}}</view>
-            <view class="route-meta">{{item.totalDuration}}</view>
-          </view>
+  <view class="route-actions">
+    <button class="btn primary" bindtap="openAddModal">添加地点</button>
+    <button class="btn" loading="{{sorting}}" disabled="{{sorting || stops.length < 2}}" bindtap="smartSort">{{sorting ? '正在排序' : '智能排序'}}</button>
+  </view>
+
+  <view class="stop-list">
+    <view wx:if="{{!stops.length}}" class="status">当前路线暂无地点，请先添加地点。</view>
+    <block wx:for="{{stops}}" wx:key="id">
+      <view class="stop-card">
+        <view class="stop-order">{{item.order}}</view>
+        <view class="stop-image {{item.image ? '' : 'stop-image-empty'}}" bindtap="openStop" data-id="{{item.id}}">
+          <image wx:if="{{item.image}}" class="stop-img" mode="aspectFill" src="{{item.image}}" />
+          <text wx:else>图</text>
         </view>
-        <view class="tag-wrap">
-          <block wx:for="{{item.tags}}" wx:key="*this">
-            <text class="tag">{{item}}</text>
-          </block>
+        <view class="stop-main" bindtap="openStop" data-id="{{item.id}}">
+          <view class="stop-name">{{item.name}}</view>
+          <view class="stop-stay">建议停留 {{item.stay}}</view>
+          <view class="stop-note">{{item.note}}</view>
         </view>
-
-        <block wx:for="{{item.stops}}" wx:for-item="stop" wx:key="id">
-          <view class="stop-row" bindtap="openStop" data-id="{{stop.id}}">
-            <view class="stop-order">{{stop.order}}</view>
-            <view class="stop-main">
-              <view class="stop-name">{{stop.name}}</view>
-              <view class="meta">建议游览：{{stop.recommendedDuration}}</view>
-            </view>
-          </view>
-        </block>
-
-        <view class="toolbar">
-          <button class="btn primary" bindtap="startRoute" data-index="{{index}}">开始导航</button>
-          <button class="btn" bindtap="openAi" data-index="{{index}}">问 AI</button>
+        <view class="drag-tools">
+          <button bindtap="moveStop" data-index="{{index}}" data-direction="up" disabled="{{index == 0}}">↑</button>
+          <button bindtap="moveStop" data-index="{{index}}" data-direction="down" disabled="{{index == stops.length - 1}}">↓</button>
+          <button class="delete-stop" bindtap="removeStop" data-index="{{index}}">删</button>
         </view>
       </view>
     </block>
-  </block>
+  </view>
 
-  <view class="ai-float" bindtap="openGlobalAi">AI</view>
+  <view wx:if="{{showCreateModal}}" class="modal-mask" bindtap="closeCreateModal">
+    <view class="add-sheet route-create-sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">新增路线</view>
+      <view class="form-label">路线名称</view>
+      <input class="sheet-input" value="{{newRouteName}}" bindinput="onNewRouteName" confirm-type="done" bindconfirm="confirmCreateRoute" focus maxlength="30" />
+      <view class="sheet-actions">
+        <button class="btn" bindtap="closeCreateModal">取消</button>
+        <button class="btn primary" bindtap="confirmCreateRoute">新建并切换</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showAddModal}}" class="modal-mask" bindtap="closeAddModal">
+    <view class="add-sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="sheet-title">加入路线</view>
+      <view class="sheet-current">当前路线：{{routeName}}</view>
+
+      <view class="form-label">地点信息</view>
+      <input class="sheet-input" value="{{candidate.name}}" bindinput="onCandidateName" placeholder="地点名称" />
+      <input class="sheet-input" value="{{candidate.stay}}" bindinput="onCandidateStay" placeholder="停留时间，例如 45 分钟" />
+      <input class="sheet-input" type="number" value="{{candidate.order}}" bindinput="onCandidateOrder" placeholder="游玩顺序" />
+
+      <view class="sheet-actions">
+        <button class="btn" bindtap="closeAddModal">取消</button>
+        <button class="btn primary" bindtap="confirmAdd">确认加入</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="route-bottom-actions">
+    <button class="btn primary" open-type="share" bindtap="shareRoute">分享路线</button>
+  </view>
+
   <view class="bottom-nav">
     <view class="nav-item" data-tab="home" bindtap="goTab"><view class="nav-icon">⌂</view><view>首页</view></view>
-    <view class="nav-item" data-tab="map" bindtap="goTab"><view class="nav-icon">◎</view><view>地图</view></view>
+    <view class="nav-item" data-tab="camera" bindtap="goTab"><view class="nav-icon">◉</view><view>拍照</view></view>
     <view class="nav-item active" data-tab="routes" bindtap="goTab"><view class="nav-icon">⌘</view><view>路线</view></view>
-    <view class="nav-item" data-tab="favorites" bindtap="goTab"><view class="nav-icon">♡</view><view>收藏</view></view>
     <view class="nav-item" data-tab="profile" bindtap="goTab"><view class="nav-icon">○</view><view>我的</view></view>
   </view>
 </view>

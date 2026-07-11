@@ -1,0 +1,59 @@
+<view class="page result-page">
+  <image wx:if="{{image}}" class="result-image" mode="aspectFill" src="{{image}}" />
+
+  <view wx:if="{{loading}}" class="recognition-status">
+    <view class="status-title">AI 正在识别</view>
+    <view class="status-text">正在分析建筑轮廓、匾额、文字和纹饰...</view>
+  </view>
+
+  <view wx:elif="{{error}}" class="recognition-status error-status">
+    <view class="status-title">识别失败</view>
+    <view class="status-text">{{error}}</view>
+    <view class="status-actions">
+      <button class="btn primary" bindtap="recognize">重新识别</button>
+      <button class="btn" bindtap="chooseAgain">重新拍摄</button>
+    </view>
+  </view>
+
+  <block wx:elif="{{result}}">
+    <view class="result-card">
+      <view class="result-kicker">AI 识别结果</view>
+      <view class="result-title">{{result.name}}</view>
+      <view class="result-meta">
+        <text>置信度 {{result.confidence}}</text>
+        <text>{{result.type}}</text>
+        <text wx:if="{{result.locationUsed}}">已结合当前位置</text>
+      </view>
+      <view class="tag-row">
+        <block wx:for="{{result.tags}}" wx:key="*this">
+          <text class="tag">{{item}}</text>
+        </block>
+      </view>
+    </view>
+
+    <view wx:if="{{result.visualEvidence}}" class="card evidence-card">
+      <view class="card-title">识别依据</view>
+      <view class="body">{{result.visualEvidence}}</view>
+    </view>
+
+    <view class="accessibility-strip">{{result.accessibility}}</view>
+
+    <view class="card">
+      <view class="card-title">简介</view>
+      <view class="body">{{result.summary}}</view>
+    </view>
+
+    <view class="card">
+      <view class="card-title">历史信息</view>
+      <view class="body">{{result.story}}</view>
+    </view>
+
+    <view class="action-grid">
+      <button wx:if="{{result.recognized}}" class="btn primary" bindtap="addToRoute">加入我的路线</button>
+      <button wx:if="{{result.recognized}}" class="btn" bindtap="toggleFavorite">{{saved ? '已收藏' : '收藏'}}</button>
+      <button class="btn" open-type="share" bindtap="shareFriend">分享给朋友</button>
+      <button class="btn ghost" bindtap="askAi">问 AI</button>
+      <button wx:if="{{!result.recognized}}" class="btn primary" bindtap="chooseAgain">重新拍摄</button>
+    </view>
+  </block>
+</view>

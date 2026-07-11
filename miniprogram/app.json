@@ -1,15 +1,19 @@
 {
   "pages": [
     "pages/mode-select/mode-select",
-    "pages/start/start",
-    "pages/low-vision-home/low-vision-home",
-    "pages/mobility-home/mobility-home",
     "pages/home/home",
+    "pages/camera/camera",
+    "pages/recognition-result/recognition-result",
     "pages/place/place",
     "pages/map/map",
     "pages/routes/routes",
     "pages/favorites/favorites",
     "pages/profile/profile",
+    "pages/profile-edit/profile-edit",
+    "pages/start/start",
+    "pages/low-vision-home/low-vision-home",
+    "pages/low-vision-place/low-vision-place",
+    "pages/mobility-home/mobility-home",
     "pages/assistant/assistant",
     "pages/story/story",
     "pages/history/history"
@@ -20,9 +24,17 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f6f4ef"
   },
+  "networkTimeout": {
+    "request": 30000,
+    "uploadFile": 60000,
+    "downloadFile": 30000
+  },
   "permission": {
     "scope.userLocation": {
       "desc": "用于发现你附近的历史文化地点并生成本地导览内容"
+    },
+    "scope.record": {
+      "desc": "用于将语音转换为文字，以搜索景点或向 AI 助手提问"
     }
   },
   "requiredPrivateInfos": [
@@ -30,7 +42,7 @@
   ],
   "plugins": {
     "WechatSI": {
-      "version": "0.3.5",
+      "version": "0.3.7",
       "provider": "wx069ba97219f66d99"
     }
   },

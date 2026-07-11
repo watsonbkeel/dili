@@ -1,48 +1,127 @@
-.favorite-card-head {
+.favorites-page {
+  background: #f7f6f1;
+  padding-bottom: 60rpx;
+}
+
+.city-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin: 28rpx 0 14rpx;
+  padding-bottom: 12rpx;
+  border-bottom: 2rpx solid #d8ddd9;
+}
+
+.city-name {
+  color: #18212f;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.city-count {
+  color: #667085;
+  font-size: 24rpx;
+}
+
+.favorite-card {
+  display: flex;
+  gap: 18rpx;
+  padding: 20rpx;
+  margin-bottom: 18rpx;
+  border: 1rpx solid #e1ded5;
+  border-radius: 8rpx;
+  background: #ffffff;
+}
+
+.fav-cover {
+  width: 166rpx;
+  height: 142rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+  background: #e8f1ee;
+  color: #1f6f68;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 24rpx;
+}
+
+.fav-img {
+  width: 100%;
+  height: 100%;
+}
+
+.fav-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.fav-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 18rpx;
+  gap: 14rpx;
 }
 
-.favorite-card-head .card-title {
+.fav-head .card-title {
   min-width: 0;
   flex: 1;
 }
 
-.favorite-remove {
-  width: 64rpx;
-  height: 64rpx;
-  min-height: 64rpx;
-  padding: 0;
-  border: 1rpx solid #f2b8b5;
-  border-radius: 8rpx;
-  background: #fff8f8;
-  color: #e53935;
+.saved-mark {
+  min-height: 42rpx;
+  padding: 0 12rpx;
+  border-radius: 6rpx;
+  background: #edf4f2;
+  color: #1f6f68;
+  font-size: 22rpx;
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
   flex-shrink: 0;
-  line-height: 1;
-}
-
-.favorite-remove::after {
-  border: 0;
-}
-
-.favorite-icon {
-  font-size: 38rpx;
-  line-height: 1;
 }
 
 .preview {
-  margin: 18rpx 0;
+  margin-top: 10rpx;
   color: #344054;
-  font-size: 27rpx;
-  line-height: 1.6;
+  font-size: 25rpx;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.heart-active {
-  color: #e53935;
+.fav-actions {
+  display: flex;
+  gap: 10rpx;
+  flex-wrap: wrap;
+  margin-top: 14rpx;
+}
+
+.mini-action {
+  min-height: 58rpx;
+  line-height: 58rpx;
+  padding: 0 14rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #c8d1dc;
+  background: #ffffff;
+  color: #1d2433;
+  font-size: 23rpx;
+}
+
+.mini-action.primary {
+  background: #1f6f68;
+  border-color: #1f6f68;
+  color: #ffffff;
+}
+
+.mini-action.danger {
+  color: #b3261e;
+  border-color: #e0bbb7;
+}
+
+.mini-action::after {
+  border: 0;
 }

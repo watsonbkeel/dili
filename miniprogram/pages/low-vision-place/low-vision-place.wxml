@@ -1,0 +1,48 @@
+<view class="lv-detail-page">
+  <view class="lv-detail-nav" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-row">
+      <button class="back-btn" bindtap="goBack">返回</button>
+      <view class="nav-title">景点介绍</view>
+      <view class="nav-spacer"></view>
+    </view>
+  </view>
+  <view class="nav-placeholder" style="height: {{navigationHeight}}px;"></view>
+
+  <view class="detail-content">
+    <view wx:if="{{loading}}" class="plain-status">正在加载景点介绍</view>
+    <view wx:elif="{{error}}" class="plain-status">{{error}}</view>
+
+    <block wx:elif="{{place}}">
+      <view class="place-name">{{place.name}}</view>
+      <view class="speech-state">{{audio.statusText}}</view>
+
+      <block wx:for="{{sections}}" wx:key="title">
+        <view class="text-section">
+          <view class="section-title">{{item.title}}</view>
+          <block wx:for="{{item.lines}}" wx:for-item="line" wx:key="*this">
+            <view class="section-line">{{line}}</view>
+          </block>
+        </view>
+      </block>
+
+      <view wx:if="{{question}}" class="text-section conversation-section">
+        <view class="section-title">你的问题</view>
+        <view class="section-line">{{question}}</view>
+      </view>
+
+      <view wx:if="{{answer}}" class="text-section conversation-section">
+        <view class="section-title">AI 回答</view>
+        <view class="section-line">{{answer}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="voice-panel">
+    <view class="voice-status">{{voiceStatus}}</view>
+    <button
+      class="ask-ai-btn {{recording ? 'recording' : ''}}"
+      bindtap="toggleVoiceQuestion"
+      disabled="{{processing}}"
+    >{{recording ? '停止' : (processing ? '处理中' : '问 AI')}}</button>
+  </view>
+</view>

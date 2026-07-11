@@ -120,7 +120,7 @@ page {
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 12rpx 34rpx rgba(27, 64, 58, 0.12);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
 }
 
@@ -174,4 +174,14 @@ page {
 .audio-state {
   color: #667085;
   font-size: 24rpx;
+}
+
+.btn.ghost {
+  background: #f8faf9;
+  color: #1f6f68;
+  border-color: #c9ded9;
+}
+
+.btn.text-danger {
+  color: #b3261e;
 }
