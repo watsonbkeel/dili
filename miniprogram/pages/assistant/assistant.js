@@ -259,14 +259,19 @@ Page({
     if (!this.recorder) return;
     if (this.speech) this.speech.stop();
     this.setData({ input: '', error: '', voiceStatus: '正在打开麦克风' });
-    this.recorder.start({
-      duration: MAX_RECORDING_MS,
-      sampleRate: 16000,
-      numberOfChannels: 1,
-      encodeBitRate: 48000,
-      format: 'wav',
-      frameSize: 4
-    });
+    try {
+      this.recorder.start({
+        duration: MAX_RECORDING_MS,
+        sampleRate: 16000,
+        numberOfChannels: 1,
+        encodeBitRate: 48000,
+        format: 'wav',
+        audioSource: 'auto',
+        frameSize: 5
+      });
+    } catch (error) {
+      this.setData({ voiceStatus: error.errMsg || '录音启动失败，请检查麦克风权限' });
+    }
   },
 
   stopRecording() {

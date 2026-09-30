@@ -1,4 +1,4 @@
-<view class="lv-page">
+<view class="lv-page font-{{fontSize}}">
   <view class="lv-fixed-header" style="padding-top: {{headerTopPadding}}px;">
     <view class="lv-top-row">
       <view class="lv-title">语音大字导览</view>
@@ -7,7 +7,14 @@
   </view>
   <view class="lv-header-placeholder" style="height: {{headerHeight}}px;"></view>
 
-  <view class="lv-status">大字 · 高对比 · 语音优先 · 少步行</view>
+  <view class="lv-font-panel">
+    <view class="lv-font-prompt">请选择你的文字大小</view>
+    <view class="lv-font-options">
+      <button class="lv-font-option {{fontSize === 'small' ? 'selected' : ''}}" bindtap="changeFontSize" data-size="small" aria-label="使用小号文字">小</button>
+      <button class="lv-font-option {{fontSize === 'medium' ? 'selected' : ''}}" bindtap="changeFontSize" data-size="medium" aria-label="使用中号文字">中</button>
+      <button class="lv-font-option {{fontSize === 'large' ? 'selected' : ''}}" bindtap="changeFontSize" data-size="large" aria-label="使用大号文字">大</button>
+    </view>
+  </view>
   <view class="lv-city">城市：北京</view>
 
   <view wx:if="{{searchQuery || searchResults.length}}" id="voice-search-results" class="lv-search-results">

@@ -9,6 +9,27 @@
     <view>已开启少步行与无障碍信息优先</view>
   </view>
 
+  <view class="location-card">
+    <view class="location-copy">
+      <view class="location-main">当前位置：{{locationLabel}}</view>
+      <view class="location-sub">{{locationSourceText}}｜更新于 {{locationUpdatedText}}</view>
+    </view>
+    <button class="refresh" bindtap="refreshLocation" loading="{{locating}}" disabled="{{locating}}">{{locating ? '定位中' : '刷新定位'}}</button>
+  </view>
+
+  <view class="mh-map-card">
+    <map
+      class="mh-map"
+      latitude="{{location.lat}}"
+      longitude="{{location.lng}}"
+      markers="{{markers}}"
+      scale="14"
+      show-location="{{usingRealLocation}}"
+      bindmarkertap="onMarkerTap"
+    />
+    <view class="mh-map-caption">点击地图标记可查看景点详情</view>
+  </view>
+
   <view class="mh-feature-grid">
     <view class="mh-feature green" bindtap="openShortRoute">
       <view class="mh-feature-icon">少</view>
@@ -25,14 +46,6 @@
       <view class="mh-feature-title">规划轻松行程</view>
       <view class="mh-feature-desc">按你的需要生成路线</view>
     </view>
-  </view>
-
-  <view class="location-card">
-    <view class="location-copy">
-      <view class="location-main">当前位置：{{locationLabel}}</view>
-      <view class="location-sub">{{locationSourceText}}｜更新于 {{locationUpdatedText}}</view>
-    </view>
-    <button class="refresh" bindtap="refreshLocation" loading="{{locating}}" disabled="{{locating}}">{{locating ? '定位中' : '刷新定位'}}</button>
   </view>
 
   <view wx:if="{{loading}}" class="mh-state">正在根据位置整理景点...</view>

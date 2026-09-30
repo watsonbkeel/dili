@@ -40,6 +40,23 @@ function normalizePlace(place) {
   };
 }
 
+function createMarkers(places) {
+  return places.map((place, index) => ({
+    id: index,
+    latitude: Number(place.lat),
+    longitude: Number(place.lng),
+    title: place.name,
+    width: 28,
+    height: 28,
+    callout: {
+      content: place.name,
+      display: 'BYCLICK',
+      padding: 6,
+      borderRadius: 4
+    }
+  }));
+}
+
 function nowText() {
   const date = new Date();
   const hours = String(date.getHours()).padStart(2, '0');
@@ -53,10 +70,12 @@ Page({
     locating: false,
     error: '',
     location: DEMO_LOCATION,
+    usingRealLocation: false,
     locationLabel: DEMO_LOCATION.label,
     locationSourceText: '演示定位',
     locationUpdatedText: nowText(),
     places: [],
+    markers: [],
     accessiblePlaces: [],
     visibleAccessiblePlaces: [],
     shortWalkPlaces: [],
@@ -78,11 +97,13 @@ Page({
         lng: location.lng
       });
       const places = (payload.places || []).map(normalizePlace);
+      const markers = createMarkers(places);
       const accessiblePlaces = sortAccessiblePlaces(places);
       const shortWalkPlaces = sortShortWalkPlaces(places);
       this.setData({
         loading: false,
         places,
+        markers,
         accessiblePlaces,
         visibleAccessiblePlaces: this.data.showAccessiblePlaces ? accessiblePlaces : accessiblePlaces.slice(0, 1),
         shortWalkPlaces,
@@ -104,6 +125,7 @@ Page({
         this.setData({
           locating: false,
           location,
+          usingRealLocation: true,
           locationLabel: '真实当前位置',
           locationSourceText: result.accuracy ? `真实定位，精度约 ${Math.round(result.accuracy)} 米` : '真实定位',
           locationUpdatedText: nowText()
@@ -115,6 +137,7 @@ Page({
         this.setData({
           locating: false,
           location: DEMO_LOCATION,
+          usingRealLocation: false,
           locationLabel: DEMO_LOCATION.label,
           locationSourceText: '定位未授权，继续使用演示定位',
           locationUpdatedText: nowText()
@@ -127,6 +150,11 @@ Page({
 
   openPlace(event) {
     nav.openPlace(event.currentTarget.dataset.id);
+  },
+
+  onMarkerTap(event) {
+    const place = this.data.places[event.detail.markerId];
+    if (place) nav.openPlace(place.id);
   },
 
   openNavigation(event) {

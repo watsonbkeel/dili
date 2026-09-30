@@ -38,16 +38,56 @@ const apiJs = read('miniprogram/utils/api.js');
 const assistantJs = read('miniprogram/pages/assistant/assistant.js');
 const assistantWxml = read('miniprogram/pages/assistant/assistant.wxml');
 const assistantWxss = read('miniprogram/pages/assistant/assistant.wxss');
+const modeSelectWxml = read('miniprogram/pages/mode-select/mode-select.wxml');
+const modeSelectWxss = read('miniprogram/pages/mode-select/mode-select.wxss');
 
 test('normal home exposes AI and no mode button', () => {
   assert.match(homeWxml, /bindtap="openAi">AI 助手/);
   assert.doesNotMatch(homeWxml, /mode-switch|bindtap="changeMode"/);
 });
 
+test('normal home uses a real map with Tiananmen default and manual real-location refresh', () => {
+  const homeJs = read('miniprogram/pages/home/home.js');
+  const homeWxss = read('miniprogram/pages/home/home.wxss');
+  assert.match(homeWxml, /<map[\s\S]*latitude="{{latitude}}"[\s\S]*markers="{{markers}}"[\s\S]*bindmarkertap="onMarkerTap"/);
+  assert.doesNotMatch(homeWxml, /map-grid|map-pin/);
+  assert.match(homeWxml, /bindtap="refreshLocation"/);
+  assert.match(homeJs, /DEFAULT_LOCATION = \{[\s\S]*latitude: 39\.90746,[\s\S]*longitude: 116\.39763/);
+  assert.match(homeJs, /refreshLocation\(\)[\s\S]*wx\.getLocation\([\s\S]*isHighAccuracy: true/);
+  assert.match(homeWxss, /\.home-map\s*{[\s\S]*height: 420rpx/);
+});
+
+test('normal mode uses the supplied user avatar image', () => {
+  assert.match(modeSelectWxml, /data-mode="normal"[\s\S]*class="simple-icon normal-avatar"/);
+  assert.match(modeSelectWxml, /class="normal-avatar-image"[\s\S]*src="\/assets\/images\/normal-user-avatar\.jpeg"/);
+  assert.match(modeSelectWxss, /\.normal-avatar-image\s*{[\s\S]*width: 100%;[\s\S]*height: 100%/);
+  assert.equal(fs.existsSync(path.join(root, 'miniprogram/assets/images/normal-user-avatar.jpeg')), true);
+});
+
+test('mode selector keeps all three choices compact and in the requested order', () => {
+  const normalIndex = modeSelectWxml.indexOf('data-mode="normal"');
+  const mobilityIndex = modeSelectWxml.indexOf('data-mode="mobility"');
+  const lowVisionIndex = modeSelectWxml.indexOf('data-mode="lowVision"');
+  assert.ok(normalIndex < mobilityIndex && mobilityIndex < lowVisionIndex);
+  assert.match(modeSelectWxml, /class="vision-demo"[\s\S]*故宫博物院[\s\S]*播放 \/ 暂停 \/ 继续/);
+  assert.match(modeSelectWxss, /\.simple\s*{[\s\S]*min-height: 138rpx;[\s\S]*box-sizing: border-box;/);
+  assert.match(modeSelectWxss, /\.vision-choose\s*{[\s\S]*min-height: 84rpx;/);
+});
+
+test('mode selector uses a consistent mobility icon and a larger single-line footer', () => {
+  assert.match(modeSelectWxml, /class="simple-icon mobility-icon"[\s\S]*src="\/assets\/icons\/mobility-accessibility\.svg"/);
+  assert.doesNotMatch(modeSelectWxml, />♿<\/view>/);
+  assert.equal(fs.existsSync(path.join(root, 'miniprogram/assets/icons/mobility-accessibility.svg')), true);
+  assert.match(modeSelectWxss, /\.simple\s*{[\s\S]*margin-bottom: 28rpx;/);
+  assert.match(modeSelectWxss, /\.mode-footer\s*{[\s\S]*font-size: 25rpx;[\s\S]*white-space: nowrap;/);
+});
+
 test('place uses one play-pause-resume control and concise AI copy', () => {
   assert.match(placeWxml, /bindtap="toggleSummaryAudio"/);
   assert.doesNotMatch(placeWxml, /停止|继续追问 AI/);
   assert.match(placeWxml, /bindtap="openAi">问 AI/);
+  assert.match(placeWxml, /class="btn" bindtap="openNavigation">导航到这里/);
+  assert.match(placeWxml, /class="btn primary" bindtap="openAi">问 AI/);
 });
 
 test('place exposes heart favorite state and exclusive reaction counts', () => {
@@ -58,6 +98,15 @@ test('place exposes heart favorite state and exclusive reaction counts', () => {
   assert.match(placeWxml, /reactionCounts\.notRecommend/);
   assert.match(placeJs, /previous === selected \? '' : selected/);
   assert.match(placeJs, /api\.updatePlaceReaction/);
+});
+
+test('place action buttons keep stable three-and-two-column rows on real devices', () => {
+  const placeWxss = read('miniprogram/pages/place/place.wxss');
+  assert.match(placeWxss, /\.feature-grid\s*{[\s\S]*display: flex;[\s\S]*align-items: stretch;/);
+  assert.match(placeWxss, /\.feature-btn\s*{[\s\S]*width: 0;[\s\S]*margin: 0;[\s\S]*flex: 1;[\s\S]*white-space: nowrap;/);
+  assert.match(placeWxss, /\.reaction-grid\s*{[\s\S]*display: flex;[\s\S]*align-items: stretch;/);
+  assert.match(placeWxss, /\.reaction-btn\s*{[\s\S]*width: 0;[\s\S]*margin: 0;[\s\S]*flex: 1;/);
+  assert.doesNotMatch(placeWxss, /@media\s*\(max-width: 360px\)[\s\S]*primary-feature-grid/);
 });
 
 test('favorites are grouped by city and support immediate removal', () => {
@@ -106,12 +155,22 @@ test('mobility shortcuts show their corresponding page content', () => {
   assert.doesNotMatch(mobilityJs, /openShortRoute\(\)\s*{[^}]*redirectTo/);
 });
 
+test('mobility shortcut cards remain a three-column row on narrow real devices', () => {
+  const mobilityWxss = read('miniprogram/pages/mobility-home/mobility-home.wxss');
+  assert.match(mobilityWxss, /\.mh-feature-grid\s*{[\s\S]*display: flex;[\s\S]*align-items: stretch;/);
+  assert.match(mobilityWxss, /\.mh-feature\s*{[\s\S]*width: 0;[\s\S]*min-width: 0;[\s\S]*flex: 1;/);
+  assert.doesNotMatch(mobilityWxss, /@media\s*\(max-width: 360px\)[\s\S]*\.mh-feature-grid/);
+});
+
 test('mobility home uses demo location until a manual real-location refresh', () => {
   assert.match(mobilityJs, /DEMO_LOCATION = \{[\s\S]*lat: 39\.90746,[\s\S]*lng: 116\.39763/);
   assert.match(mobilityJs, /onLoad\(\)[\s\S]*this\.loadPlaces\(DEMO_LOCATION\)/);
   assert.match(mobilityJs, /refreshLocation\(\)[\s\S]*wx\.getLocation\([\s\S]*type: 'gcj02'[\s\S]*isHighAccuracy: true/);
   assert.match(mobilityWxml, /当前位置：{{locationLabel}}/);
   assert.match(mobilityWxml, /演示定位|locationSourceText/);
+  assert.match(mobilityWxml, /<map[\s\S]*latitude="{{location\.lat}}"[\s\S]*markers="{{markers}}"[\s\S]*bindmarkertap="onMarkerTap"/);
+  assert.match(mobilityJs, /usingRealLocation: false/);
+  assert.match(mobilityJs, /success: \(result\) => \{[\s\S]*usingRealLocation: true/);
 });
 
 test('mobility home renders accessible and short-walk recommendations as place cards', () => {
@@ -150,7 +209,10 @@ test('mode selection is the launch page and remembers the selected mode', () => 
   const userModeJs = read('miniprogram/utils/userMode.js');
   assert.equal(appConfig.pages[0], 'pages/mode-select/mode-select');
   assert.match(modeSelectJs, /savedMode && options\.force !== '1'/);
+  assert.match(modeSelectWxml, /wx:if="{{pageReady}}"/);
+  assert.match(modeSelectJs, /savedMode && options\.force !== '1'[\s\S]*wx\.reLaunch\([\s\S]*return;/);
   assert.match(modeSelectJs, /userMode\.setMode\(mode\)/);
+  assert.match(navigationJs, /function goHome[\s\S]*userMode\.homeUrlForMode\(mode\)[\s\S]*wx\.reLaunch/);
   assert.match(userModeJs, /wx\.setStorageSync\(MODE_KEY, mode\)/);
 });
 
@@ -180,13 +242,36 @@ test('low-vision home provides bottom voice attraction search', () => {
   assert.match(lowVisionWxml, /id="voice-search-results" class="lv-search-results"/);
   assert.match(lowVisionWxml, /class="lv-voice-dock"/);
   assert.match(lowVisionWxss, /\.lv-voice-dock\s*{[\s\S]*position: fixed;[\s\S]*bottom: 0;[\s\S]*z-index: 25;/);
-  assert.match(lowVisionWxss, /\.lv-page\s*{[\s\S]*padding: 0 30rpx calc\(360rpx \+ env\(safe-area-inset-bottom\)\);/);
+  assert.match(lowVisionWxss, /\.lv-page\s*{[\s\S]*padding: 0 30rpx calc\(430rpx \+ env\(safe-area-inset-bottom\)\);/);
   assert.ok(lowVisionWxml.indexOf('id="voice-search-results"') < lowVisionWxml.indexOf('class="lv-voice-dock"'));
   assert.match(lowVisionJs, /SILENCE_TIMEOUT_MS = 3000/);
   assert.match(lowVisionJs, /MAX_RECORDING_MS = 60000/);
   assert.match(lowVisionJs, /api\.transcribeAudio\(filePath\)/);
   assert.match(lowVisionJs, /matchPlaces\(query, this\.data\.places/);
   assert.match(lowVisionJs, /pageScrollTo\(\{ selector: '#voice-search-results'/);
+});
+
+test('low-vision home and detail use consistently enlarged typography', () => {
+  assert.match(lowVisionWxss, /\.lv-page\s*{[\s\S]*font-size: 44rpx/);
+  assert.match(lowVisionWxss, /\.lv-title\s*{[\s\S]*font-size: 68rpx/);
+  assert.match(lowVisionWxss, /\.lv-summary,[\s\S]*\.lv-distance\s*{[\s\S]*font-size: 46rpx/);
+  assert.match(lowVisionWxss, /\.lv-main-btn,[\s\S]*\.lv-big-btn\s*{[\s\S]*font-size: 50rpx/);
+  assert.match(lowVisionPlaceWxss, /\.lv-detail-page\s*{[\s\S]*font-size: 46rpx/);
+  assert.match(lowVisionPlaceWxss, /\.place-name\s*{[\s\S]*font-size: 72rpx/);
+  assert.match(lowVisionPlaceWxss, /\.section-line\s*{[\s\S]*font-size: 46rpx/);
+  assert.match(lowVisionPlaceWxss, /\.ask-ai-btn\s*{[\s\S]*font-size: 52rpx/);
+});
+
+test('low-vision font size selector applies one persisted size across home and detail', () => {
+  assert.match(lowVisionWxml, /请选择你的文字大小/);
+  assert.match(lowVisionWxml, /data-size="small"[\s\S]*data-size="medium"[\s\S]*data-size="large"/);
+  assert.match(lowVisionWxml, /class="lv-page font-{{fontSize}}"/);
+  assert.match(lowVisionPlaceWxml, /class="lv-detail-page font-{{fontSize}}"/);
+  assert.match(lowVisionJs, /lowVisionPreferences\.setFontSize/);
+  assert.match(lowVisionJs, /onShow\(\)[\s\S]*lowVisionPreferences\.getFontSize/);
+  assert.match(lowVisionPlaceJs, /onShow\(\)[\s\S]*lowVisionPreferences\.getFontSize/);
+  assert.match(lowVisionWxss, /\.font-small[\s\S]*\.font-medium[\s\S]*\.font-large/);
+  assert.match(lowVisionPlaceWxss, /\.font-small[\s\S]*\.font-medium[\s\S]*\.font-large/);
 });
 
 test('normal and low-vision homes share the same place preparation', () => {
@@ -246,6 +331,9 @@ test('AI assistant switches between text and three-second-silence voice input', 
   assert.match(assistantJs, /SILENCE_TIMEOUT_MS = 3000/);
   assert.match(assistantJs, /frameContainsVoice\(event\.frameBuffer\)/);
   assert.match(assistantJs, /api\.transcribeAudio\(filePath\)/);
+  assert.match(assistantJs, /audioSource: 'auto'[\s\S]*frameSize: 5/);
+  assert.match(lowVisionJs, /audioSource: 'auto'[\s\S]*frameSize: 5/);
+  assert.match(lowVisionPlaceJs, /audioSource: 'auto'[\s\S]*frameSize: 5/);
   assert.match(assistantJs, /sendQuestion\(question, \{ fromVoice: true \}\)/);
   assert.match(assistantWxss, /\.input-dock\s*{[\s\S]*position: fixed/);
 });

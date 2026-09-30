@@ -9,12 +9,24 @@ const tabPages = {
 
 function goTab(event) {
   const key = event.currentTarget.dataset.tab;
-  const url = key === 'home' ? userMode.homeUrlForMode() : tabPages[key];
+  if (key === 'home') {
+    goHome();
+    return;
+  }
+  const url = tabPages[key];
   if (!url) return;
   const pages = getCurrentPages();
   const current = pages[pages.length - 1];
   if (`/${current.route}` === url) return;
   wx.redirectTo({ url });
+}
+
+function goHome(mode = userMode.getMode()) {
+  const url = userMode.homeUrlForMode(mode);
+  const pages = getCurrentPages();
+  const current = pages[pages.length - 1];
+  if (current && `/${current.route}` === url) return;
+  wx.reLaunch({ url });
 }
 
 function openAi(context = {}) {
@@ -48,6 +60,7 @@ function openLocation(target) {
 }
 
 module.exports = {
+  goHome,
   goTab,
   openAi,
   openLocation,

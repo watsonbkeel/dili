@@ -4,9 +4,11 @@ page {
 
 .lv-detail-page {
   min-height: 100vh;
-  padding-bottom: 230rpx;
+  padding-bottom: 300rpx;
   background: #ffffff;
   color: #000000;
+  font-size: 46rpx;
+  line-height: 1.65;
   box-sizing: border-box;
 }
 
@@ -26,26 +28,26 @@ page {
 }
 
 .nav-row {
-  height: 104rpx;
+  height: 132rpx;
   padding: 0 28rpx;
   display: grid;
-  grid-template-columns: 150rpx 1fr 150rpx;
+  grid-template-columns: 180rpx 1fr 180rpx;
   align-items: center;
   box-sizing: border-box;
 }
 
 .back-btn {
-  width: 142rpx;
-  height: 76rpx;
-  min-height: 76rpx;
+  width: 172rpx;
+  height: 94rpx;
+  min-height: 94rpx;
   margin: 0;
   padding: 0;
   border: 4rpx solid #000000;
   border-radius: 8rpx;
   background: #ffffff;
   color: #000000;
-  font-size: 32rpx;
-  line-height: 72rpx;
+  font-size: 44rpx;
+  line-height: 90rpx;
   font-weight: 900;
 }
 
@@ -56,13 +58,13 @@ page {
 
 .nav-title {
   text-align: center;
-  font-size: 38rpx;
+  font-size: 50rpx;
   line-height: 1.2;
   font-weight: 900;
 }
 
 .nav-spacer {
-  width: 150rpx;
+  width: 180rpx;
 }
 
 .detail-content {
@@ -71,13 +73,13 @@ page {
 
 .plain-status {
   padding: 60rpx 0;
-  font-size: 38rpx;
+  font-size: 48rpx;
   line-height: 1.5;
   font-weight: 800;
 }
 
 .place-name {
-  font-size: 58rpx;
+  font-size: 72rpx;
   line-height: 1.2;
   font-weight: 900;
 }
@@ -85,8 +87,8 @@ page {
 .speech-state,
 .voice-status {
   margin-top: 18rpx;
-  font-size: 30rpx;
-  line-height: 1.45;
+  font-size: 40rpx;
+  line-height: 1.55;
   font-weight: 800;
 }
 
@@ -100,15 +102,15 @@ page {
 }
 
 .section-title {
-  font-size: 40rpx;
+  font-size: 54rpx;
   line-height: 1.3;
   font-weight: 900;
 }
 
 .section-line {
   margin-top: 18rpx;
-  font-size: 34rpx;
-  line-height: 1.65;
+  font-size: 46rpx;
+  line-height: 1.75;
   font-weight: 700;
 }
 
@@ -129,23 +131,23 @@ page {
 }
 
 .voice-status {
-  min-height: 44rpx;
+  min-height: 56rpx;
   margin: 0 0 14rpx;
   text-align: center;
 }
 
 .ask-ai-btn {
   width: 100%;
-  height: 96rpx;
-  min-height: 96rpx;
+  height: 112rpx;
+  min-height: 112rpx;
   margin: 0;
   padding: 0 20rpx;
   border: 4rpx solid #000000;
   border-radius: 8rpx;
   background: #000000;
   color: #ffffff;
-  font-size: 42rpx;
-  line-height: 92rpx;
+  font-size: 52rpx;
+  line-height: 108rpx;
   font-weight: 900;
 }
 
@@ -158,4 +160,36 @@ page {
   background: #333333;
   color: #ffffff;
   opacity: 1;
+}
+
+.font-small {
+  font-size: 40rpx;
+}
+
+.font-small .back-btn { font-size: 38rpx; }
+.font-small .nav-title { font-size: 44rpx; }
+.font-small .plain-status { font-size: 42rpx; }
+.font-small .place-name { font-size: 62rpx; }
+.font-small .speech-state,
+.font-small .voice-status { font-size: 34rpx; }
+.font-small .section-title { font-size: 48rpx; }
+.font-small .section-line { font-size: 40rpx; }
+.font-small .ask-ai-btn { font-size: 44rpx; }
+
+.font-medium {
+  font-size: 43rpx;
+}
+
+.font-medium .back-btn { font-size: 41rpx; }
+.font-medium .nav-title { font-size: 47rpx; }
+.font-medium .plain-status { font-size: 45rpx; }
+.font-medium .place-name { font-size: 67rpx; }
+.font-medium .speech-state,
+.font-medium .voice-status { font-size: 37rpx; }
+.font-medium .section-title { font-size: 51rpx; }
+.font-medium .section-line { font-size: 43rpx; }
+.font-medium .ask-ai-btn { font-size: 48rpx; }
+
+.font-large {
+  font-size: 46rpx;
 }

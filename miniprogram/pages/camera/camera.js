@@ -1,5 +1,38 @@
 const nav = require('../../utils/navigation');
 
+const MAX_RECOGNITION_IMAGE_SIDE = 1280;
+const RECOGNITION_IMAGE_QUALITY = 45;
+
+function compressForRecognition(image, done) {
+  const compress = (dimensions = {}) => {
+    wx.compressImage({
+      src: image,
+      quality: RECOGNITION_IMAGE_QUALITY,
+      ...dimensions,
+      success: (result) => done(result.tempFilePath || image),
+      fail: () => done(image)
+    });
+  };
+
+  if (typeof wx.getImageInfo !== 'function') {
+    compress();
+    return;
+  }
+  wx.getImageInfo({
+    src: image,
+    success: (info) => {
+      const width = Number(info.width) || MAX_RECOGNITION_IMAGE_SIDE;
+      const height = Number(info.height) || MAX_RECOGNITION_IMAGE_SIDE;
+      const scale = Math.min(1, MAX_RECOGNITION_IMAGE_SIDE / Math.max(width, height));
+      compress({
+        compressedWidth: Math.max(1, Math.round(width * scale)),
+        compressedHeight: Math.max(1, Math.round(height * scale))
+      });
+    },
+    fail: () => compress()
+  });
+}
+
 Page({
   data: {
     tips: ['匾额', '雕刻', '建筑轮廓', '展品说明牌'],
@@ -20,12 +53,7 @@ Page({
           this.setData({ choosing: false });
           return;
         }
-        wx.compressImage({
-          src: image,
-          quality: 55,
-          success: (compressed) => this.openRecognition(compressed.tempFilePath || image),
-          fail: () => this.openRecognition(image)
-        });
+        compressForRecognition(image, (preparedImage) => this.openRecognition(preparedImage));
       },
       fail: () => {
         this.setData({ choosing: false });

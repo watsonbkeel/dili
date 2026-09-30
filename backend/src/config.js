@@ -51,6 +51,13 @@ function readConfig(env = process.env) {
     openaiChatCompletionsPath: mergedEnv.OPENAI_CHAT_COMPLETIONS_PATH || '',
     openaiTimeoutMs: Number(mergedEnv.OPENAI_TIMEOUT_MS || 4000),
     openaiMaxTokens: Number(mergedEnv.OPENAI_MAX_TOKENS || 600),
+    assistantBaseUrl: (mergedEnv.ASSISTANT_BASE_URL || mergedEnv.OPENAI_BASE_URL || 'https://api.bkeel.com').replace(/\/$/, ''),
+    assistantApiKey: mergedEnv.ASSISTANT_API_KEY || mergedEnv.OPENAI_API_KEY || '',
+    assistantModel: mergedEnv.ASSISTANT_MODEL || mergedEnv.OPENAI_MODEL || 'gpt-5.4-mini',
+    assistantChatCompletionsPath:
+      mergedEnv.ASSISTANT_CHAT_COMPLETIONS_PATH || mergedEnv.OPENAI_CHAT_COMPLETIONS_PATH || '',
+    assistantTimeoutMs: Number(mergedEnv.ASSISTANT_TIMEOUT_MS || mergedEnv.OPENAI_TIMEOUT_MS || 30000),
+    assistantMaxTokens: Number(mergedEnv.ASSISTANT_MAX_TOKENS || mergedEnv.OPENAI_MAX_TOKENS || 600),
     speechToTextUrl: mergedEnv.SPEECH_TO_TEXT_URL || 'http://127.0.0.1:3102/v1/audio/transcriptions',
     speechToTextTimeoutMs: Number(mergedEnv.SPEECH_TO_TEXT_TIMEOUT_MS || 60000),
     promptVersion: 'local-history-v1'

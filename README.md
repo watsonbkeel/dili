@@ -98,6 +98,12 @@ OPENAI_MODEL=gpt-5.4-mini
 OPENAI_VISION_MODEL=gpt-5.6-terra
 OPENAI_TIMEOUT_MS=30000
 OPENAI_MAX_TOKENS=600
+ASSISTANT_BASE_URL=https://tokenhub.tencentmaas.com
+ASSISTANT_CHAT_COMPLETIONS_PATH=/v1/chat/completions
+ASSISTANT_API_KEY=你的TokenHub模型Key
+ASSISTANT_MODEL=deepseek-v4-pro
+ASSISTANT_TIMEOUT_MS=30000
+ASSISTANT_MAX_TOKENS=2000
 SPEECH_TO_TEXT_URL=http://127.0.0.1:3102/v1/audio/transcriptions
 SPEECH_TO_TEXT_TIMEOUT_MS=60000
 ```
@@ -114,13 +120,15 @@ SPEECH_TO_TEXT_TIMEOUT_MS=60000
 - 默认目录是 `backend/public/assets`。
 - 例如把 `demo.jpg` 放到 `backend/public/assets/images/demo.jpg` 后，可通过 `https://dili.bkeel.com/assets/images/demo.jpg` 访问。
 
-AI 助手使用 `OPENAI_MODEL`，拍照识别使用 `OPENAI_VISION_MODEL`；两者共用同一个 API Key、Base URL 和 Chat Completions 兼容接口。默认请求路径为：
+AI 助手优先使用独立的 `ASSISTANT_*` 配置，拍照识别继续使用 `OPENAI_API_KEY`、`OPENAI_BASE_URL` 和 `OPENAI_VISION_MODEL`。两套配置互不影响；未配置 `ASSISTANT_*` 时，AI 助手才兼容回退到 `OPENAI_*`。
+
+拍照识别默认请求路径为：
 
 ```text
 https://api.bkeel.com/v1/chat/completions
 ```
 
-若第三方服务路径不是 `/v1/chat/completions`，可通过 `OPENAI_CHAT_COMPLETIONS_PATH` 调整。
+若第三方服务路径不是 `/v1/chat/completions`，可分别通过 `ASSISTANT_CHAT_COMPLETIONS_PATH` 或 `OPENAI_CHAT_COMPLETIONS_PATH` 调整。
 
 ## 小程序发布注意事项
 

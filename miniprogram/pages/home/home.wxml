@@ -21,24 +21,23 @@
   </view>
 
   <view class="map-card">
-    <view class="home-map">
-      <view class="map-grid"></view>
-      <view class="map-pin palace" bindtap="openPlaceByTap" data-id="beijing-palace-museum">
-        <text></text>
-        <view>故宫</view>
-      </view>
-      <view class="map-pin jingshan" bindtap="openPlaceByTap" data-id="jingshan-park">
-        <text></text>
-        <view>景山</view>
-      </view>
-      <view class="map-pin shichahai" bindtap="openPlaceByTap" data-id="shichahai">
-        <text></text>
-        <view>什刹海</view>
-      </view>
-    </view>
+    <map
+      class="home-map"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      markers="{{markers}}"
+      scale="14"
+      show-location="{{locationMode}}"
+      bindmarkertap="onMarkerTap"
+    />
     <view class="map-caption">
-      <text>附近历史点位</text>
-      <text>什刹海 · 景山 · 故宫</text>
+      <view>
+        <view class="map-caption-title">{{locationMode ? '真实当前位置' : '默认位置：天安门'}}</view>
+        <view class="map-caption-sub">地图标记可点击查看景点</view>
+      </view>
+      <button class="location-refresh" bindtap="refreshLocation" loading="{{locating}}" disabled="{{locating}}">
+        {{locating ? '定位中' : '刷新定位'}}
+      </button>
     </view>
   </view>
 

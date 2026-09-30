@@ -1,4 +1,4 @@
-<view class="lv-detail-page">
+<view class="lv-detail-page font-{{fontSize}}">
   <view class="lv-detail-nav" style="padding-top: {{statusBarHeight}}px;">
     <view class="nav-row">
       <button class="back-btn" bindtap="goBack">返回</button>

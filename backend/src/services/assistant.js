@@ -52,7 +52,7 @@ function buildAssistantMessages({ question, context }) {
     {
       role: 'system',
       content:
-        '你是北京本地历史旅行助手。回答要中文、简洁、适合旅行现场理解。不能虚构具体年份、书名、链接或人物关系；不确定内容必须提示需核实。'
+        '你是北京本地历史旅行助手。回答必须使用简洁、自然、适合现场阅读和语音播报的中文，控制在600个汉字以内并完整收尾，不使用Markdown、表格或链接。优先依据用户提供的当前景点和无障碍上下文；不能虚构具体年份、书名或人物关系。严禁补充上下文未出现的具体入口名称、无障碍通道走向、卫生间位置、轮椅租借点、票务和开放时间；即使你认为自己知道也不要写。此类实时信息如果上下文没有明确提供，只能提示向景区官方或现场工作人员核实。'
     },
     {
       role: 'user',
@@ -65,8 +65,10 @@ function buildAssistantMessages({ question, context }) {
 }
 
 function chatCompletionsUrl(config) {
-  const baseUrl = new URL(config.openaiBaseUrl || 'https://api.bkeel.com');
-  const configuredPath = String(config.openaiChatCompletionsPath || '').trim();
+  const baseUrl = new URL(config.assistantBaseUrl || config.openaiBaseUrl || 'https://api.bkeel.com');
+  const configuredPath = String(
+    config.assistantChatCompletionsPath || config.openaiChatCompletionsPath || ''
+  ).trim();
   if (configuredPath) {
     baseUrl.pathname = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
     return baseUrl.toString();
@@ -94,8 +96,34 @@ function extractAnswer(payload) {
   return '';
 }
 
+function normalizeAssistantAnswer(text, maxChars = 600) {
+  const normalized = String(text || '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[*_`#>~]/g, '')
+    .replace(/^\s*[-+]\s+/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  const chars = Array.from(normalized);
+  if (chars.length <= maxChars) return normalized;
+
+  const limited = chars.slice(0, maxChars).join('');
+  const sentenceEnd = Math.max(
+    limited.lastIndexOf('。'),
+    limited.lastIndexOf('！'),
+    limited.lastIndexOf('？'),
+    limited.lastIndexOf('!'),
+    limited.lastIndexOf('?')
+  );
+  if (sentenceEnd >= Math.floor(maxChars * 0.6)) return limited.slice(0, sentenceEnd + 1).trim();
+  return `${chars.slice(0, Math.max(1, maxChars - 1)).join('').trim()}。`;
+}
+
 async function askAssistant({ config, question, context = {}, fetchImpl = fetch }) {
-  if (!config.openaiApiKey) {
+  const apiKey = config.assistantApiKey || config.openaiApiKey;
+  const model = config.assistantModel || config.openaiModel || 'gpt-5.4-mini';
+  const timeoutMs = Number(config.assistantTimeoutMs || config.openaiTimeoutMs || 30000);
+  const maxTokens = Number(config.assistantMaxTokens || config.openaiMaxTokens || 600);
+  if (!apiKey) {
     return {
       answer: templateAnswer(question, context),
       source: 'template'
@@ -105,15 +133,15 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
   try {
     const response = await fetchImpl(chatCompletionsUrl(config), {
       method: 'POST',
-      signal: AbortSignal.timeout(Number(config.openaiTimeoutMs || 4000)),
+      signal: AbortSignal.timeout(timeoutMs),
       headers: {
-        Authorization: `Bearer ${config.openaiApiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: config.openaiModel,
+        model,
         temperature: 0.4,
-        max_tokens: Number(config.openaiMaxTokens || 600),
+        max_tokens: maxTokens,
         messages: buildAssistantMessages({ question, context })
       })
     });
@@ -126,7 +154,7 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
     }
 
     const payload = await response.json();
-    const answer = extractAnswer(payload);
+    const answer = normalizeAssistantAnswer(extractAnswer(payload));
     return {
       answer: answer || templateAnswer(question, context),
       source: answer ? 'ai' : 'template-fallback'
@@ -141,8 +169,10 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
 
 module.exports = {
   askAssistant,
+  buildAssistantMessages,
   chatCompletionsUrl,
   contextText,
   extractAnswer,
+  normalizeAssistantAnswer,
   templateAnswer
 };

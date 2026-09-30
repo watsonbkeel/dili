@@ -26,7 +26,7 @@
   },
   "networkTimeout": {
     "request": 30000,
-    "uploadFile": 60000,
+    "uploadFile": 75000,
     "downloadFile": 30000
   },
   "permission": {

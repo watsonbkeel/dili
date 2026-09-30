@@ -96,8 +96,8 @@
     </view>
 
     <view class="toolbar action-bar">
-      <button class="btn primary" bindtap="openNavigation">导航到这里</button>
-      <button class="btn" bindtap="openAi">问 AI</button>
+      <button class="btn" bindtap="openNavigation">导航到这里</button>
+      <button class="btn primary" bindtap="openAi">问 AI</button>
     </view>
   </view>
 

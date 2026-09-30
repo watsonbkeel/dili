@@ -2,10 +2,11 @@ const api = require('../../utils/api');
 const { createSpeechController } = require('../../utils/speech');
 const { frameContainsVoice, transcriptionText } = require('../../utils/voiceInput');
 const viewHistory = require('../../utils/viewHistory');
+const lowVisionPreferences = require('../../utils/lowVisionPreferences');
 
 const SILENCE_TIMEOUT_MS = 3000;
 const MAX_RECORDING_MS = 30000;
-const NAV_ROW_RPX = 104;
+const NAV_ROW_RPX = 132;
 
 function systemInfo() {
   try {
@@ -74,6 +75,7 @@ Page({
   data: {
     statusBarHeight: systemInfo().statusBarHeight || 24,
     navigationHeight: 76,
+    fontSize: lowVisionPreferences.getFontSize(),
     placeId: '',
     place: null,
     sections: [],
@@ -97,12 +99,18 @@ Page({
     this.setData({
       placeId: options.id || '',
       statusBarHeight,
-      navigationHeight
+      navigationHeight,
+      fontSize: lowVisionPreferences.getFontSize()
     });
     this.speech = createSpeechController(this, 'audio');
     this.recorder = wx.getRecorderManager();
     this.bindRecorderEvents();
     this.loadPlace();
+  },
+
+  onShow() {
+    const fontSize = lowVisionPreferences.getFontSize();
+    if (fontSize !== this.data.fontSize) this.setData({ fontSize });
   },
 
   onUnload() {
@@ -244,14 +252,19 @@ Page({
       voiceStatus: '正在打开麦克风'
     });
     this.recordStopReason = '';
-    this.recorder.start({
-      duration: MAX_RECORDING_MS,
-      sampleRate: 16000,
-      numberOfChannels: 1,
-      encodeBitRate: 48000,
-      format: 'wav',
-      frameSize: 4
-    });
+    try {
+      this.recorder.start({
+        duration: MAX_RECORDING_MS,
+        sampleRate: 16000,
+        numberOfChannels: 1,
+        encodeBitRate: 48000,
+        format: 'wav',
+        audioSource: 'auto',
+        frameSize: 5
+      });
+    } catch (error) {
+      this.setData({ processing: false, voiceStatus: error.errMsg || '录音启动失败，请检查麦克风权限' });
+    }
   },
 
   stopRecording(reason) {

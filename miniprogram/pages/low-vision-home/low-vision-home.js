@@ -4,9 +4,10 @@ const { createSpeechController } = require('../../utils/speech');
 const { getFallbackPlaces, preparePlaces } = require('../../utils/placeList');
 const { matchPlaces } = require('../../utils/placeSearch');
 const { frameContainsVoice, transcriptionText } = require('../../utils/voiceInput');
+const lowVisionPreferences = require('../../utils/lowVisionPreferences');
 
 const initialPlaces = getFallbackPlaces();
-const HEADER_HEIGHT_RPX = 116;
+const HEADER_HEIGHT_RPX = 148;
 const SILENCE_TIMEOUT_MS = 3000;
 const MAX_RECORDING_MS = 60000;
 
@@ -47,6 +48,7 @@ Page({
   data: {
     headerTopPadding: headerMetrics().headerTopPadding,
     headerHeight: 82,
+    fontSize: lowVisionPreferences.getFontSize(),
     loading: false,
     error: '',
     places: initialPlaces,
@@ -67,11 +69,19 @@ Page({
   },
 
   onLoad() {
-    this.setData(headerMetrics());
+    this.setData({
+      ...headerMetrics(),
+      fontSize: lowVisionPreferences.getFontSize()
+    });
     this.speech = createSpeechController(this, 'audio');
     this.recorder = wx.getRecorderManager();
     this.bindRecorderEvents();
     this.loadPlaces();
+  },
+
+  onShow() {
+    const fontSize = lowVisionPreferences.getFontSize();
+    if (fontSize !== this.data.fontSize) this.setData({ fontSize });
   },
 
   onUnload() {
@@ -109,6 +119,11 @@ Page({
 
   changeMode() {
     nav.openModeSelect();
+  },
+
+  changeFontSize(event) {
+    const fontSize = lowVisionPreferences.setFontSize(event.currentTarget.dataset.size);
+    this.setData({ fontSize });
   },
 
   openNearest() {
@@ -250,14 +265,19 @@ Page({
       searchResults: [],
       searchStatus: '正在打开麦克风'
     });
-    this.recorder.start({
-      duration: MAX_RECORDING_MS,
-      sampleRate: 16000,
-      numberOfChannels: 1,
-      encodeBitRate: 48000,
-      format: 'wav',
-      frameSize: 4
-    });
+    try {
+      this.recorder.start({
+        duration: MAX_RECORDING_MS,
+        sampleRate: 16000,
+        numberOfChannels: 1,
+        encodeBitRate: 48000,
+        format: 'wav',
+        audioSource: 'auto',
+        frameSize: 5
+      });
+    } catch (error) {
+      this.setData({ processing: false, searchStatus: error.errMsg || '录音启动失败，请检查麦克风权限' });
+    }
   },
 
   stopRecording() {
