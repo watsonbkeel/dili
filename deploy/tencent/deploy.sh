@@ -34,8 +34,14 @@ else
   tar -xzf "$TARBALL" -C "$RELEASE_DIR"
 fi
 cd "$RELEASE_DIR"
-log "installing production dependencies"
-npm ci --omit=dev --no-audit --no-fund >/dev/null
+if [ -d node_modules ]; then
+  log "node_modules bundled in release; skip npm ci"
+elif command -v npm >/dev/null 2>&1; then
+  log "installing production dependencies"
+  npm ci --omit=dev --no-audit --no-fund >/dev/null
+else
+  echo "node_modules missing and npm not installed; build release with bundled deps"; exit 1
+fi
 chown -R root:root "$RELEASE_DIR"
 chmod -R go-w "$RELEASE_DIR"
 
