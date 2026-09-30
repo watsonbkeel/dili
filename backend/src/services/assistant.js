@@ -65,7 +65,7 @@ function buildAssistantMessages({ question, context }) {
 }
 
 function buildChatCompletionsUrl(base, path) {
-  const baseUrl = new URL(base || 'https://api.bkeel.com');
+  const baseUrl = new URL(base || 'https://tokenhub.tencentmaas.com');
   const configuredPath = String(path || '').trim();
   if (configuredPath) {
     baseUrl.pathname = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
@@ -131,7 +131,7 @@ function normalizeAssistantAnswer(text, maxChars = 600) {
 
 async function askAssistant({ config, question, context = {}, fetchImpl = fetch }) {
   const apiKey = config.assistantApiKey || config.openaiApiKey;
-  const model = config.assistantModel || config.openaiModel || 'gpt-5.4-mini';
+  const model = config.assistantModel || config.openaiModel || 'deepseek/deepseek-flash';
   const timeoutMs = Number(config.assistantTimeoutMs || config.openaiTimeoutMs || 30000);
   const maxTokens = Number(config.assistantMaxTokens || config.openaiMaxTokens || 600);
   if (!apiKey) {

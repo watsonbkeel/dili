@@ -222,7 +222,7 @@ async function recognizeImage({ body, contentType, config, fetchImpl = fetch }) 
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: config.openaiVisionModel || 'gpt-5.6-terra',
+        model: config.openaiVisionModel || 'deepseek/deepseek-flash',
         temperature: 0.1,
         max_tokens: Math.max(700, Number(config.openaiMaxTokens || 600)),
         response_format: { type: 'json_object' },

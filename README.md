@@ -63,7 +63,7 @@ npm start
 - `POST /api/story`：根据 `placeId` 或完整地点资料生成可信导览。
 - `POST /api/assistant`：AI 助手问答。后端记录问题和回答，并在有模型配置时转发到外部模型。
 - `POST /api/transcriptions`：接收小程序录音（multipart 字段 `file`，16k 单声道 wav，≤60 秒），默认调用腾讯云一句话识别 SentenceRecognition，返回 `{ text, provider, requestId }`。设 `SPEECH_TO_TEXT_PROVIDER=openai-compatible` 可回滚到旧的本地 Qwen3 ASR。失败时返回 `{ error, code }`（如 `ASR_NOT_CONFIGURED`、`ASR_TIMEOUT`、`ASR_BALANCE`）。
-- `POST /api/recognize`：接收拍摄图片和地理位置，并调用 `gpt-5.6-terra` 视觉模型返回动态景点或文物识别结果。
+- `POST /api/recognize`：接收拍摄图片和地理位置，并调用 `OPENAI_VISION_MODEL` 视觉模型（当前 TokenHub `deepseek/deepseek-flash`）返回动态景点或文物识别结果。
 - `GET /api/history?userId=`：读取用户历史记录。
 - `DELETE /api/history/:id?userId=`：删除单条历史记录。
 
@@ -92,17 +92,17 @@ PORT=13104
 DATA_DIR=backend/data
 ASSET_DIR=backend/public/assets
 TENCENT_MAP_KEY=你的腾讯位置服务Key
-OPENAI_BASE_URL=https://api.bkeel.com
+OPENAI_BASE_URL=https://tokenhub.tencentmaas.com
 OPENAI_CHAT_COMPLETIONS_PATH=/v1/chat/completions
 OPENAI_API_KEY=你的模型Key
-OPENAI_MODEL=gpt-5.4-mini
-OPENAI_VISION_MODEL=gpt-5.6-terra
+OPENAI_MODEL=deepseek/deepseek-flash
+OPENAI_VISION_MODEL=deepseek/deepseek-flash
 OPENAI_TIMEOUT_MS=30000
 OPENAI_MAX_TOKENS=600
 ASSISTANT_BASE_URL=https://tokenhub.tencentmaas.com
 ASSISTANT_CHAT_COMPLETIONS_PATH=/v1/chat/completions
 ASSISTANT_API_KEY=你的TokenHub模型Key
-ASSISTANT_MODEL=deepseek-v4-pro
+ASSISTANT_MODEL=deepseek/deepseek-flash
 ASSISTANT_TIMEOUT_MS=30000
 ASSISTANT_MAX_TOKENS=2000
 SPEECH_TO_TEXT_PROVIDER=tencent
@@ -130,7 +130,7 @@ AI 助手优先使用独立的 `ASSISTANT_*` 配置，拍照识别继续使用 `
 拍照识别默认请求路径为：
 
 ```text
-https://api.bkeel.com/v1/chat/completions
+https://tokenhub.tencentmaas.com/v1/chat/completions
 ```
 
 若第三方服务路径不是 `/v1/chat/completions`，可分别通过 `ASSISTANT_CHAT_COMPLETIONS_PATH` 或 `OPENAI_CHAT_COMPLETIONS_PATH` 调整。
