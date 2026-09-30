@@ -2,7 +2,7 @@ const api = require('../../utils/api');
 const nav = require('../../utils/navigation');
 const { createSpeechController } = require('../../utils/speech');
 const { getFallbackPlaces, preparePlaces } = require('../../utils/placeList');
-const { matchPlaces } = require('../../utils/placeSearch');
+const { matchPlaces, placesMentionedIn } = require('../../utils/placeSearch');
 const { frameContainsVoice, transcriptionText } = require('../../utils/voiceInput');
 const lowVisionPreferences = require('../../utils/lowVisionPreferences');
 
@@ -59,6 +59,7 @@ Page({
     processing: false,
     searchStatus: '点击开始说出你想找的景点',
     searchQuery: '',
+    searchAnswer: '',
     searchResultTitle: '',
     searchResults: [],
     audio: {
@@ -261,6 +262,7 @@ Page({
     if (this.speech) this.speech.stop();
     this.setData({
       searchQuery: '',
+      searchAnswer: '',
       searchResultTitle: '',
       searchResults: [],
       searchStatus: '正在打开麦克风'
@@ -299,30 +301,81 @@ Page({
       }
 
       const match = matchPlaces(query, this.data.places, { limit: 6 });
-      const title = match.mode === 'exact' ? '找到以下景点' : '为你找到相似景点';
-      const resultNames = match.results.map((place) => place.name).join('、');
-      const status = match.results.length ? `共找到 ${match.results.length} 个景点` : '没有找到相关景点，请换一种说法';
-      this.setData(
-        {
-          processing: false,
-          searchQuery: query,
-          searchResultTitle: match.results.length ? title : '',
-          searchResults: match.results,
-          searchStatus: status
-        },
-        () => {
-          if (match.results.length && wx.pageScrollTo) {
-            wx.pageScrollTo({ selector: '#voice-search-results', duration: 300 });
-          }
-        }
-      );
-      if (this.speech) {
-        this.speech.play(match.results.length ? `${status}。${resultNames}` : status);
+      // 说出了具体景点名：直接列出景点（原有体验，不耗 AI 调用）
+      if (match.mode === 'exact') {
+        this.showSearchResult({
+          query,
+          title: '找到以下景点',
+          results: match.results,
+          speakText: `共找到 ${match.results.length} 个景点。${match.results.map((place) => place.name).join('、')}`
+        });
+        return;
       }
+
+      // 没说具体景点（如"北京面积最小的景点""哪里能看升旗"）：交给 AI 结合景点清单回答，
+      // 并把回答里提到的已收录景点列出来，避免"说什么都返回同几个景点"
+      this.setData({ searchQuery: query, searchStatus: '正在为你查找' });
+      const answer = await this.askAiForPlaces(query);
+      if (answer) {
+        const mentioned = placesMentionedIn(answer, this.data.places, { limit: 6 });
+        const results = mentioned.length ? mentioned : match.results;
+        this.showSearchResult({
+          query,
+          answer,
+          title: results.length ? '相关景点' : '',
+          results,
+          speakText: answer
+        });
+        return;
+      }
+
+      // AI 不可用时回退到本地相似匹配
+      const status = match.results.length ? `共找到 ${match.results.length} 个景点` : '没有找到相关景点，请换一种说法';
+      this.showSearchResult({
+        query,
+        title: match.results.length ? '为你找到相似景点' : '',
+        results: match.results,
+        status,
+        speakText: match.results.length ? `${status}。${match.results.map((place) => place.name).join('、')}` : status
+      });
     } catch (error) {
       const message = error.message || '语音搜索失败，请再试一次';
       this.setData({ processing: false, searchStatus: message });
       if (this.speech) this.speech.play(message);
     }
+  },
+
+  async askAiForPlaces(query) {
+    try {
+      const payload = await api.askAssistant({
+        question: query,
+        context: { type: 'placeSearch', mode: 'lowVision', city: '北京' }
+      });
+      if (!payload || payload.source !== 'ai') return '';
+      return String(payload.answer || '').trim();
+    } catch {
+      return '';
+    }
+  },
+
+  showSearchResult({ query, answer = '', title = '', results = [], status, speakText }) {
+    if (this.destroyed) return;
+    const finalStatus = status || (results.length ? `共找到 ${results.length} 个景点` : answer ? 'AI 已回答' : '没有找到相关景点，请换一种说法');
+    this.setData(
+      {
+        processing: false,
+        searchQuery: query,
+        searchAnswer: answer,
+        searchResultTitle: results.length ? title : '',
+        searchResults: results,
+        searchStatus: finalStatus
+      },
+      () => {
+        if ((results.length || answer) && wx.pageScrollTo) {
+          wx.pageScrollTo({ selector: '#voice-search-results', duration: 300 });
+        }
+      }
+    );
+    if (this.speech && speakText) this.speech.play(speakText);
   }
 });

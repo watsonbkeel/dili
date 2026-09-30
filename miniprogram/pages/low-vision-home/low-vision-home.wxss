@@ -184,6 +184,18 @@ page {
   overflow-wrap: anywhere;
 }
 
+.lv-search-answer {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  border: 4rpx solid #000000;
+  border-radius: 16rpx;
+  background: #ffffff;
+  color: #000000;
+  font-size: 44rpx;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
 .lv-listen-actions {
   margin-top: 14rpx;
 }
@@ -278,7 +290,8 @@ page {
 .font-small .lv-section-title { font-size: 46rpx; }
 .font-small .lv-voice-dock .lv-listen-title { font-size: 42rpx; }
 .font-small .lv-listen-state { font-size: 34rpx; }
-.font-small .lv-search-query { font-size: 38rpx; }
+.font-small .lv-search-query,
+.font-small .lv-search-answer { font-size: 38rpx; }
 .font-small .lv-main-btn,
 .font-small .lv-big-btn { font-size: 42rpx; }
 .font-small .lv-search-result-title { font-size: 44rpx; }
@@ -300,7 +313,8 @@ page {
 .font-medium .lv-section-title { font-size: 50rpx; }
 .font-medium .lv-voice-dock .lv-listen-title { font-size: 45rpx; }
 .font-medium .lv-listen-state { font-size: 37rpx; }
-.font-medium .lv-search-query { font-size: 41rpx; }
+.font-medium .lv-search-query,
+.font-medium .lv-search-answer { font-size: 41rpx; }
 .font-medium .lv-main-btn,
 .font-medium .lv-big-btn { font-size: 46rpx; }
 .font-medium .lv-search-result-title { font-size: 48rpx; }

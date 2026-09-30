@@ -125,12 +125,18 @@ function askAssistant(payload) {
   });
 }
 
-function transcribeAudio(filePath) {
+// 移动网络下上传偶发卡住（服务器侧表现为 408 读请求体超时）。
+// 单次上传限时 20 秒，网络失败/超时/408/5xx 自动重试 1 次，避免用户长时间"没反应"。
+const TRANSCRIBE_TIMEOUT_MS = 20000;
+const TRANSCRIBE_MAX_ATTEMPTS = 2;
+
+function uploadAudioOnce(filePath) {
   return new Promise((resolve, reject) => {
     wx.uploadFile({
       url: `${app.globalData.apiBaseUrl}/api/transcriptions`,
       filePath,
       name: 'file',
+      timeout: TRANSCRIBE_TIMEOUT_MS,
       header: {
         'X-User-Id': userId()
       },
@@ -144,20 +150,40 @@ function transcribeAudio(filePath) {
         try {
           payload = typeof res.data === 'string' ? JSON.parse(res.data) : res.data;
         } catch {
-          reject(new Error('语音识别返回格式错误'));
+          const error = new Error('语音识别返回格式错误');
+          error.retryable = res.statusCode === 408 || res.statusCode >= 500;
+          reject(error);
           return;
         }
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve(payload);
           return;
         }
-        reject(new Error((payload && payload.error) || `语音识别失败：${res.statusCode}`));
+        const error = new Error((payload && payload.error) || `语音识别失败：${res.statusCode}`);
+        error.retryable = res.statusCode === 408 || res.statusCode >= 500;
+        reject(error);
       },
       fail(error) {
-        reject(new Error(error.errMsg || '语音上传失败'));
+        const message = String((error && error.errMsg) || '');
+        const failure = new Error(/timeout/i.test(message) ? '网络较慢，语音上传超时' : message || '语音上传失败');
+        failure.retryable = true;
+        reject(failure);
       }
     });
   });
+}
+
+async function transcribeAudio(filePath) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= TRANSCRIBE_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      return await uploadAudioOnce(filePath);
+    } catch (error) {
+      lastError = error;
+      if (!error.retryable) break;
+    }
+  }
+  throw lastError || new Error('语音识别失败，请再试一次');
 }
 
 function recognizeImage(filePath, location = null) {

@@ -19,6 +19,7 @@
 
   <view wx:if="{{searchQuery || searchResults.length}}" id="voice-search-results" class="lv-search-results">
     <view wx:if="{{searchQuery}}" class="lv-search-query">你说：{{searchQuery}}</view>
+    <view wx:if="{{searchAnswer}}" class="lv-search-answer">{{searchAnswer}}</view>
     <view wx:if="{{searchResultTitle}}" class="lv-search-result-title">{{searchResultTitle}}</view>
     <block wx:for="{{searchResults}}" wx:key="id">
       <view class="lv-search-result" bindtap="openPlace" data-id="{{item.id}}">

@@ -1,4 +1,17 @@
-const { getPlaceById } = require('./placeStore');
+const { getPlaceById, listPlaces } = require('./placeStore');
+
+// 语音搜景点：把已收录景点清单（名称+类别+一句话简介）交给模型，
+// 让"面积最大/最小""能看升旗"这类比较、条件型问题也能落到具体景点上
+function placeCatalogText(city = '北京') {
+  const places = listPlaces({ city });
+  return places
+    .map((place) => {
+      const tags = [...(place.category || []), ...(place.tags || [])].slice(0, 4).join('/');
+      const summary = String(place.summary || '').replace(/\s+/g, '').slice(0, 40);
+      return `${place.name}（${tags}）${summary}`;
+    })
+    .join('；');
+}
 const { getRouteById } = require('./routeStore');
 
 function contextText(context = {}) {
@@ -26,6 +39,10 @@ function contextText(context = {}) {
   if (context.type === 'mode' && context.mode === 'mobility') {
     return '当前城市：北京。用户从行动不便人士首页进入，回答时优先考虑无障碍通行、步行时长和休息安排。';
   }
+  if (context.type === 'placeSearch') {
+    const city = context.city || '北京';
+    return `当前城市：${city}。用户在视障语音导览首页用语音找景点，回答会被语音播报。本应用已收录的景点：${placeCatalogText(city)}。请直接回答用户的问题，并点名一到三个最相关的已收录景点（名称必须与清单一致）；清单里没有合适的，就如实说明并给出一般性建议，控制在150字以内。`;
+  }
   if (context.type === 'mode' && context.mode === 'lowVision') {
     return '当前城市：北京。用户从视障人士首页进入，回答应清晰、简洁，适合语音播报。';
   }
@@ -34,6 +51,9 @@ function contextText(context = {}) {
 
 function templateAnswer(question, context = {}) {
   const q = String(question || '').trim();
+  if (context.type === 'placeSearch') {
+    return '暂时无法回答这个问题。你可以直接说出景点名称，比如故宫、天坛、颐和园。';
+  }
   const ctx = contextText(context);
   if (!q) {
     return '你可以问我某个景点的历史背景、建筑特色，或请我推荐一条适合当前行程的路线。';
