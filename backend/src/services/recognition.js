@@ -1,5 +1,5 @@
 const crypto = require('node:crypto');
-const { chatCompletionsUrl } = require('./assistant');
+const { visionCompletionsUrl } = require('./assistant');
 const { listPlaces } = require('./placeStore');
 const { validateLatLng } = require('./location');
 
@@ -214,7 +214,7 @@ async function recognizeImage({ body, contentType, config, fetchImpl = fetch }) 
   const geoContext = locationContext(location);
   let response;
   try {
-    response = await fetchImpl(chatCompletionsUrl(config), {
+    response = await fetchImpl(visionCompletionsUrl(config), {
       method: 'POST',
       signal: AbortSignal.timeout(Number(config.openaiTimeoutMs || 30000)),
       headers: {

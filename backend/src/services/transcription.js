@@ -1,3 +1,6 @@
+const { audioFromMultipart } = require('./asr/audio');
+const { transcribeWithTencent } = require('./asr/tencent');
+
 function transcriptionText(payload) {
   return String(
     (payload && payload.text) ||
@@ -6,7 +9,13 @@ function transcriptionText(payload) {
   ).trim();
 }
 
-async function transcribeAudio({ body, contentType, config, fetchImpl = fetch }) {
+function speechProvider(config) {
+  const provider = String(config.speechToTextProvider || 'tencent').trim().toLowerCase();
+  return provider === 'openai-compatible' ? 'openai-compatible' : 'tencent';
+}
+
+// 回滚路径：原样转发 multipart 到 OpenAI 兼容的 /v1/audio/transcriptions（旧 Qwen3-ASR 服务）。
+async function transcribeWithOpenAICompatible({ body, contentType, config, fetchImpl = fetch }) {
   if (!String(contentType || '').toLowerCase().startsWith('multipart/form-data')) {
     const error = new Error('Audio upload must use multipart/form-data');
     error.status = 415;
@@ -43,18 +52,26 @@ async function transcribeAudio({ body, contentType, config, fetchImpl = fetch })
   }
 
   if (!response.ok) {
-    const error = new Error(payload.detail || payload.error || 'Speech recognition failed');
+    const error = new Error('Speech recognition failed');
     error.status = 502;
     throw error;
   }
 
-  return {
-    ...payload,
-    text: transcriptionText(payload)
-  };
+  // 只返回 text，不透传上游原始响应
+  return { text: transcriptionText(payload), provider: 'openai-compatible' };
+}
+
+async function transcribeAudio({ body, contentType, config, fetchImpl = fetch, createAsrClient, logger }) {
+  if (speechProvider(config) === 'openai-compatible') {
+    return transcribeWithOpenAICompatible({ body, contentType, config, fetchImpl });
+  }
+  const { audio } = await audioFromMultipart(body, contentType);
+  return transcribeWithTencent({ audio, config, createClient: createAsrClient, logger });
 }
 
 module.exports = {
+  speechProvider,
   transcribeAudio,
+  transcribeWithOpenAICompatible,
   transcriptionText
 };

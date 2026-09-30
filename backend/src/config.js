@@ -40,6 +40,7 @@ function readConfig(env = process.env) {
   };
 
   return {
+    host: mergedEnv.HOST || '127.0.0.1',
     port: Number(mergedEnv.PORT || 3000),
     dataDir: mergedEnv.DATA_DIR || path.join(process.cwd(), 'backend', 'data'),
     assetDir: mergedEnv.ASSET_DIR || path.join(process.cwd(), 'backend', 'public', 'assets'),
@@ -60,6 +61,19 @@ function readConfig(env = process.env) {
     assistantMaxTokens: Number(mergedEnv.ASSISTANT_MAX_TOKENS || mergedEnv.OPENAI_MAX_TOKENS || 600),
     speechToTextUrl: mergedEnv.SPEECH_TO_TEXT_URL || 'http://127.0.0.1:3102/v1/audio/transcriptions',
     speechToTextTimeoutMs: Number(mergedEnv.SPEECH_TO_TEXT_TIMEOUT_MS || 60000),
+    speechToTextProvider: (mergedEnv.SPEECH_TO_TEXT_PROVIDER || 'tencent').trim().toLowerCase(),
+    tencentSecretId: mergedEnv.TENCENTCLOUD_SECRET_ID || '',
+    tencentSecretKey: mergedEnv.TENCENTCLOUD_SECRET_KEY || '',
+    tencentSessionToken: mergedEnv.TENCENTCLOUD_SESSION_TOKEN || '',
+    tencentAsrEndpoint: mergedEnv.TENCENT_ASR_ENDPOINT || 'asr.tencentcloudapi.com',
+    tencentAsrRegion: mergedEnv.TENCENT_ASR_REGION || '',
+    tencentAsrEngine: mergedEnv.TENCENT_ASR_ENGINE || '16k_zh',
+    asrTimeoutMs: Number(mergedEnv.ASR_TIMEOUT_MS || 15000),
+    asrMaxRetries: Number(mergedEnv.ASR_MAX_RETRIES ?? 1),
+    paidRateLimitPerMinute: Number(mergedEnv.PAID_RATE_LIMIT_PER_MINUTE || 20),
+    paidMaxConcurrency: Number(mergedEnv.PAID_MAX_CONCURRENCY || 4),
+    trustProxy: String(mergedEnv.TRUST_PROXY || '1') === '1',
+    adminToken: mergedEnv.ADMIN_TOKEN || '',
     promptVersion: 'local-history-v1'
   };
 }

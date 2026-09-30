@@ -5,9 +5,14 @@
   "description": "WeChat mini program and Node backend for location-based local history storytelling.",
   "scripts": {
     "start": "node backend/src/server.js",
-    "test": "node --test backend/test/*.test.js"
+    "test": "node --test backend/test/*.test.js",
+    "check-env": "node scripts/check-env.js",
+    "smoke": "node scripts/smoke-test.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "tencentcloud-sdk-nodejs-asr": "4.1.315"
   }
 }

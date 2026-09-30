@@ -1,0 +1,36 @@
+# 新腾讯云服务器 systemd 单元（单实例，不使用 PM2 cluster）
+# 代码：/opt/dili/current（符号链接到 /opt/dili/releases/<sha>）
+# 数据：/var/lib/dili/{data,assets}   配置：/etc/dili/dili.env（600，root:dili）
+[Unit]
+Description=dili local history guide API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dili
+Group=dili
+WorkingDirectory=/opt/dili/current
+Environment=NODE_ENV=production
+Environment=ENV_FILE=/etc/dili/dili.env
+EnvironmentFile=/etc/dili/dili.env
+ExecStart=/usr/bin/node /opt/dili/current/backend/src/server.js
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=20
+
+# 加固
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/dili
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

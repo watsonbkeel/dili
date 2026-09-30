@@ -11,6 +11,8 @@ async function startTestServer(options = {}) {
   const store = new DataStore(dir);
   const server = createApp({
     store,
+    createAsrClient: options.createAsrClient,
+    logger: options.logger || null,
     config: {
       dataDir: dir,
       tencentMapKey: '',
@@ -190,10 +192,11 @@ test('POST /api/assistant returns template answer without AI key', async (t) => 
   assert.equal(records[0].source, 'template');
 });
 
-test('POST /api/transcriptions proxies multipart audio to local ASR', async (t) => {
+test('POST /api/transcriptions proxies multipart audio to local ASR in openai-compatible rollback mode', async (t) => {
   let capturedUrl = '';
   let capturedOptions = null;
   const server = await startTestServer({
+    config: { speechToTextProvider: 'openai-compatible' },
     fetchImpl: async (url, options) => {
       capturedUrl = url;
       capturedOptions = options;

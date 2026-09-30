@@ -11,9 +11,20 @@ const { askAssistant } = require('./services/assistant');
 const { transcribeAudio } = require('./services/transcription');
 const { recognizeImage } = require('./services/recognition');
 const { listRoutes } = require('./services/routeStore');
+const { clientKey, createPaidGuard } = require('./services/paidGuard');
+const { runtimeCheck } = require('./services/runtimeCheck');
 
-function sendJson(res, status, payload) {
+const MAX_AUDIO_UPLOAD_BYTES = 6 * 1024 * 1024;
+const MAX_IMAGE_UPLOAD_BYTES = 15 * 1024 * 1024;
+
+// 结构化日志：只记录事件元数据，不记录音频、base64、图片、密钥或用户原文
+function defaultLogger(entry) {
+  console.log(JSON.stringify({ time: new Date().toISOString(), ...entry }));
+}
+
+function sendJson(res, status, payload, extraHeaders = {}) {
   res.writeHead(status, {
+    ...extraHeaders,
     'Content-Type': 'application/json; charset=utf-8',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,POST,DELETE,OPTIONS',
@@ -83,15 +94,24 @@ async function readBody(req) {
   }
 }
 
-async function readRawBody(req, maxBytes = 15 * 1024 * 1024) {
+async function readRawBody(req, maxBytes = MAX_IMAGE_UPLOAD_BYTES, tooLargeMessage = 'Upload is too large') {
+  const declared = Number(req.headers['content-length'] || 0);
+  const tooLarge = () => {
+    const error = new Error(tooLargeMessage);
+    error.status = 413;
+    return error;
+  };
+  if (declared && declared > maxBytes) {
+    req.resume();
+    throw tooLarge();
+  }
   const chunks = [];
   let size = 0;
   for await (const chunk of req) {
     size += chunk.length;
     if (size > maxBytes) {
-      const error = new Error('Audio upload is too large');
-      error.status = 413;
-      throw error;
+      req.resume();
+      throw tooLarge();
     }
     chunks.push(chunk);
   }
@@ -108,7 +128,19 @@ function getUserId(req, url, body = {}) {
   );
 }
 
-function createApp({ config = readConfig(), store = new DataStore(config.dataDir), fetchImpl = fetch } = {}) {
+function createApp({
+  config = readConfig(),
+  store = new DataStore(config.dataDir),
+  fetchImpl = fetch,
+  createAsrClient,
+  logger = defaultLogger,
+  paidGuard = createPaidGuard({
+    perMinute: Number(config.paidRateLimitPerMinute ?? 20),
+    maxConcurrency: Number(config.paidMaxConcurrency ?? 4)
+  })
+} = {}) {
+  const guarded = (req, task) => paidGuard.run(clientKey(req, config.trustProxy !== false), task);
+
   return http.createServer(async (req, res) => {
     try {
       if (req.method === 'OPTIONS') {
@@ -125,6 +157,16 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
 
       if (req.method === 'GET' && url.pathname === '/health') {
         sendJson(res, 200, { ok: true });
+        return;
+      }
+
+      // 受保护的配置/存储自检：需要 ADMIN_TOKEN；未配置时接口不存在。不调用任何计费接口。
+      if (req.method === 'GET' && url.pathname === '/api/admin/check') {
+        if (!isAdmin(req, config)) {
+          sendJson(res, 404, { error: 'Not found' });
+          return;
+        }
+        sendJson(res, 200, await runtimeCheck({ config }));
         return;
       }
 
@@ -173,24 +215,30 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
       }
 
       if (req.method === 'POST' && url.pathname === '/api/transcriptions') {
-        const body = await readRawBody(req);
-        const result = await transcribeAudio({
-          body,
-          contentType: req.headers['content-type'],
-          config,
-          fetchImpl
+        const result = await guarded(req, async () => {
+          const body = await readRawBody(req, MAX_AUDIO_UPLOAD_BYTES, '录音文件过大，请缩短到 60 秒以内');
+          return transcribeAudio({
+            body,
+            contentType: req.headers['content-type'],
+            config,
+            fetchImpl,
+            createAsrClient,
+            logger
+          });
         });
         sendJson(res, 200, result);
         return;
       }
 
       if (req.method === 'POST' && url.pathname === '/api/recognize') {
-        const body = await readRawBody(req);
-        const result = await recognizeImage({
-          body,
-          contentType: req.headers['content-type'],
-          config,
-          fetchImpl
+        const result = await guarded(req, async () => {
+          const body = await readRawBody(req, MAX_IMAGE_UPLOAD_BYTES, 'Image upload is too large');
+          return recognizeImage({
+            body,
+            contentType: req.headers['content-type'],
+            config,
+            fetchImpl
+          });
         });
         sendJson(res, 200, { result });
         return;
@@ -199,12 +247,14 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
       if (req.method === 'POST' && url.pathname === '/api/assistant') {
         const body = await readBody(req);
         const userId = String(getUserId(req, url, body));
-        const result = await askAssistant({
-          config,
-          fetchImpl,
-          question: body.question || '',
-          context: body.context || {}
-        });
+        const result = await guarded(req, () =>
+          askAssistant({
+            config,
+            fetchImpl,
+            question: body.question || '',
+            context: body.context || {}
+          })
+        );
         const record = await store.addAssistantRecord({
           userId,
           question: body.question || '',
@@ -304,18 +354,41 @@ function createApp({ config = readConfig(), store = new DataStore(config.dataDir
 
       sendJson(res, 404, { error: 'Not found' });
     } catch (error) {
-      sendJson(res, error.status || 500, {
-        error: error.message || 'Internal server error'
-      });
+      const status = error.status || 500;
+      if (status >= 500 && logger) {
+        logger({ event: 'error', method: req.method, path: req.url && req.url.split('?')[0], status, code: error.code || '' });
+      }
+      const payload = { error: status >= 500 && !error.status ? 'Internal server error' : error.message || 'Internal server error' };
+      if (error.code) payload.code = error.code;
+      sendJson(res, status, payload, error.retryAfter ? { 'Retry-After': String(error.retryAfter) } : {});
     }
   });
+}
+
+function isAdmin(req, config) {
+  const expected = String(config.adminToken || '');
+  if (expected.length < 16) return false;
+  const provided = String(req.headers['x-admin-token'] || '');
+  const a = Buffer.from(provided);
+  const b = Buffer.from(expected);
+  return a.length === b.length && require('node:crypto').timingSafeEqual(a, b);
 }
 
 if (require.main === module) {
   const config = readConfig();
   const server = createApp({ config });
-  server.listen(config.port, () => {
-    console.log(`Local history backend listening on http://localhost:${config.port}`);
+  // Node 默认 requestTimeout 300s；这里与 Nginx/小程序超时对齐
+  server.requestTimeout = 90 * 1000;
+  server.headersTimeout = 30 * 1000;
+  server.listen(config.port, config.host, () => {
+    console.log(
+      JSON.stringify({
+        event: 'listening',
+        host: config.host,
+        port: config.port,
+        speechToTextProvider: config.speechToTextProvider
+      })
+    );
   });
 }
 

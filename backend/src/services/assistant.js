@@ -64,11 +64,9 @@ function buildAssistantMessages({ question, context }) {
   ];
 }
 
-function chatCompletionsUrl(config) {
-  const baseUrl = new URL(config.assistantBaseUrl || config.openaiBaseUrl || 'https://api.bkeel.com');
-  const configuredPath = String(
-    config.assistantChatCompletionsPath || config.openaiChatCompletionsPath || ''
-  ).trim();
+function buildChatCompletionsUrl(base, path) {
+  const baseUrl = new URL(base || 'https://api.bkeel.com');
+  const configuredPath = String(path || '').trim();
   if (configuredPath) {
     baseUrl.pathname = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
     return baseUrl.toString();
@@ -79,6 +77,19 @@ function chatCompletionsUrl(config) {
     ? `${normalizedPath}/chat/completions`
     : `${normalizedPath}/v1/chat/completions`;
   return baseUrl.toString();
+}
+
+// 文字问答：ASSISTANT_* 优先，未配置时回退 OPENAI_*
+function chatCompletionsUrl(config) {
+  return buildChatCompletionsUrl(
+    config.assistantBaseUrl || config.openaiBaseUrl,
+    config.assistantChatCompletionsPath || config.openaiChatCompletionsPath
+  );
+}
+
+// 视觉识别：只用 OPENAI_*，不受 ASSISTANT_* 影响（两套配置互不干扰）
+function visionCompletionsUrl(config) {
+  return buildChatCompletionsUrl(config.openaiBaseUrl, config.openaiChatCompletionsPath);
 }
 
 function extractAnswer(payload) {
@@ -174,5 +185,6 @@ module.exports = {
   contextText,
   extractAnswer,
   normalizeAssistantAnswer,
-  templateAnswer
+  templateAnswer,
+  visionCompletionsUrl
 };

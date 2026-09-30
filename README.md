@@ -62,7 +62,7 @@ npm start
 - `GET /api/routes`：返回推荐路线。
 - `POST /api/story`：根据 `placeId` 或完整地点资料生成可信导览。
 - `POST /api/assistant`：AI 助手问答。后端记录问题和回答，并在有模型配置时转发到外部模型。
-- `POST /api/transcriptions`：接收小程序录音，并转发到本机 Qwen3 ASR 服务完成语音转文字。
+- `POST /api/transcriptions`：接收小程序录音（multipart 字段 `file`，16k 单声道 wav，≤60 秒），默认调用腾讯云一句话识别 SentenceRecognition，返回 `{ text, provider, requestId }`。设 `SPEECH_TO_TEXT_PROVIDER=openai-compatible` 可回滚到旧的本地 Qwen3 ASR。失败时返回 `{ error, code }`（如 `ASR_NOT_CONFIGURED`、`ASR_TIMEOUT`、`ASR_BALANCE`）。
 - `POST /api/recognize`：接收拍摄图片和地理位置，并调用 `gpt-5.6-terra` 视觉模型返回动态景点或文物识别结果。
 - `GET /api/history?userId=`：读取用户历史记录。
 - `DELETE /api/history/:id?userId=`：删除单条历史记录。
@@ -84,9 +84,10 @@ curl -X POST http://127.0.0.1:13104/api/assistant \
 
 ## 环境变量
 
-在 `.env` 中配置：
+完整模板见 [.env.example](.env.example)（含腾讯云 ASR、限流、HOST、ADMIN_TOKEN 等新变量）。常用项：
 
 ```bash
+HOST=127.0.0.1
 PORT=13104
 DATA_DIR=backend/data
 ASSET_DIR=backend/public/assets
@@ -104,8 +105,12 @@ ASSISTANT_API_KEY=你的TokenHub模型Key
 ASSISTANT_MODEL=deepseek-v4-pro
 ASSISTANT_TIMEOUT_MS=30000
 ASSISTANT_MAX_TOKENS=2000
-SPEECH_TO_TEXT_URL=http://127.0.0.1:3102/v1/audio/transcriptions
-SPEECH_TO_TEXT_TIMEOUT_MS=60000
+SPEECH_TO_TEXT_PROVIDER=tencent
+TENCENTCLOUD_SECRET_ID=
+TENCENTCLOUD_SECRET_KEY=
+TENCENT_ASR_ENGINE=16k_zh
+ASR_TIMEOUT_MS=15000
+ASR_MAX_RETRIES=1
 ```
 
 安全要求：
@@ -139,18 +144,19 @@ https://api.bkeel.com/v1/chat/completions
 - 图片资源通过 `https://dili.bkeel.com/assets/...` 访问时，也要在下载/图片相关合法域名中确认。
 - 不要使用 `http://IP:端口` 作为正式后端地址。
 
-如果迁移到另一台服务器：
+腾讯云部署（systemd 单实例 + 独立 Nginx 站点 + 代码/数据分离）见 [docs/腾讯云部署说明.md](docs/腾讯云部署说明.md)，回滚见 [docs/回滚说明.md](docs/回滚说明.md)，验收记录见 [docs/迁移验收报告.md](docs/迁移验收报告.md)。
 
-1. 拉取 GitHub 代码。
-2. 创建 `.env` 并配置模型 key。
-3. 执行 `npm install`。
-4. 用 `npm start`、pm2 或 systemd 启动后端。
-5. 用 HTTPS 域名反向代理到后端端口。
-6. 修改 `miniprogram/app.js` 的 `apiBaseUrl` 为 HTTPS 域名。
-7. 在微信公众平台配置合法域名。
-8. 重新上传小程序。
+常用命令：
 
-详细交接见 [docs/部署与AI接手指南.md](docs/部署与AI接手指南.md)。
+```bash
+npm test                                   # 离线自动化测试（mock，不计费）
+ENV_FILE=/etc/dili/dili.env npm run check-env   # 配置/存储自检，只输出是否配置
+npm run smoke -- https://dili.bkeel.com    # 非计费冒烟测试
+```
+
+已知风险：`X-User-Id` 由客户端自报，不是身份认证，只用于区分历史记录，不能作为权限依据。
+
+旧版交接见 [docs/部署与AI接手指南.md](docs/部署与AI接手指南.md)。
 
 ## 设计与数据说明
 
