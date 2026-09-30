@@ -112,6 +112,13 @@ function visionCompletionsUrl(config) {
   return buildChatCompletionsUrl(config.openaiBaseUrl, config.openaiChatCompletionsPath);
 }
 
+// 返回要合并进请求体的思考开关字段；值非法或为 none 时不发送
+function thinkingParams(config = {}) {
+  const mode = String(config.llmThinking ?? 'disabled').trim().toLowerCase();
+  if (mode === 'disabled' || mode === 'enabled') return { thinking: { type: mode } };
+  return {};
+}
+
 function extractAnswer(payload) {
   const content = payload?.choices?.[0]?.message?.content;
   if (typeof content === 'string') return content.trim();
@@ -173,6 +180,7 @@ async function askAssistant({ config, question, context = {}, fetchImpl = fetch 
         model,
         temperature: 0.4,
         max_tokens: maxTokens,
+        ...thinkingParams(config),
         messages: buildAssistantMessages({ question, context })
       })
     });
@@ -206,5 +214,6 @@ module.exports = {
   extractAnswer,
   normalizeAssistantAnswer,
   templateAnswer,
+  thinkingParams,
   visionCompletionsUrl
 };

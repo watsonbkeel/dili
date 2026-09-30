@@ -74,6 +74,9 @@ function readConfig(env = process.env) {
     paidMaxConcurrency: Number(mergedEnv.PAID_MAX_CONCURRENCY || 4),
     trustProxy: String(mergedEnv.TRUST_PROXY || '1') === '1',
     adminToken: mergedEnv.ADMIN_TOKEN || '',
+    // DeepSeek V4 系列在 TokenHub 默认开启深度思考，导游问答/识图不需要，关闭以降低延迟和 token。
+    // disabled（默认）/ enabled：随请求发送 thinking.type；none：不发送该字段（兼容不认识该字段的模型）。
+    llmThinking: String(mergedEnv.LLM_THINKING ?? 'disabled').trim().toLowerCase(),
     promptVersion: 'local-history-v1'
   };
 }

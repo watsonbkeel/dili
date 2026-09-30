@@ -1,5 +1,5 @@
 const crypto = require('node:crypto');
-const { visionCompletionsUrl } = require('./assistant');
+const { thinkingParams, visionCompletionsUrl } = require('./assistant');
 const { listPlaces } = require('./placeStore');
 const { validateLatLng } = require('./location');
 
@@ -226,6 +226,7 @@ async function recognizeImage({ body, contentType, config, fetchImpl = fetch }) 
         temperature: 0.1,
         max_tokens: Math.max(700, Number(config.openaiMaxTokens || 600)),
         response_format: { type: 'json_object' },
+        ...thinkingParams(config),
         messages: recognitionMessages(dataUrl, geoContext)
       })
     });

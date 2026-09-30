@@ -183,3 +183,28 @@ test('askAssistant uses local template when API key is not configured', async ()
   assert.equal(result.source, 'template');
   assert.match(result.answer, /建筑|空间|轴线/);
 });
+
+test('thinking is disabled by default and configurable', () => {
+  const { thinkingParams } = require('../src/services/assistant');
+  const { readConfig } = require('../src/config');
+  assert.deepEqual(thinkingParams({}), { thinking: { type: 'disabled' } });
+  assert.deepEqual(thinkingParams({ llmThinking: 'enabled' }), { thinking: { type: 'enabled' } });
+  assert.deepEqual(thinkingParams({ llmThinking: 'none' }), {});
+  assert.equal(readConfig({ ENV_FILE: '/nonexistent' }).llmThinking, 'disabled');
+  assert.equal(readConfig({ ENV_FILE: '/nonexistent', LLM_THINKING: 'none' }).llmThinking, 'none');
+});
+
+test('assistant request body disables thinking for DeepSeek', async () => {
+  let sent = null;
+  await askAssistant({
+    config: { assistantApiKey: 'test-key', assistantBaseUrl: 'https://example.test' },
+    question: '故宫有多大',
+    context: {},
+    fetchImpl: async (url, init) => {
+      sent = JSON.parse(init.body);
+      return { ok: true, json: async () => ({ choices: [{ message: { content: '故宫很大。' } }] }) };
+    }
+  });
+  assert.deepEqual(sent.thinking, { type: 'disabled' });
+  assert.equal(sent.model, 'deepseek/deepseek-flash');
+});
