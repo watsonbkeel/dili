@@ -1,7 +1,14 @@
 const api = require('../../utils/api');
 const { presentationForContext } = require('../../utils/assistantContext');
 const { createSpeechController } = require('../../utils/speech');
-const { frameContainsVoice, transcriptionText } = require('../../utils/voiceInput');
+const {
+  RECORDER_RETRY_DELAY_MS,
+  frameContainsVoice,
+  isStartRecordFailure,
+  recorderErrorMessage,
+  transcriptionText
+} = require('../../utils/voiceInput');
+const logger = require('../../utils/logger');
 
 const SILENCE_TIMEOUT_MS = 3000;
 const MAX_RECORDING_MS = 60000;
@@ -156,6 +163,7 @@ Page({
 
   bindRecorderEvents() {
     this.handleRecorderStart = () => {
+      this.startingRecording = false;
       this.recordStartedAt = Date.now();
       this.lastVoiceAt = this.recordStartedAt;
       this.voiceDetected = false;
@@ -175,10 +183,11 @@ Page({
       }
     };
     this.handleRecorderStop = (result) => {
+      this.startingRecording = false;
       this.clearSilenceTimer();
       if (this.destroyed) return;
       this.setData({ recording: false });
-      if (!result.tempFilePath) {
+      if (!result || !result.tempFilePath) {
         this.setData({ processingVoice: false, voiceStatus: '没有获得录音，请再试一次' });
         return;
       }
@@ -186,10 +195,26 @@ Page({
     };
     this.handleRecorderError = (error) => {
       this.clearSilenceTimer();
+      logger.error('Recorder error', {
+        page: 'assistant',
+        errMsg: error && error.errMsg,
+        retried: Boolean(this.recordRetried)
+      });
+      if (this.destroyed) return;
+      // 麦克风/音频会话被占用导致启动失败：稍等后自动重试一次
+      if (!this.data.recording && !this.recordRetried && isStartRecordFailure(error)) {
+        this.recordRetried = true;
+        this.setData({ voiceStatus: '正在重新打开麦克风' });
+        setTimeout(() => {
+          if (!this.destroyed) this.launchRecorder();
+        }, RECORDER_RETRY_DELAY_MS);
+        return;
+      }
+      this.startingRecording = false;
       this.setData({
         recording: false,
         processingVoice: false,
-        voiceStatus: error.errMsg || '录音失败，请检查麦克风权限'
+        voiceStatus: recorderErrorMessage(error)
       });
     };
     this.recorder.onStart(this.handleRecorderStart);
@@ -219,7 +244,7 @@ Page({
   },
 
   toggleVoiceInput() {
-    if (this.data.processingVoice || this.data.loading) return;
+    if (this.data.processingVoice || this.data.loading || this.startingRecording) return;
     if (this.data.recording) {
       this.stopRecording();
       return;
@@ -256,9 +281,18 @@ Page({
   },
 
   startRecording() {
-    if (!this.recorder) return;
-    if (this.speech) this.speech.stop();
+    if (!this.recorder || this.startingRecording) return;
+    this.startingRecording = true;
+    this.recordRetried = false;
     this.setData({ input: '', error: '', voiceStatus: '正在打开麦克风' });
+    // 先停止播报并等待系统释放音频，再开始录音，避免 start record fail
+    const ready = this.speech ? this.speech.stopAndRelease() : Promise.resolve();
+    ready.then(() => {
+      if (!this.destroyed) this.launchRecorder();
+    });
+  },
+
+  launchRecorder() {
     try {
       this.recorder.start({
         duration: MAX_RECORDING_MS,
@@ -270,7 +304,7 @@ Page({
         frameSize: 5
       });
     } catch (error) {
-      this.setData({ voiceStatus: error.errMsg || '录音启动失败，请检查麦克风权限' });
+      this.handleRecorderError(error);
     }
   },
 

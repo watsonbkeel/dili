@@ -33,7 +33,29 @@ function transcriptionText(payload) {
   ).trim();
 }
 
+// 录音启动失败（多为麦克风/音频会话被占用）时自动重试一次
+const RECORDER_RETRY_DELAY_MS = 500;
+
+function isStartRecordFailure(error) {
+  const message = String((error && error.errMsg) || error || '');
+  return /start\s*record\s*fail|start:fail|operateRecorder:fail/i.test(message);
+}
+
+function recorderErrorMessage(error) {
+  const message = String((error && error.errMsg) || error || '');
+  if (/auth|permission|deny|denied|authorize/i.test(message)) {
+    return '没有麦克风权限，请在设置中允许录音';
+  }
+  if (isStartRecordFailure(message)) {
+    return '麦克风暂时被占用，请稍后再点一次';
+  }
+  return '录音失败，请再试一次';
+}
+
 module.exports = {
+  RECORDER_RETRY_DELAY_MS,
   frameContainsVoice,
+  isStartRecordFailure,
+  recorderErrorMessage,
   transcriptionText
 };

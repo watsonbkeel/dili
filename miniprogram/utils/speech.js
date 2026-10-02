@@ -1,13 +1,28 @@
+const logger = require('./logger');
+
 const MAX_TTS_CHARS = 90;
+// 每段失败后重新合成并重试的次数；仍失败则跳到下一段，不让整篇播报中断
+const MAX_SEGMENT_RETRIES = 1;
+// 停止播放后给系统释放音频会话的时间，再开始录音（iOS 上立即录音易报 start record fail）
+const AUDIO_RELEASE_MS = 300;
 
 function normalizeSpeechText(text) {
   return String(text || '')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .replace(/[*_`#>~]/g, '')
+    .replace(/[*_`#>~|]/g, '')
     .replace(/^\s*[-+]\s+/gm, '')
     .replace(/^\s*\d+[.)、]\s*/gm, '')
     .replace(/(^|\s)\d+[.)、]\s*/g, '$1')
+    // 时刻：9:00 / 10：30 → 9点00分（须在年份规则之前，避免把 10:30 读成年份）
+    .replace(/(^|[^\d])(\d{1,2})\s*[：:]\s*(\d{2})(?!\d)/g, '$1$2点$3分')
+    // 年份后接冒号：1406：明成祖… → 1406年，明成祖…（同声传译插件对“数字＋冒号”合成的音频会播放失败）
+    .replace(/(^|[^\d])(\d{3,4})\s*[：:]/g, '$1$2年，')
+    // 其余冒号一律改为逗号，读起来自然，也避免合成异常
+    .replace(/\s*[：:]\s*/g, '，')
     .replace(/\s+/g, ' ')
+    // 合并拼接产生的重复标点：“。。” “。；” “，。”
+    .replace(/[，,、；;]*([。！？!?])[。！？!?，,、；;\s]*/g, '$1')
+    .replace(/([，,、；;])[，,、；;\s]+/g, '$1')
     .trim();
 }
 
@@ -78,13 +93,15 @@ function splitSpeechText(text) {
 }
 
 function createSpeechController(page, dataKey) {
-  const audio = wx.createInnerAudioContext();
+  let audio = null;
   let currentRate = 1;
   let plugin = null;
   let queue = [];
   let queueIndex = 0;
+  let attempts = 0;
+  let failedSegments = 0;
   let playToken = 0;
-  let ignoreNextStop = false;
+  let resumeAfterInterruption = false;
 
   function current() {
     return page.data[dataKey] || {};
@@ -99,27 +116,95 @@ function createSpeechController(page, dataKey) {
     });
   }
 
-  audio.onPlay(() => setState({ status: 'playing', statusText: '语音播放中' }));
-  audio.onPause(() => setState({ status: 'paused', statusText: '语音已暂停' }));
-  audio.onStop(() => {
-    if (ignoreNextStop) {
-      ignoreNextStop = false;
-      return;
+  function releaseAudio() {
+    if (!audio) return;
+    const old = audio;
+    audio = null;
+    try {
+      old.stop();
+    } catch {
+      // 已停止或已销毁
     }
-    setState({ status: 'idle', statusText: '语音已停止' });
-  });
-  audio.onEnded(() => {
-    if (queueIndex < queue.length - 1) {
-      queueIndex += 1;
-      synthesizeAndPlay(playToken);
+    try {
+      old.destroy();
+    } catch {
+      // ignore
+    }
+  }
+
+  function finish() {
+    releaseAudio();
+    if (failedSegments) {
+      setState({ status: 'idle', statusText: `播放完成（${failedSegments} 段未能播放）` });
       return;
     }
     setState({ status: 'idle', statusText: '播放完成' });
-  });
-  audio.onError((error) => {
-    console.error('Speech audio playback failed', error);
-    setState({ status: 'failed', statusText: '语音播放失败' });
-  });
+  }
+
+  function nextSegment(token) {
+    if (token !== playToken) return;
+    queueIndex += 1;
+    attempts = 0;
+    if (queueIndex >= queue.length) {
+      finish();
+      return;
+    }
+    synthesizeAndPlay(token);
+  }
+
+  // 某一段合成或播放失败：先重试，仍失败则跳过该段继续播放
+  function segmentFailed(token, stage, error) {
+    if (token !== playToken) return;
+    logger.error('Speech segment failed', {
+      stage,
+      segment: `${queueIndex + 1}/${queue.length}`,
+      attempt: attempts + 1,
+      errCode: error && error.errCode,
+      errMsg: (error && (error.errMsg || error.msg || error.message)) || String(error || ''),
+      text: String(queue[queueIndex] || '').slice(0, 30)
+    });
+    releaseAudio();
+    if (attempts < MAX_SEGMENT_RETRIES) {
+      attempts += 1;
+      synthesizeAndPlay(token);
+      return;
+    }
+    failedSegments += 1;
+    if (failedSegments >= queue.length) {
+      setState({
+        status: 'failed',
+        statusText: stage === 'synthesize' ? '语音生成失败' : '语音播放失败'
+      });
+      wx.showToast({ title: '语音播放失败', icon: 'none' });
+      return;
+    }
+    nextSegment(token);
+  }
+
+  // 每段使用新的播放器，避免在 onEnded 回调里给同一实例换 src 时部分机型报错
+  function playFile(token, filename) {
+    releaseAudio();
+    const segmentAudio = wx.createInnerAudioContext();
+    audio = segmentAudio;
+    const isCurrent = () => token === playToken && audio === segmentAudio;
+
+    segmentAudio.onPlay(() => {
+      if (isCurrent()) setState({ status: 'playing', statusText: '语音播放中' });
+    });
+    segmentAudio.onPause(() => {
+      if (isCurrent()) setState({ status: 'paused', statusText: '语音已暂停' });
+    });
+    segmentAudio.onEnded(() => {
+      if (isCurrent()) nextSegment(token);
+    });
+    segmentAudio.onError((error) => {
+      if (isCurrent()) segmentFailed(token, 'play', error);
+    });
+
+    segmentAudio.src = filename;
+    segmentAudio.playbackRate = currentRate;
+    segmentAudio.play();
+  }
 
   function getPlugin() {
     if (plugin) return plugin;
@@ -131,7 +216,7 @@ function createSpeechController(page, dataKey) {
     if (token !== playToken) return;
     const content = queue[queueIndex];
     if (!content) {
-      setState({ status: 'idle', statusText: '播放完成' });
+      finish();
       return;
     }
 
@@ -146,22 +231,15 @@ function createSpeechController(page, dataKey) {
       content,
       success(res) {
         if (token !== playToken) return;
-        const filename = res.filename || res.tempFilePath;
+        const filename = res && (res.filename || res.tempFilePath);
         if (!filename) {
-          console.error('Speech synthesis returned no audio file', res);
-          setState({ status: 'failed', statusText: '语音生成失败' });
-          wx.showToast({ title: '语音生成失败', icon: 'none' });
+          segmentFailed(token, 'synthesize', res);
           return;
         }
-        audio.src = filename;
-        audio.playbackRate = currentRate;
-        audio.play();
+        playFile(token, filename);
       },
       fail(error) {
-        if (token !== playToken) return;
-        console.error('Speech synthesis failed', error);
-        setState({ status: 'failed', statusText: '语音生成失败' });
-        wx.showToast({ title: '语音生成失败', icon: 'none' });
+        segmentFailed(token, 'synthesize', error);
       }
     });
   }
@@ -173,18 +251,17 @@ function createSpeechController(page, dataKey) {
       return;
     }
     playToken += 1;
+    releaseAudio();
     queue = chunks;
     queueIndex = 0;
-    ignoreNextStop = true;
-    audio.stop();
-    setTimeout(() => {
-      ignoreNextStop = false;
-    }, 0);
+    attempts = 0;
+    failedSegments = 0;
+    resumeAfterInterruption = false;
     setState({ status: 'loading', statusText: '语音加载中' });
     try {
       getPlugin();
     } catch (error) {
-      console.error('Speech plugin unavailable', error);
+      logger.error('Speech plugin unavailable', error);
       setState({ status: 'failed', statusText: '语音插件不可用' });
       wx.showToast({ title: '语音插件不可用', icon: 'none' });
       return;
@@ -193,31 +270,66 @@ function createSpeechController(page, dataKey) {
     synthesizeAndPlay(playToken);
   }
 
+  function isActive() {
+    const status = current().status;
+    return Boolean(audio) || status === 'loading' || status === 'playing' || status === 'paused';
+  }
+
+  function stop() {
+    const wasActive = isActive();
+    playToken += 1;
+    queue = [];
+    queueIndex = 0;
+    resumeAfterInterruption = false;
+    releaseAudio();
+    if (wasActive) setState({ status: 'idle', statusText: '语音已停止' });
+    return wasActive;
+  }
+
+  // 来电、微信语音等打断播放后，结束时自动继续
+  const handleInterruptionBegin = () => {
+    resumeAfterInterruption = Boolean(audio) && current().status === 'playing';
+  };
+  const handleInterruptionEnd = () => {
+    if (!resumeAfterInterruption || !audio) return;
+    resumeAfterInterruption = false;
+    audio.play();
+  };
+  if (wx.onAudioInterruptionBegin) wx.onAudioInterruptionBegin(handleInterruptionBegin);
+  if (wx.onAudioInterruptionEnd) wx.onAudioInterruptionEnd(handleInterruptionEnd);
+
   return {
     play,
     pause() {
-      audio.pause();
+      if (audio) audio.pause();
     },
     resume() {
-      audio.play();
+      if (audio) audio.play();
     },
     setRate(rate) {
       currentRate = Number(rate) || 1;
-      audio.playbackRate = currentRate;
+      if (audio) audio.playbackRate = currentRate;
       setState({ rate: currentRate, statusText: `${currentRate}x 倍速` });
     },
-    stop() {
-      playToken += 1;
-      queue = [];
-      queueIndex = 0;
-      audio.stop();
+    stop,
+    // 停止播放并等待系统释放音频会话，供录音前调用
+    stopAndRelease() {
+      const wasActive = stop();
+      return new Promise((resolve) => setTimeout(resolve, wasActive ? AUDIO_RELEASE_MS : 0));
     },
     destroy() {
       playToken += 1;
       queue = [];
-      audio.destroy();
+      releaseAudio();
+      if (wx.offAudioInterruptionBegin) wx.offAudioInterruptionBegin(handleInterruptionBegin);
+      if (wx.offAudioInterruptionEnd) wx.offAudioInterruptionEnd(handleInterruptionEnd);
     }
   };
 }
 
-module.exports = { createSpeechController };
+module.exports = {
+  AUDIO_RELEASE_MS,
+  createSpeechController,
+  normalizeSpeechText,
+  splitSpeechText
+};

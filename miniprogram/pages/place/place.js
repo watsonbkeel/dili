@@ -59,7 +59,9 @@ function buildSummaryPoints(place) {
     },
     {
       title: '和哪段历史有关',
-      text: timeline.length ? `${timeline[0].year}：${timeline[0].event}` : `${place.period || '北京历史'}相关地点。`
+      text: timeline.length
+        ? `${timeline[0].year}${/^\d+$/.test(String(timeline[0].year)) ? '年' : ''}，${timeline[0].event}`
+        : `${place.period || '北京历史'}相关地点。`
     },
     {
       title: '到现场应该看什么',
@@ -230,7 +232,7 @@ Page({
 
   playSummary() {
     if (!this.summarySpeech || !this.data.place) return;
-    const points = (this.data.summaryPoints || []).map((point) => `${point.title}：${point.text}`);
+    const points = (this.data.summaryPoints || []).map((point) => `${point.title}。${point.text}`);
     const text = points.length ? `${this.data.place.name}。${points.join('。')}` : this.data.place.summary;
     this.summarySpeech.play(text);
   },

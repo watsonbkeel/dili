@@ -1,6 +1,13 @@
 const api = require('../../utils/api');
 const { createSpeechController } = require('../../utils/speech');
-const { frameContainsVoice, transcriptionText } = require('../../utils/voiceInput');
+const {
+  RECORDER_RETRY_DELAY_MS,
+  frameContainsVoice,
+  isStartRecordFailure,
+  recorderErrorMessage,
+  transcriptionText
+} = require('../../utils/voiceInput');
+const logger = require('../../utils/logger');
 const viewHistory = require('../../utils/viewHistory');
 const lowVisionPreferences = require('../../utils/lowVisionPreferences');
 
@@ -21,10 +28,19 @@ function textList(values) {
   return (values || []).map((value) => String(value || '').trim()).filter(Boolean);
 }
 
+// 时间线写成“1406年，……”；不用“1406：”，同声传译插件合成“数字＋冒号”的音频会播放失败
+function timelineLine(item) {
+  const year = String((item && item.year) || '').trim();
+  const event = String((item && item.event) || '').trim();
+  if (!year) return event;
+  if (!event) return year;
+  return /^\d+$/.test(year) ? `${year}年，${event}` : `${year}，${event}`;
+}
+
 function buildSections(place) {
   const categories = [...textList(place.category), ...textList(place.tags)];
   const timeline = (place.timeline || [])
-    .map((item) => [item.year, item.event].filter(Boolean).join('：'))
+    .map((item) => timelineLine(item))
     .filter(Boolean);
   const sections = [
     {
@@ -141,6 +157,7 @@ Page({
 
   bindRecorderEvents() {
     this.handleRecorderStart = () => {
+      this.startingRecording = false;
       this.recordStartedAt = Date.now();
       this.lastVoiceAt = this.recordStartedAt;
       this.voiceDetected = false;
@@ -160,10 +177,11 @@ Page({
       }
     };
     this.handleRecorderStop = (result) => {
+      this.startingRecording = false;
       this.clearSilenceTimer();
       if (this.destroyed) return;
       this.setData({ recording: false });
-      if (!result.tempFilePath) {
+      if (!result || !result.tempFilePath) {
         this.setData({ processing: false, voiceStatus: '没有获得录音，请再试一次' });
         return;
       }
@@ -171,10 +189,26 @@ Page({
     };
     this.handleRecorderError = (error) => {
       this.clearSilenceTimer();
+      logger.error('Recorder error', {
+        page: 'low-vision-place',
+        errMsg: error && error.errMsg,
+        retried: Boolean(this.recordRetried)
+      });
+      if (this.destroyed) return;
+      // 麦克风/音频会话被占用导致启动失败：稍等后自动重试一次
+      if (!this.data.recording && !this.recordRetried && isStartRecordFailure(error)) {
+        this.recordRetried = true;
+        this.setData({ voiceStatus: '正在重新打开麦克风' });
+        setTimeout(() => {
+          if (!this.destroyed) this.launchRecorder();
+        }, RECORDER_RETRY_DELAY_MS);
+        return;
+      }
+      this.startingRecording = false;
       this.setData({
         recording: false,
         processing: false,
-        voiceStatus: error.errMsg || '录音失败，请检查麦克风权限'
+        voiceStatus: recorderErrorMessage(error)
       });
     };
     this.recorder.onStart(this.handleRecorderStart);
@@ -207,7 +241,7 @@ Page({
   },
 
   toggleVoiceQuestion() {
-    if (this.data.processing) return;
+    if (this.data.processing || this.startingRecording) return;
     if (this.data.recording) {
       this.stopRecording('manual');
       return;
@@ -244,14 +278,23 @@ Page({
   },
 
   startRecording() {
-    if (!this.recorder) return;
-    if (this.speech) this.speech.stop();
+    if (!this.recorder || this.startingRecording) return;
+    this.startingRecording = true;
+    this.recordRetried = false;
     this.setData({
       question: '',
       answer: '',
       voiceStatus: '正在打开麦克风'
     });
     this.recordStopReason = '';
+    // 先停止播报并等待系统释放音频，再开始录音，避免 start record fail
+    const ready = this.speech ? this.speech.stopAndRelease() : Promise.resolve();
+    ready.then(() => {
+      if (!this.destroyed) this.launchRecorder();
+    });
+  },
+
+  launchRecorder() {
     try {
       this.recorder.start({
         duration: MAX_RECORDING_MS,
@@ -263,7 +306,7 @@ Page({
         frameSize: 5
       });
     } catch (error) {
-      this.setData({ processing: false, voiceStatus: error.errMsg || '录音启动失败，请检查麦克风权限' });
+      this.handleRecorderError(error);
     }
   },
 
